@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public abstract class Stat {
 
-	
-	
+
+
 	public static double min(ArrayList<Double> array){
 		double minV = array.get(0);
 		for (int i = 0; i < array.size(); i++) {
@@ -15,7 +15,7 @@ public abstract class Stat {
 		}
 		return minV;
 	}
-	
+
 	public static double max(ArrayList<Double> array){
 		double maxV = array.get(0);
 		for (int i = 0; i < array.size(); i++) {
@@ -25,5 +25,13 @@ public abstract class Stat {
 		}
 		return maxV;
 	}
-	
+
+	public static double sum(ArrayList<Double> array){
+		double sumv = 0;
+		for (int i = 0; i < array.size(); i++) {
+			sumv += array.get(i);
+		}
+		return sumv;
+	}
+
 }
