@@ -19,6 +19,8 @@ public class JavaFXFracGenApplication extends Application{
 		Pane root = FXMLLoader.load(getClass().getResource("/LayoutMain.fxml"));
 
 		Scene scene = new Scene(root,700,500); // 600, 400
+		scene.getStylesheets().add("styles.css");
+
 		primaryStage.setScene(scene);
 
 		primaryStage.show();
