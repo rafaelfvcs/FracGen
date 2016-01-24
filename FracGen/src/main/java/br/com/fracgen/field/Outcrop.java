@@ -1,5 +1,8 @@
 package br.com.fracgen.field;
 
-public class Outcrop {
+public abstract class Outcrop {
+
+	private String nome;
+	private String local;
 
 }
