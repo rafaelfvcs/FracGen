@@ -1,9 +1,0 @@
-
-.mainFxmlClass {
-
-}
-.button{
-  -fx-border-width:12px;
-  -fx-background-insets: 0 0 -1 0, 0, 1, 2;
-  -fx-background-radius: 3px, 3px, 2px, 1px;
-}

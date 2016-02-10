@@ -1,43 +1,30 @@
 package br.com.fracgen.application;
 
+import java.util.ArrayList;
+import java.util.Random;
 
-import br.com.fracgen.util.LimitedTextField;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+import br.com.fracgen.statistic.Stat;
 
-public class ApplicationTest extends Application {
+public abstract class ApplicationTest {
+	public static void main(String[] args) {
+		Random r = new Random();
+		ArrayList<Double> vars = new ArrayList<>();
 
-    public LimitedTextField csv = new LimitedTextField();
-    
-    private static ApplicationTest instance;    
+		for (int i = 0; i < 10; i++) {
+			double nr = r.nextDouble()*10;
+			vars.add(nr);
+			System.out.println(nr);
+		}
 
-    public ApplicationTest() {
-        instance = this;
-    }
+		System.out.println("");
 
-    public static ApplicationTest getInstance() {
-        return instance;
-    }
+		System.out.println(Stat.max(vars));
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+		System.out.println(Stat.min(vars));
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("NFracGen");
+		System.out.println(Stat.sum(vars));
 
-        Pane root = FXMLLoader.load(getClass().getResource("/LayoutMain.fxml"));
 
-        Scene scene = new Scene(root, 700, 500); // 600, 400
-        scene.getStylesheets().add("styles.css");
-
-        primaryStage.setScene(scene);
-
-        primaryStage.show();
-    }
+	}
 
 }

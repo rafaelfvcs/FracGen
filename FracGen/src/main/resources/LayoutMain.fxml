@@ -71,16 +71,14 @@ xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fracgen.controller.Con
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Button layoutX="14.0" layoutY="342.0" mnemonicParsing="false" text="Button" />
-                              <TableView layoutX="14.0" layoutY="41.0" prefHeight="295.0" prefWidth="227.0"
-                                    fx:id="tableData">
+                              <TableView layoutX="14.0" layoutY="41.0" prefHeight="295.0" prefWidth="227.0">
                                 <columns>
                                   <TableColumn prefWidth="75.0" text="ID" />
                                   <TableColumn prefWidth="75.0" text="SP" />
                                     <TableColumn prefWidth="75.0" text="AP" />
                                 </columns>
                               </TableView>
-                              <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Load"
-                                    onAction="#openFileStage"  />
+                              <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Load" />
                               <TextField layoutX="66.0" layoutY="14.0" prefHeight="25.0" prefWidth="174.0" />
                               <Separator layoutX="251.0" orientation="VERTICAL" prefHeight="381.0" prefWidth="3.0" />
                               <LineChart layoutX="257.0" layoutY="14.0" prefHeight="294.0" prefWidth="433.0">
