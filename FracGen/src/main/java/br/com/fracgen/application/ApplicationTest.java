@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import br.com.fracgen.statistic.Stat;
+import br.com.fracgen.util.DataSCL;
+import br.com.fracgen.util.OpenScanlineData;
 
 public abstract class ApplicationTest {
 	public static void main(String[] args) {
+
+		/*
 		Random r = new Random();
 		ArrayList<Double> vars = new ArrayList<>();
 
@@ -23,7 +27,18 @@ public abstract class ApplicationTest {
 		System.out.println(Stat.min(vars));
 
 		System.out.println(Stat.sum(vars));
+		 */
 
+//		DataSCL d = new DataSCL();
+//		d.setName("Nova Olinda");
+//		d.setSize("20 metros");
+
+		DataSCL d = OpenScanlineData.openScl("src/main/resources/data.dat");
+
+		for (int i = 0; i < d.getAperture().size(); i++) {
+			System.out.println("Novos :" + d.getSpacing().get(i));
+		}
+		//System.out.println("Novos :" + d.getSpacing().get(2));
 
 	}
 
