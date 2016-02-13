@@ -2,10 +2,10 @@ package br.com.fracgen.util;
 
 public class LimitedTextField {
 
-    public String fileName = "";
-    public String Separator = ",";
-    public String[] headerValues;
-    public boolean hasHeader = true;
+    private String fileName = "";
+    private String Separator = ",";
+    private String[] headerValues;
+    private boolean hasHeader = true;
 
     public void setFilename(String filename) {
         this.fileName = filename;
