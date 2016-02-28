@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public abstract class OpenScanilneData extends DataSCL{
+public abstract class OpenScanlineData extends DataSCL{
 
 	/**
 	 * @author elidio
@@ -47,7 +47,9 @@ public abstract class OpenScanilneData extends DataSCL{
      * @param file
      * @return dScl = data loaded =[
      */
-    public static DataSCL openScanlineData(String file){
+    public static DataSCL openScl(String file){
+
+    	// colocar se o arquivo tem ou nao cabecalho
 
 		if(file == null){
 			file = "data.dat";
