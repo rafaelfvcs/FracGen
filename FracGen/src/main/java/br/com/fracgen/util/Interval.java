@@ -5,10 +5,24 @@ import java.util.ArrayList;
 public abstract class Interval {
 
 
+	public static double[] intervArray(double min,  double delta, double max){
+
+		ArrayList<Double> aux = intervList(min,delta,max);
+
+		double[] vet = new double[aux.size()];
+
+		for (int i = 0; i < aux.size(); i++) {
+			vet[i] = aux.get(i);
+		}
+
+		return vet;
+	}
+
+
 	/*
 	 * methods Ok! igual ao Matlab
 	 */
-	public static ArrayList<Double> interv(double min,  double delta, double max){
+	public static ArrayList<Double> intervList(double min,  double delta, double max){
 
 		ArrayList<Double> vet = new ArrayList<>();
 
@@ -49,4 +63,13 @@ public abstract class Interval {
 
 		return null;
 	}
+
+	/*
+	 * ones
+	 */
+	public static ArrayList<Double> ones(int numInt){
+
+		return null;
+	}
+
 }
