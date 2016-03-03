@@ -140,7 +140,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                <Tab text="Input">
+                <Tab text="Scanline">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -148,7 +148,10 @@
                                  <top>
                                     <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                       <items>
-                                        <Button mnemonicParsing="false" text="Load" />
+                                        <Button fx:id="load_sclData" mnemonicParsing="false" onAction="#loadSclData" text="Load" />
+                                          <Button mnemonicParsing="false" text="PowerLaw" />
+                                          <Button mnemonicParsing="false" text="Save" />
+                                          <Button mnemonicParsing="false" onAction="#sclClear" text="Clear" />
                                       </items>
                                     </ToolBar>
                                  </top>
@@ -163,10 +166,10 @@
                                           </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                              <children>
-                                                <TableView layoutX="-33.0" layoutY="14.0" prefHeight="264.0" prefWidth="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <TableView fx:id="scl_table" layoutX="-33.0" layoutY="14.0" prefHeight="264.0" prefWidth="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                   <columns>
-                                                    <TableColumn prefWidth="75.0" text="SP" />
-                                                    <TableColumn prefWidth="75.0" text="AP" />
+                                                    <TableColumn fx:id="ap" prefWidth="70.0" text="AP" />
+                                                      <TableColumn fx:id="sp" prefWidth="75.0" text="SP" />
                                                   </columns>
                                                 </TableView>
                                              </children>
@@ -177,17 +180,33 @@
                                  <center>
                                     <LineChart axisSortingPolicy="NONE" title="Lei de Potência" BorderPane.alignment="CENTER">
                                       <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
+                                        <CategoryAxis label="Aperture (mm)" side="BOTTOM" />
                                       </xAxis>
                                       <yAxis>
-                                        <NumberAxis label="Freq Acumulada (1/m)" side="LEFT" />
+                                        <NumberAxis label="Freq Acumulada (1/m)" side="TOP" />
                                       </yAxis>
                                     </LineChart>
                                  </center>
                                  <right>
                                     <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <Label layoutX="14.0" layoutY="14.0" text="Saídas do programa:" />
+                                          <Label layoutX="14.0" layoutY="14.0" text="Scanlines informations:" />
+                                          <Label layoutX="14.0" layoutY="50.0" text="Name:" />
+                                          <Label layoutX="14.0" layoutY="84.0" text="N data:" />
+                                          <Label layoutX="14.0" layoutY="120.0" text="Mean: Ap" />
+                                          <Label layoutX="14.0" layoutY="152.0" text="Std: Ap" />
+                                          <Label layoutX="14.0" layoutY="187.0" text="Mean: Sp" />
+                                          <Label layoutX="14.0" layoutY="223.0" text="Std: Sp" />
+                                          <Label layoutX="14.0" layoutY="255.0" text="CV Ap (%)" />
+                                          <Label fx:id="sclName" layoutX="122.0" layoutY="50.0" text="Label" />
+                                          <Label fx:id="sclNumData" layoutX="122.0" layoutY="84.0" text="Label" />
+                                          <Label fx:id="sclApMean" layoutX="122.0" layoutY="120.0" text="Label" />
+                                          <Label fx:id="sclApStd" layoutX="122.0" layoutY="152.0" text="Label" />
+                                          <Label fx:id="sclSpMean" layoutX="122.0" layoutY="187.0" text="Label" />
+                                          <Label fx:id="sclSpStd" layoutX="122.0" layoutY="223.0" text="Label" />
+                                          <Label fx:id="sclCVap" layoutX="122.0" layoutY="255.0" text="Label" />
+                                          <Label layoutX="13.0" layoutY="291.0" text="CV Sp (%)" />
+                                          <Label fx:id="sclCVsp" layoutX="122.0" layoutY="291.0" text="Label" />
                                        </children>
                                     </Pane>
                                  </right>
@@ -201,15 +220,15 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   </content>
                 </Tab>
-                  <Tab text="Results">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
-                  </Tab>
                   <Tab text="Modeling">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
+                  </Tab>
+                  <Tab text="Outputs">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
                   </Tab>
               </tabs>
             </TabPane>
