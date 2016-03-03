@@ -1,5 +1,7 @@
 package br.com.fracgen.statistic;
 
+import java.util.ArrayList;
+
 public class Average {
     
     public double arithmeticAverage(ArrayList<Double> array) {
