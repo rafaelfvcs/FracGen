@@ -19,7 +19,8 @@ public class JavaFXFracGenApplication extends Application{
 		Scene scene = new Scene(root);
 		//scene.getStylesheets().add("/styles/styles_login.css");
 		stage.setScene(scene);
-		stage.setTitle("Login");
+//		stage.setTitle("Login");
+		stage.setTitle("NFracGen");
 		stage.show();
 	}
 

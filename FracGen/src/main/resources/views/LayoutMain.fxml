@@ -3,6 +3,10 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.ScatterChart?>
+<?import javafx.scene.chart.StackedAreaChart?>
+<?import javafx.scene.chart.StackedBarChart?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
@@ -11,6 +15,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -22,9 +27,12 @@
 <?import javafx.scene.effect.Reflection?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fracgen.controller.Controller">
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fracgen.controller.Controller">
    <top>
       <MenuBar styleClass="alert" BorderPane.alignment="CENTER">
         <menus>
@@ -60,19 +68,19 @@
          <top>
             <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <items>
-                <Button mnemonicParsing="false" prefWidth="50.0" text="MC" />
-                  <Button layoutX="10.0" layoutY="13.0" mnemonicParsing="false" prefWidth="50.0" text="2D" />
-                  <Button layoutX="64.0" layoutY="13.0" mnemonicParsing="false" prefWidth="50.0" text="3D" />
-                  <Button layoutX="118.0" layoutY="13.0" mnemonicParsing="false" prefWidth="50.0" text="Stats" />
-                  <Button layoutX="172.0" layoutY="13.0" mnemonicParsing="false" prefWidth="50.0" text="Geo" />
-                  <Button mnemonicParsing="false" text="Android" />
+                <Button fx:id="btn_toolbar_mc" mnemonicParsing="false" prefWidth="50.0" text="MC" />
+                  <Button fx:id="btn_toolbar_2d" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" prefWidth="50.0" text="2D" />
+                  <Button fx:id="btn_toolbar_3d" layoutX="64.0" layoutY="13.0" mnemonicParsing="false" prefWidth="50.0" text="3D" />
+                  <Button fx:id="btn_toolbar_stats" layoutX="118.0" layoutY="13.0" mnemonicParsing="false" prefWidth="50.0" text="Stats" />
+                  <Button fx:id="btn_toolbar_geo" layoutX="172.0" layoutY="13.0" mnemonicParsing="false" onAction="#geoModeling" prefWidth="50.0" text="Geo" />
+                  <Button fx:id="btn_toolbar_android" mnemonicParsing="false" text="Android" />
               </items>
             </ToolBar>
          </top>
          <center>
-            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <TabPane fx:id="tabPane_main" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
-                  <Tab text="DB conect">
+                  <Tab fx:id="tab_main_dbconnect" text="DB connect">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -92,7 +100,14 @@
                                       <panes>
                                         <TitledPane animated="false" text="Field Trip">
                                           <content>
-                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Web Connect" />
+                                                      <TextField layoutX="78.0" layoutY="44.0" prefHeight="25.0" prefWidth="106.0" />
+                                                      <Label layoutX="33.0" layoutY="48.0" text="User:" />
+                                                      <Label layoutX="20.0" layoutY="79.0" text="Password:" />
+                                                      <TextField layoutX="78.0" layoutY="77.0" prefHeight="25.0" prefWidth="106.0" />
+                                                   </children></AnchorPane>
                                           </content>
                                         </TitledPane>
                                         <TitledPane animated="false" text="Analysis">
@@ -140,7 +155,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                <Tab text="Scanline">
+                <Tab fx:id="tab_main_scanline" text="Scanline">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -148,10 +163,10 @@
                                  <top>
                                     <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                       <items>
-                                        <Button fx:id="load_sclData" mnemonicParsing="false" onAction="#loadSclData" text="Load" />
-                                          <Button mnemonicParsing="false" text="PowerLaw" />
-                                          <Button mnemonicParsing="false" text="Save" />
-                                          <Button mnemonicParsing="false" onAction="#sclClear" text="Clear" />
+                                        <Button fx:id="btn_scanline_load" mnemonicParsing="false" onAction="#loadSclData" text="Load" />
+                                          <Button fx:id="btn_scanline_plotpowerlaw" mnemonicParsing="false" onAction="#plotPowerLaw" text="PowerLaw" />
+                                          <Button fx:id="btn_scanline_save" mnemonicParsing="false" onAction="#saveSclData" text="Save" />
+                                          <Button fx:id="btn_scanline_clear" mnemonicParsing="false" onAction="#sclInfoClear" text="Clear" />
                                       </items>
                                     </ToolBar>
                                  </top>
@@ -161,7 +176,7 @@
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                              <children>
                                                 <Label layoutX="14.0" layoutY="14.0" text="Data Types:" />
-                                                <ComboBox layoutX="4.0" layoutY="38.0" prefWidth="150.0" />
+                                                <ComboBox fx:id="dataTypeScl" layoutX="14.0" layoutY="38.0" prefHeight="25.0" prefWidth="113.0" />
                                              </children>
                                           </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -178,9 +193,9 @@
                                     </SplitPane>
                                  </left>
                                  <center>
-                                    <LineChart axisSortingPolicy="NONE" title="Lei de Potência" BorderPane.alignment="CENTER">
+                                    <LineChart fx:id="gPowerLaw" axisSortingPolicy="NONE" title="Lei de Potência" BorderPane.alignment="CENTER">
                                       <xAxis>
-                                        <CategoryAxis label="Aperture (mm)" side="BOTTOM" />
+                                        <NumberAxis label="Aperture (mm)" side="BOTTOM" />
                                       </xAxis>
                                       <yAxis>
                                         <NumberAxis label="Freq Acumulada (1/m)" side="TOP" />
@@ -191,22 +206,28 @@
                                     <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                        <children>
                                           <Label layoutX="14.0" layoutY="14.0" text="Scanlines informations:" />
-                                          <Label layoutX="14.0" layoutY="50.0" text="Name:" />
-                                          <Label layoutX="14.0" layoutY="84.0" text="N data:" />
-                                          <Label layoutX="14.0" layoutY="120.0" text="Mean: Ap" />
-                                          <Label layoutX="14.0" layoutY="152.0" text="Std: Ap" />
-                                          <Label layoutX="14.0" layoutY="187.0" text="Mean: Sp" />
-                                          <Label layoutX="14.0" layoutY="223.0" text="Std: Sp" />
-                                          <Label layoutX="14.0" layoutY="255.0" text="CV Ap (%)" />
-                                          <Label fx:id="sclName" layoutX="122.0" layoutY="50.0" text="Label" />
-                                          <Label fx:id="sclNumData" layoutX="122.0" layoutY="84.0" text="Label" />
-                                          <Label fx:id="sclApMean" layoutX="122.0" layoutY="120.0" text="Label" />
-                                          <Label fx:id="sclApStd" layoutX="122.0" layoutY="152.0" text="Label" />
-                                          <Label fx:id="sclSpMean" layoutX="122.0" layoutY="187.0" text="Label" />
-                                          <Label fx:id="sclSpStd" layoutX="122.0" layoutY="223.0" text="Label" />
-                                          <Label fx:id="sclCVap" layoutX="122.0" layoutY="255.0" text="Label" />
-                                          <Label layoutX="13.0" layoutY="291.0" text="CV Sp (%)" />
-                                          <Label fx:id="sclCVsp" layoutX="122.0" layoutY="291.0" text="Label" />
+                                          <Label layoutX="14.0" layoutY="66.0" text="Name:" />
+                                          <Label layoutX="14.0" layoutY="85.0" text="N data:" />
+                                          <Label layoutX="14.0" layoutY="103.0" text="Mean: Ap" />
+                                          <Label layoutX="14.0" layoutY="122.0" text="Std: Ap" />
+                                          <Label layoutX="14.0" layoutY="141.0" text="Mean: Sp" />
+                                          <Label layoutX="14.0" layoutY="160.0" text="Std: Sp" />
+                                          <Label layoutX="14.0" layoutY="179.0" text="CV Ap (%)" />
+                                          <Label fx:id="sclName" alignment="CENTER_RIGHT" layoutX="122.0" layoutY="66.0" text="-" />
+                                          <Label fx:id="sclNumData" layoutX="122.0" layoutY="85.0" text="-" />
+                                          <Label fx:id="sclApMean" layoutX="122.0" layoutY="103.0" text="-" />
+                                          <Label fx:id="sclApStd" layoutX="122.0" layoutY="122.0" text="-" />
+                                          <Label fx:id="sclSpMean" layoutX="122.0" layoutY="141.0" text="-" />
+                                          <Label fx:id="sclSpStd" layoutX="122.0" layoutY="160.0" text="-" />
+                                          <Label fx:id="sclCVap" layoutX="122.0" layoutY="179.0" text="-" />
+                                          <Label layoutX="13.0" layoutY="199.0" text="CV Sp (%)" />
+                                          <Label fx:id="sclCVsp" layoutX="122.0" layoutY="199.0" text="-" />
+                                          <Label layoutX="13.0" layoutY="40.0" text="F =" />
+                                          <Label fx:id="coefA" layoutX="34.0" layoutY="40.0" text="a " />
+                                          <Label layoutX="66.0" layoutY="40.0" text="*(X) ^ " />
+                                          <Label fx:id="coefK" layoutX="99.0" layoutY="40.0" text="-k" />
+                                          <Label layoutX="141.0" layoutY="40.0" text="R2=" />
+                                          <Label fx:id="sclr2" layoutX="165.0" layoutY="40.0" text="00" />
                                        </children>
                                     </Pane>
                                  </right>
@@ -215,19 +236,227 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Analysis">
+                <Tab fx:id="tab_main_analysis" text="Analysis">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <BorderPane layoutX="242.0" layoutY="91.0" prefHeight="381.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <top>
+                                    <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                      <items>
+                                        <Button mnemonicParsing="false" text="New" />
+                                          <Button mnemonicParsing="false" text="Load" />
+                                          <Button mnemonicParsing="false" text="Edit" />
+                                          <Button mnemonicParsing="false" text="Save" />
+                                      </items>
+                                    </ToolBar>
+                                 </top>
+                                 <center>
+                                    <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                                      <tabs>
+                                        <Tab text="Statistics">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <BorderPane layoutX="236.0" layoutY="64.0" prefHeight="312.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <left>
+                                                            <GridPane BorderPane.alignment="CENTER">
+                                                              <columnConstraints>
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                              </columnConstraints>
+                                                              <rowConstraints>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                              </rowConstraints>
+                                                            </GridPane>
+                                                         </left>
+                                                         <center>
+                                                            <GridPane BorderPane.alignment="CENTER">
+                                                              <columnConstraints>
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                              </columnConstraints>
+                                                              <rowConstraints>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                              </rowConstraints>
+                                                               <children>
+                                                                  <PieChart />
+                                                                  <GridPane GridPane.columnIndex="1">
+                                                                     <columnConstraints>
+                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                                     </columnConstraints>
+                                                                     <rowConstraints>
+                                                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                     </rowConstraints>
+                                                                     <children>
+                                                                        <StackedBarChart>
+                                                                          <xAxis>
+                                                                            <CategoryAxis side="BOTTOM" />
+                                                                          </xAxis>
+                                                                          <yAxis>
+                                                                            <NumberAxis side="LEFT" />
+                                                                          </yAxis>
+                                                                        </StackedBarChart>
+                                                                     </children>
+                                                                  </GridPane>
+                                                                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                     <columnConstraints>
+                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                                     </columnConstraints>
+                                                                     <rowConstraints>
+                                                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                     </rowConstraints>
+                                                                     <children>
+                                                                        <StackedAreaChart>
+                                                                          <xAxis>
+                                                                            <NumberAxis side="BOTTOM" />
+                                                                          </xAxis>
+                                                                          <yAxis>
+                                                                            <NumberAxis side="LEFT" />
+                                                                          </yAxis>
+                                                                        </StackedAreaChart>
+                                                                     </children>
+                                                                  </GridPane>
+                                                                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                                     <columnConstraints>
+                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                                     </columnConstraints>
+                                                                     <rowConstraints>
+                                                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                     </rowConstraints>
+                                                                     <children>
+                                                                        <ScatterChart>
+                                                                          <xAxis>
+                                                                            <CategoryAxis label="Var x" side="BOTTOM" />
+                                                                          </xAxis>
+                                                                          <yAxis>
+                                                                            <NumberAxis label="Var y" side="LEFT" />
+                                                                          </yAxis>
+                                                                        </ScatterChart>
+                                                                     </children>
+                                                                  </GridPane>
+                                                               </children>
+                                                            </GridPane>
+                                                         </center>
+                                                      </BorderPane>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                        <Tab text="Monte Carlo">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <BorderPane layoutX="219.0" layoutY="44.0" prefHeight="312.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                          <Tab text="Geoestatistics">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <BorderPane layoutX="220.0" layoutY="65.0" prefHeight="312.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                      </tabs>
+                                    </TabPane>
+                                 </center>
+                              </BorderPane>
+                           </children></AnchorPane>
                   </content>
                 </Tab>
-                  <Tab text="Modeling">
+                  <Tab fx:id="tab_main_modeling" text="Modeling">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <BorderPane layoutX="250.0" layoutY="74.0" prefHeight="381.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <center>
+                                    <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                                      <tabs>
+                                        <Tab fx:id="tab_modeling_2d" text="2D">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <BorderPane layoutX="292.0" layoutY="44.0" prefHeight="352.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <center>
+                                                            <SplitPane dividerPositions="0.27650429799426934" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                              <items>
+                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                                     <children>
+                                                                        <Label fx:id="label" layoutX="14.0" layoutY="14.0" text="Label" />
+                                                                        <Slider fx:id="slider" layoutX="14.0" layoutY="88.0" />
+                                                                        <TextField fx:id="text" layoutX="21.0" layoutY="118.0" prefHeight="25.0" prefWidth="109.0" />
+                                                                        <CheckBox fx:id="checkbox" layoutX="14.0" layoutY="167.0" mnemonicParsing="false" text="CheckBox" />
+                                                                     </children></AnchorPane>
+                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                                     <children>
+                                                                        <BorderPane layoutX="37.0" layoutY="48.0" prefHeight="350.0" prefWidth="465.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                           <center>
+                                                                              <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                                                                                <tabs>
+                                                                                  <Tab text="Modeling">
+                                                                                    <content>
+                                                                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                                                                    </content>
+                                                                                  </Tab>
+                                                                                  <Tab text="View">
+                                                                                    <content>
+                                                                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                                                                    </content>
+                                                                                  </Tab>
+                                                                                </tabs>
+                                                                              </TabPane>
+                                                                           </center>
+                                                                        </BorderPane>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                              </items>
+                                                            </SplitPane>
+                                                         </center>
+                                                      </BorderPane>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                        <Tab fx:id="tab_modeling_3d" text="3D">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                          </content>
+                                        </Tab>
+                                      </tabs>
+                                    </TabPane>
+                                 </center>
+                              </BorderPane>
+                           </children></AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Outputs">
+                  <Tab fx:id="tab_main_outputs" text="Outputs">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <BorderPane layoutX="250.0" layoutY="80.0" prefHeight="381.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <left>
+                                    <GridPane BorderPane.alignment="CENTER">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                    </GridPane>
+                                 </left>
+                              </BorderPane>
+                           </children></AnchorPane>
                     </content>
                   </Tab>
               </tabs>
