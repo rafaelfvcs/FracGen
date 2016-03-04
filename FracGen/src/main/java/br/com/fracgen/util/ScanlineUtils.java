@@ -8,6 +8,10 @@ import br.com.fracgen.statistic.Stat;
 public class ScanlineUtils {
 
 
+	/*
+	 * freq: frequency
+	 * ap: aperture
+	 */
 	public static FreqAperture unique(ArrayList<Double> freq, ArrayList<Double> ap1){
 
 		ArrayList<Double> apf = new ArrayList<>();
