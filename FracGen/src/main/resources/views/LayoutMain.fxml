@@ -166,6 +166,8 @@
                                           <Button fx:id="btn_scanline_plotpowerlaw" mnemonicParsing="false" onAction="#plotPowerLaw" text="PowerLaw" />
                                           <Button fx:id="btn_scanline_save" mnemonicParsing="false" onAction="#saveSclData" text="Save" />
                                           <Button fx:id="btn_scanline_clear" mnemonicParsing="false" onAction="#sclInfoClear" text="Clear" />
+                                          <Button fx:id="load2" mnemonicParsing="false" onAction="#load2" text="Load2" />
+                                          <Button fx:id="btn_scanline_advancedfilter" mnemonicParsing="false" onAction="#advancedFilter" text="Adv Filter" />
                                       </items>
                                     </ToolBar>
                                  </top>
@@ -175,7 +177,11 @@
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                              <children>
                                                 <Label layoutX="14.0" layoutY="14.0" text="Data Types:" />
-                                                <ComboBox fx:id="dataTypeScl" layoutX="14.0" layoutY="38.0" prefHeight="25.0" prefWidth="113.0" />
+                                                <ComboBox fx:id="dataTypeScl" layoutX="14.0" layoutY="38.0" prefHeight="25.0" prefWidth="122.0" />
+                                                <Button fx:id="btn_scanline_findpl" layoutX="14.0" layoutY="91.0" mnemonicParsing="false" onAction="#findPlFilter" text="Find PL" />
+                                                <Button fx:id="btn_scanline_clearpl" layoutX="76.0" layoutY="91.0" mnemonicParsing="false" onAction="#clearPlFilter" text="Clear PL" />
+                                                <CheckBox fx:id="checkbox_filter_scl_data" layoutX="14.0" layoutY="68.0" mnemonicParsing="false" text="Filter Data" />
+                                                <Button fx:id="btn_scanline_saveanalysis" layoutX="14.0" layoutY="123.0" mnemonicParsing="false" onAction="#saveAnalysisSclFilter" prefHeight="25.0" prefWidth="120.0" text="Save Analysis" />
                                              </children>
                                           </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -233,10 +239,10 @@
                                           </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                              <children>
-                                                <TableView layoutX="-33.0" prefHeight="166.0" prefWidth="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <TableView fx:id="scl_table_data_new" layoutX="-42.0" prefHeight="166.0" prefWidth="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                   <columns>
-                                                    <TableColumn prefWidth="106.0" text="C1" />
-                                                    <TableColumn prefWidth="72.0" text="C2" />
+                                                    <TableColumn fx:id="apn" prefWidth="75.0" text="APN" />
+                                                    <TableColumn fx:id="spn" prefWidth="75.0" text="SPN" />
                                                   </columns>
                                                 </TableView>
                                              </children></AnchorPane>

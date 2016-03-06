@@ -17,7 +17,7 @@ public class JavaFXFracGenApplication extends Application{
 	public void start(Stage stage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getResource("/views/LayoutMain.fxml"));
 		Scene scene = new Scene(root);
-		//scene.getStylesheets().add("/styles/styles_login.css");
+//		scene.getStylesheets().add("/styles/styles.css");
 		stage.setScene(scene);
 //		stage.setTitle("Login");
 		stage.setTitle("NFracGen");

@@ -1,8 +1,8 @@
 package br.com.fracgen.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import br.com.fracgen.model.PowerLawOrtega;
@@ -13,29 +13,43 @@ import br.com.fracgen.util.DataSCL;
 import br.com.fracgen.util.OpenScanlineData;
 import br.com.fracgen.util.PowerLaw;
 import br.com.fracgen.util.RoundUtil;
+import br.com.fracgen.util.XYChartDataUtil;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import javafx.util.converter.NumberStringConverter;
 
 public class Controller {
@@ -43,6 +57,9 @@ public class Controller {
 	/*
 	 * Main application
 	 */
+	@FXML
+	BorderPane mainPane;
+
 	@FXML
 	Stage stage;
 
@@ -79,9 +96,19 @@ public class Controller {
 	@FXML
 	private TabPane tabPane_analysis;
 
-
+	/*
+	 * CheckBox
+	 */
 	@FXML
-	BorderPane mainPane;
+	private CheckBox checkbox_filter_scl_data;
+
+	/*
+	 *
+	 */
+
+	// Others
+	@FXML
+	private ComboBox<String> dataTypeScl;
 
 	/*
 	 *
@@ -93,7 +120,6 @@ public class Controller {
 	 */
 	@FXML
 	private Button btn_toolbar_geo;
-
 
 	/*
 	 * ---------------------------- Buttons-Vars-----------------------------
@@ -109,6 +135,16 @@ public class Controller {
 
 	@FXML
 	private Button btn_scanline_clear;
+
+	@FXML
+	private Button btn_scanline_findpl;
+
+	@FXML
+	private Button btn_scanline_clearpl;
+
+	@FXML
+	private Button btn_scanline_saveanalysis;
+
 
 	/*
 	 * ----------------------------- Scanlines - Tab --------------------------------
@@ -149,11 +185,24 @@ public class Controller {
 	@FXML
 	private TableColumn<Scl, Double> sp;
 
+	@FXML
+	private TableView<Scl> scl_table_data_new;
+
+	@FXML
+	private TableColumn<Scl, Double> apn;
+
+	@FXML
+	private TableColumn<Scl, Double> spn;
+
 	/*
 	 * Graphs
 	 */
 	@FXML
 	private LineChart<Number, Number> gPowerLaw; // = new LineChart<Number,Number>(xAxis,yAxis);;
+
+	/*
+	 * ---------------------------------- Elements ------------------------------------
+	 */
 
 
 	/*
@@ -163,32 +212,26 @@ public class Controller {
 	public void goToGeoModeling(){
 		tabPane_main.getSelectionModel().select(tab_main_scanline);
 	}
-
 	@FXML
 	public void goToStatistic(){
 		tabPane_main.getSelectionModel().select(tab_main_analysis);
 		tabPane_analysis.getSelectionModel().select(tab_analysis_statistics);
 	}
-
 	@FXML
 	public void goTo3D(){
 		tabPane_main.getSelectionModel().select(tab_main_modeling);
 		tabPane_modeling.getSelectionModel().select(tab_modeling_3d);
-
 	}
-
 	@FXML
 	public void goTo2D(){
 		tabPane_main.getSelectionModel().select(tab_main_modeling);
 		tabPane_modeling.getSelectionModel().select(tab_modeling_2d);
 	}
-
 	@FXML
 	public void goToMC(){
 		tabPane_main.getSelectionModel().select(tab_main_analysis);
 		tabPane_analysis.getSelectionModel().select(tab_analysis_montecarlo);
 	}
-
 	@FXML
 	public void goToAndroid(){
 //		tabPane_main.getSelectionModel().select(tab_main_analysis);
@@ -200,21 +243,133 @@ public class Controller {
 	 */
 	@FXML
 	public void saveSclData(){
+		//TODO: implementar salvar dados
+	}
 
+	public void findPlFilter(){
+		//TODO: colocar saída de coeficientes da pawer law
+		PowerLawOrtega.findFreqApertureLogOrtega(listNew);
+		setInfoScanline(listNew);
+	}
+
+	public void clearPlFilter(){
+		//TODO: fazer a limpeza dos campos das analises dos dados selecionados
+	}
+
+	public void saveAnalysisSclFilter(){
+		//TODO: salvar as análises feitas em arquivo .dat
 	}
 
 	/*
-	 * Logout
+	 * --------------------------- Menu methods -----------------------------
+	 */
+	@FXML
+	public void exit() {
+		Platform.exit();
+	}
+
+
+	/*
+	 * ----------------------------  Tab SCANLINE Methods -------------------
 	 */
 
 	@FXML
-	public void exit() {
+	public void advancedFilter(){
+
+		// Create the custom dialog.
+		Dialog<Pair<String, String>> dialog = new Dialog<>();
+		dialog.setTitle("Advanced Filter");
+		dialog.setHeaderText("Filter for scanline data:");
+
+		// Set the icon (must be included in the project).
+		//dialog.setGraphic(new ImageView(this.getClass().getResource("world.png").toString()));
+
+		// Set the button types.
+		ButtonType filterButtonType = new ButtonType("Filter", ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(filterButtonType, ButtonType.CANCEL);
+
+		// Create the username and password labels and fields.
+		GridPane grid = new GridPane();
+		grid.setHgap(10);
+		grid.setVgap(10);
+		grid.setPadding(new Insets(20, 150, 10, 10));
+
+		TextField ap_min = new TextField();
+		ap_min.setPromptText("Min Aperture");
+
+		TextField ap_max = new TextField();
+		ap_max.setPromptText("Max Aperture");
+
+		TextField sp_min = new TextField();
+		sp_min.setPromptText("Min Spacing");
+
+		TextField sp_max = new TextField();
+		sp_max.setPromptText("Max Spacing");
+
+		ComboBox<String> cb = new ComboBox<>();
+		cb.getItems().addAll(
+				"Var1", "Var2","Var3");
+		cb.setValue("Var1");
+
+
+		grid.add(new Label("Ap Min:"), 0, 0);
+		grid.add(ap_min, 1, 0);
+		grid.add(new Label("Sp Min:"), 0, 1);
+		grid.add(sp_min, 1, 1);
+
+		grid.add(new Label("Ap Max:"), 2, 0);
+		grid.add(ap_max, 3, 0);
+
+		grid.add(new Label("Sp Max:"), 2, 1);
+		grid.add(sp_max, 3, 1);
+
+		grid.add(cb, 3, 2);
+
+		//TODO: fazer o disable para os outros campos
+		// Enable/Disable login button depending on whether a username was entered.
+		Node filterButton = dialog.getDialogPane().lookupButton(filterButtonType);
+		filterButton.setDisable(true);
+
+		// Do some validation (using the Java 8 lambda syntax).
+		ap_min.textProperty().addListener((observable, oldValue, newValue) -> {
+		    filterButton.setDisable(newValue.trim().isEmpty());
+		});
+
+		dialog.getDialogPane().setContent(grid);
+
+		// Request focus on the username field by default.
+		Platform.runLater(() -> ap_min.requestFocus());
+
+		// Convert the result to a username-password-pair when the login button is clicked.
+		dialog.setResultConverter(dialogButton -> {
+		    if (dialogButton == filterButtonType) {
+		        return new Pair<>(ap_min.getText(), sp_min.getText());
+		    }
+		    return null;
+		});
+
+		Optional<Pair<String, String>> result = dialog.showAndWait();
+
+		result.ifPresent(usernamePassword -> {
+		    System.out.println("Ap Min=" + usernamePassword.getKey() + ", Sp Min=" + usernamePassword.getValue());
+		});
+
+
 
 	}
 
-	/*
-	 * Tab Scanline Methods
-	 */
+	@FXML
+	public void load2(){
+
+		/*
+		for (int i = 0; i < listNew.size(); i++) {
+			System.out.println(listNew.get(i).getAp());
+
+		}
+		System.out.println("\n");
+		System.out.println(listNew.size());
+		*/
+	}
 
 	// load scanline data
 	@FXML
@@ -251,29 +406,31 @@ public class Controller {
 		ObservableList<Scl> data = FXCollections.observableArrayList(list);
 
 		scl_table.setItems(data);
+		//*****
 
-		sclName.setText("Teste SCL");
-		sclNumData.setText(String.valueOf(d.getAperture().size()));
+		setInfoScanline(d);
 
-		double sclapmean = Stat.calculateMean(ArrayOperation.arrayListToArray(d.getAperture()));
-		double sclapstd = Stat.getStdDev(ArrayOperation.arrayListToArray(d.getAperture()));
-		sclApStd.setText(String.valueOf(RoundUtil.round(sclapstd, 3)));
-		sclApMean.setText(String.valueOf(RoundUtil.round(sclapmean, 3)));
-
-		double sclspmean = Stat.calculateMean(ArrayOperation.arrayListToArray(d.getSpacing()));
-		double sclspstd = Stat.getStdDev(ArrayOperation.arrayListToArray(d.getSpacing()));
-		sclSpStd.setText(String.valueOf(RoundUtil.round(sclspstd, 3)));
-		sclSpMean.setText(String.valueOf(RoundUtil.round(sclspmean, 3)));
-
-		double sclcvap = sclapstd/sclapmean;
-		double sclcvsp = sclspstd/sclspmean;
-
-		sclCVap.setText(String.valueOf(RoundUtil.round(sclcvap, 3)));
-		sclCVsp.setText(String.valueOf(RoundUtil.round(sclcvsp, 3)));
-		sclName.setStyle("-fx-background-color: #FF2");
+//		sclName.setText("Teste SCL");
+//		sclNumData.setText(String.valueOf(d.getAperture().size()));
+//
+//		double sclapmean = Stat.calculateMean(ArrayOperation.arrayListToArray(d.getAperture()));
+//		double sclapstd = Stat.getStdDev(ArrayOperation.arrayListToArray(d.getAperture()));
+//		sclApStd.setText(String.valueOf(RoundUtil.round(sclapstd, 3)));
+//		sclApMean.setText(String.valueOf(RoundUtil.round(sclapmean, 3)));
+//
+//		double sclspmean = Stat.calculateMean(ArrayOperation.arrayListToArray(d.getSpacing()));
+//		double sclspstd = Stat.getStdDev(ArrayOperation.arrayListToArray(d.getSpacing()));
+//		sclSpStd.setText(String.valueOf(RoundUtil.round(sclspstd, 3)));
+//		sclSpMean.setText(String.valueOf(RoundUtil.round(sclspmean, 3)));
+//
+//		double sclcvap = sclapstd/sclapmean;
+//		double sclcvsp = sclspstd/sclspmean;
+//
+//		sclCVap.setText(String.valueOf(RoundUtil.round(sclcvap, 3)));
+//		sclCVsp.setText(String.valueOf(RoundUtil.round(sclcvsp, 3)));
+//		sclName.setStyle("-fx-background-color: #FF2");
 
 	}
-
 
 	// scanline informations clear
 	@FXML
@@ -283,13 +440,13 @@ public class Controller {
 		alert.setTitle("Confirmation");
 		alert.setHeaderText("Clear data analysis");
 		alert.setContentText("Are you sure, about that?");
-//
-//		alert.showAndWait();
+
+		//	alert.showAndWait();
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
 
 			sclName.setText("-");
-			sclNumData.setText("-");
+
 			sclApStd.setText("-");
 			sclApMean.setText("-");
 			sclSpStd.setText("-");
@@ -305,30 +462,33 @@ public class Controller {
 			btn_scanline_save.setDisable(true);
 			btn_scanline_clear.setDisable(true);
 
+			gPowerLaw.setData(null);
+
 			ObservableList<Scl> data = FXCollections.observableArrayList();
 			scl_table.setItems(data);
+
+			scl_table_data_new.setItems(data);
+			listNew.clear();
 
 		} else {
 		    // ... user chose CANCEL or closed the dialog
 		}
-
-
-
-
-
-
 	}
 
 	//Calculate and plot power law
 	public void plotPowerLaw(){
-
-//		DataSCL d = OpenScanlineData.openScl("src/main/resources/data.dat");
-
-//		File file = dialogOpenFile("*.dat");
-
+		//TODO: Colocar no formato de carregamento - mudar o nome do botão
+		//DataSCL d = OpenScanlineData.openScl("src/main/resources/data.dat");
+		//File file = dialogOpenFile("*.dat");
 		//PowerLaw pl = PowerLawOrtega.findCoefficients(fileOpen.toString());
 
-		PowerLaw pl = PowerLawOrtega.findCoefficients("src/main/resources/data.dat");
+		PowerLaw pl;
+
+		if(dataTypeScl.getSelectionModel().getSelectedItem().equals("Raw SCL")){
+			pl = PowerLawOrtega.findCoefficients("src/main/resources/data.dat");
+		}else{
+			pl = PowerLawOrtega.findCoefficients(listNew);
+		}
 
 		coefA.setText(String.valueOf(RoundUtil.round(pl.getA(),3)));
 		coefK.setText(String.valueOf(RoundUtil.round(pl.getK(),3)));
@@ -353,16 +513,10 @@ public class Controller {
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Population (in millions)");
 
-//		 Set the data for the chart
+        //Set the data for the chart
         ObservableList<XYChart.Series<Number,Number>> chartData =
                         XYChartDataUtil.getPowerLaw();
-
         gPowerLaw.setData(chartData);
-	}
-
-
-	public void saveDataScl() {
-		//TODO: implements save scanline data
 	}
 
 	/*
@@ -382,7 +536,107 @@ public class Controller {
 		 return selectedFile;
 	}
 
-	// Teste aplication Bind()
+	// melhorar depois com polimorfismo
+	private void setInfoScanline(DataSCL d){
+
+		//TODO: colocar info sobre a power law
+		sclName.setText("Teste SCL");
+		sclNumData.setText(String.valueOf(d.getAperture().size()));
+
+		double sclapmean = Stat.calculateMean(ArrayOperation.arrayListToArray(d.getAperture()));
+		double sclapstd = Stat.getStdDev(ArrayOperation.arrayListToArray(d.getAperture()));
+		sclApStd.setText(String.valueOf(RoundUtil.round(sclapstd, 3)));
+		sclApMean.setText(String.valueOf(RoundUtil.round(sclapmean, 3)));
+
+		double sclspmean = Stat.calculateMean(ArrayOperation.arrayListToArray(d.getSpacing()));
+		double sclspstd = Stat.getStdDev(ArrayOperation.arrayListToArray(d.getSpacing()));
+		sclSpStd.setText(String.valueOf(RoundUtil.round(sclspstd, 3)));
+		sclSpMean.setText(String.valueOf(RoundUtil.round(sclspmean, 3)));
+
+		double sclcvap = sclapstd/sclapmean;
+		double sclcvsp = sclspstd/sclspmean;
+
+		sclCVap.setText(String.valueOf(RoundUtil.round(sclcvap, 3)));
+		sclCVsp.setText(String.valueOf(RoundUtil.round(sclcvsp, 3)));
+		sclName.setStyle("-fx-background-color: #FF2"); //mudar para css
+	}
+
+	//overload setInfoScanline method
+	private void setInfoScanline(ArrayList<Scl> scldata){
+
+		ArrayList<Double> aplist = new ArrayList<>();
+		ArrayList<Double> splist = new ArrayList<>();
+
+		for (int i = 0; i < scldata.size(); i++) {
+			aplist.add(scldata.get(i).getAp());
+			splist.add(scldata.get(i).getSp());
+		}
+
+		sclName.setText("Selected New");
+		sclNumData.setText(String.valueOf(aplist.size()));
+
+		double sclapmean = Stat.calculateMean(ArrayOperation.arrayListToArray(aplist));
+		double sclapstd = Stat.getStdDev(ArrayOperation.arrayListToArray(aplist));
+		sclApStd.setText(String.valueOf(RoundUtil.round(sclapstd, 3)));
+		sclApMean.setText(String.valueOf(RoundUtil.round(sclapmean, 3)));
+
+		double sclspmean = Stat.calculateMean(ArrayOperation.arrayListToArray(splist));
+		double sclspstd = Stat.getStdDev(ArrayOperation.arrayListToArray(splist));
+		sclSpStd.setText(String.valueOf(RoundUtil.round(sclspstd, 3)));
+		sclSpMean.setText(String.valueOf(RoundUtil.round(sclspmean, 3)));
+
+		double sclcvap = sclapstd/sclapmean;
+		double sclcvsp = sclspstd/sclspmean;
+
+		sclCVap.setText(String.valueOf(RoundUtil.round(sclcvap, 3)));
+		sclCVsp.setText(String.valueOf(RoundUtil.round(sclcvsp, 3)));
+		sclName.setStyle("-fx-background-color: #FF2");
+	}
+
+	/*
+	 *
+	 */
+	private void unbindData(Scl scldata){
+
+		if(scldata !=null){
+			//TODO: implementar algo para pesistir cores na tabela
+		}
+	}
+
+	/*
+	 * New scanline data selected
+	 */
+	ArrayList<Scl> listNew = new ArrayList<Scl>();
+	//TableRow<Scl> currentRow = new TableRow<>();
+
+	private void bindData(Scl scldata){
+
+		if(scldata !=null){
+
+			if(listNew.isEmpty()){
+				listNew.add(scldata);
+			}
+
+			if(!listNew.contains(scldata)){
+				listNew.add(scldata);
+			}
+
+			apn.setCellValueFactory(new PropertyValueFactory<Scl, Double>("ap"));
+			spn.setCellValueFactory(new PropertyValueFactory<Scl, Double>("sp"));
+
+			//currentRow.getBackground()    //setStyle("-fx-background-color:lightcoral");
+
+			scl_table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+			ObservableList<Scl> dataNew = FXCollections.observableArrayList(listNew);
+
+			scl_table_data_new.setItems(dataNew);
+		}
+	}
+
+
+	// **********  ******  ******  Teste aplication Bind() ***** ****** *********   ******
+	// Apagar:
 	@FXML
 	Slider slider;
 
@@ -395,9 +649,12 @@ public class Controller {
 	@FXML
 	CheckBox checkbox;
 
+	//---------------------+----------------------+-------------------------+-----------------------------+--------
 	/*
-	 * Initialize Method
+	 * ******************************************** Initialize Method *********************************************
 	 */
+	//---------------------+----------------------+-------------------------+-----------------------------+--------
+	@FXML
 	public <T> void initialize(){
 
 		//Pane init
@@ -406,6 +663,47 @@ public class Controller {
 		btn_scanline_plotpowerlaw.setDisable(true);
 		btn_scanline_save.setDisable(true);
 		btn_scanline_clear.setDisable(true);
+
+		btn_scanline_saveanalysis.setDisable(true);
+		btn_scanline_clearpl.setDisable(true);
+		btn_scanline_findpl.setDisable(true);
+		scl_table_data_new.setDisable(true);
+
+		/*
+		 * bind checkbox
+		 */
+		checkbox_filter_scl_data.selectedProperty().addListener((event, oldValue, newValue) -> {
+			if(checkbox_filter_scl_data.isSelected()){
+				btn_scanline_saveanalysis.setDisable(false);
+				btn_scanline_clearpl.setDisable(false);
+				btn_scanline_findpl.setDisable(false);
+				scl_table_data_new.setDisable(false);
+			}else{
+				btn_scanline_saveanalysis.setDisable(true);
+				btn_scanline_clearpl.setDisable(true);
+				btn_scanline_findpl.setDisable(true);
+				scl_table_data_new.setDisable(true);
+			}
+		});
+
+		/*
+		 * Listener scl_table
+		 */
+		scl_table.getSelectionModel().selectedItemProperty().addListener((event, oldValue, newValue) -> {
+			unbindData(oldValue);
+			bindData(newValue);
+		});
+
+		// ComboBox initial options
+		dataTypeScl.getItems().addAll(
+				"Raw SCL", "Choose SCL");
+		dataTypeScl.setValue("Raw SCL");
+
+		dataTypeScl.getSelectionModel().selectedItemProperty().addListener((e, o, n) -> {
+			String value = n; 						 //for debug only - apagar depois
+			System.out.println("Valor nudado " + n); //for debug only - apagar depois
+			dataTypeScl.setValue(n);
+		});
 
 		//label.textProperty().bind(slider.valueProperty().asString());
 		slider.valueProperty().addListener((o, ov, nv) -> {
@@ -422,7 +720,6 @@ public class Controller {
 		text.textProperty().bindBidirectional(slider.valueProperty(), new NumberStringConverter());
 
 		checkbox.selectedProperty().bind(slider.valueProperty().greaterThanOrEqualTo(50));
-
 
 	}
 }
