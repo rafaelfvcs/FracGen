@@ -12,8 +12,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fracgen.controller.LoginController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="br.com.fracgen.controller.LoginController" fx:id="mainPane">
    <center>
       <TabPane>
          <tabs>
@@ -32,7 +32,7 @@
                         <Label fx:id="lblMessage" alignment="CENTER" layoutX="69.0" layoutY="56.0" prefHeight="17.0" prefWidth="216.0" textFill="#eb0909" />
                         <Label layoutX="72.0" layoutY="101.0" text="User:" />
                         <Label layoutX="71.0" layoutY="137.0" text="Password:" />
-                        <Hyperlink layoutX="126.0" layoutY="234.0" onAction="#siteLink" text="www.nfracgen.com" />
+                        <Hyperlink fx:id="site_nfracgen" layoutX="126.0" layoutY="234.0" onAction="#siteLink" text="www.nfracgen.com" />
                      </children>
                   </Pane>
                </content>
@@ -52,7 +52,7 @@
                         <TextField layoutX="67.0" layoutY="111.0" />
                         <TextField layoutX="67.0" layoutY="145.0" />
                         <TextField layoutX="67.0" layoutY="177.0" />
-                        <Button layoutX="164.0" layoutY="214.0" mnemonicParsing="false" text="Enviar" />
+                        <Button fx:id="sendEmail" layoutX="164.0" layoutY="214.0" mnemonicParsing="false" onAction="#sendToNfracgen" text="Enviar" />
                         <Text layoutX="228.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Favor aguardar nosso" />
                         <Text layoutX="267.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email!" />
                      </children>
