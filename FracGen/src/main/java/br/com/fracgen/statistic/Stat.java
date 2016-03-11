@@ -165,6 +165,11 @@ public abstract class Stat {
                 * (n * sumY2 - sumY * sumY), 0.5);
     }
 
+	public static double mean(ArrayList<Double> data) {
+
+		return sum(data)/data.size();
+	}
+
 
 
 }
