@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -15,7 +17,9 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -23,6 +27,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.effect.Reflection?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -31,7 +37,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fracgen.controller.Controller">
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fracgen.controller.Controller">
    <top>
       <MenuBar styleClass="alert" BorderPane.alignment="CENTER">
         <menus>
@@ -49,6 +55,15 @@
               <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="_Study">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Scanline" />
+                  <MenuItem mnemonicParsing="false" text="Statistics" />
+                  <MenuItem mnemonicParsing="false" text="Monte Carlo" />
+                  <MenuItem mnemonicParsing="false" text="Modeling 2D" />
+                  <MenuItem mnemonicParsing="false" text="Modeling 3D" />
+               </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="_Help">
             <items>
                   <MenuItem mnemonicParsing="false" text="MaximaProjects" />
@@ -63,15 +78,15 @@
       <TextField BorderPane.alignment="CENTER" />
    </bottom>
    <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <BorderPane id="background2" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <top>
-            <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <ToolBar fx:id="btnbar" styleClass="segmented-button-bar" BorderPane.alignment="CENTER">
               <items>
-                <Button fx:id="btn_toolbar_mc" mnemonicParsing="false" onAction="#goToMC" prefWidth="50.0" text="MC" />
+                <Button fx:id="btn_toolbar_mc" mnemonicParsing="false" onAction="#goToMC" prefWidth="50.0" styleClass="first" text="MC" />
                   <Button fx:id="btn_toolbar_2d" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#goTo2D" prefWidth="50.0" text="2D" />
                   <Button fx:id="btn_toolbar_3d" layoutX="64.0" layoutY="13.0" mnemonicParsing="false" onAction="#goTo3D" prefWidth="50.0" text="3D" />
                   <Button fx:id="btn_toolbar_stats" layoutX="118.0" layoutY="13.0" mnemonicParsing="false" onAction="#goToStatistic" prefWidth="50.0" text="Stats" />
-                  <Button fx:id="btn_toolbar_geo" layoutX="172.0" layoutY="13.0" mnemonicParsing="false" onAction="#goToGeoModeling" prefWidth="50.0" text="Geo" />
+                  <Button fx:id="btn_toolbar_geo" layoutX="172.0" layoutY="13.0" mnemonicParsing="false" onAction="#goToGeoModeling" prefWidth="50.0" styleClass="last" text="Geo" />
                   <Button fx:id="btn_toolbar_android" mnemonicParsing="false" text="Android" />
               </items>
             </ToolBar>
@@ -178,10 +193,11 @@
                                              <children>
                                                 <Label layoutX="14.0" layoutY="14.0" text="Data Types:" />
                                                 <ComboBox fx:id="dataTypeScl" layoutX="14.0" layoutY="38.0" prefHeight="25.0" prefWidth="122.0" />
-                                                <Button fx:id="btn_scanline_findpl" layoutX="14.0" layoutY="91.0" mnemonicParsing="false" onAction="#findPlFilter" text="Find PL" />
-                                                <Button fx:id="btn_scanline_clearpl" layoutX="76.0" layoutY="91.0" mnemonicParsing="false" onAction="#clearPlFilter" text="Clear PL" />
-                                                <CheckBox fx:id="checkbox_filter_scl_data" layoutX="14.0" layoutY="68.0" mnemonicParsing="false" text="Filter Data" />
-                                                <Button fx:id="btn_scanline_saveanalysis" layoutX="14.0" layoutY="123.0" mnemonicParsing="false" onAction="#saveAnalysisSclFilter" prefHeight="25.0" prefWidth="120.0" text="Save Analysis" />
+                                                <Button fx:id="btn_scanline_findpl" layoutX="15.0" layoutY="130.0" mnemonicParsing="false" onAction="#findPlFilter" text="Find PL" />
+                                                <Button fx:id="btn_scanline_clearpl" layoutX="77.0" layoutY="130.0" mnemonicParsing="false" onAction="#clearPlFilter" text="Clear PL" />
+                                                <CheckBox fx:id="checkbox_filter_scl_data" layoutX="15.0" layoutY="107.0" mnemonicParsing="false" text="Filter Data" />
+                                                <Button fx:id="btn_scanline_saveanalysis" layoutX="15.0" layoutY="162.0" mnemonicParsing="false" onAction="#saveAnalysisSclFilter" prefHeight="25.0" prefWidth="120.0" text="Save Analysis" />
+                                                <CheckBox layoutX="15.0" layoutY="77.0" mnemonicParsing="false" text="New Analysis" />
                                              </children>
                                           </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -408,25 +424,344 @@
                                                               <items>
                                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                                      <children>
-                                                                        <Label fx:id="label" layoutX="14.0" layoutY="14.0" text="Label" />
-                                                                        <Slider fx:id="slider" layoutX="14.0" layoutY="88.0" />
-                                                                        <TextField fx:id="text" layoutX="21.0" layoutY="118.0" prefHeight="25.0" prefWidth="109.0" />
-                                                                        <CheckBox fx:id="checkbox" layoutX="14.0" layoutY="167.0" mnemonicParsing="false" text="CheckBox" />
+                                                                        <Label fx:id="label" layoutX="11.0" layoutY="179.0" text="- Status-" />
+                                                                        <Slider fx:id="slider" layoutX="10.0" layoutY="154.0" prefHeight="14.0" prefWidth="177.0" />
+                                                                        <TextField fx:id="text" layoutX="72.0" layoutY="173.0" prefHeight="25.0" prefWidth="109.0" />
+                                                                        <CheckBox fx:id="checkbox" layoutX="10.0" layoutY="125.0" mnemonicParsing="false" text="Add noise :" />
+                                                                        <Button layoutX="14.0" layoutY="461.0" mnemonicParsing="false" onAction="#drawFratures2d" text="Plot Frats" />
+                                                                        <Label layoutX="10.0" layoutY="5.0" text="Create de 2D model of DFN" />
+                                                                        <ComboBox fx:id="combo_modeling_dataset" layoutX="113.0" layoutY="32.0" prefHeight="25.0" prefWidth="68.0" />
+                                                                        <Label layoutX="13.0" layoutY="39.0" text="Control DataSet:" />
+                                                                        <RadioButton layoutX="10.0" layoutY="74.0" mnemonicParsing="false" text="Random SEED:" />
+                                                                        <RadioButton layoutX="10.0" layoutY="98.0" mnemonicParsing="false" text="Ramdom Complete" />
+                                                                        <Button layoutX="92.0" layoutY="461.0" mnemonicParsing="false" text="CLC" />
+                                                                        <Label layoutX="13.0" layoutY="213.0" text="PDF Aperture:" />
+                                                                        <ComboBox layoutX="98.0" layoutY="209.0" prefHeight="25.0" prefWidth="84.0" />
+                                                                        <Label layoutX="13.0" layoutY="249.0" text="PDF Length:" />
+                                                                        <ComboBox layoutX="98.0" layoutY="245.0" prefHeight="25.0" prefWidth="84.0" />
+                                                                        <TextField layoutX="113.0" layoutY="70.0" prefHeight="25.0" prefWidth="67.0" />
+                                                                        <Button fx:id="btn_modeling_back" layoutX="134.0" layoutY="461.0" mnemonicParsing="false" onAction="#btn_modeling_back" prefHeight="25.0" prefWidth="47.0" text="&lt;|" />
+                                                                        <CheckBox layoutX="15.0" layoutY="433.0" mnemonicParsing="false" text="Permit External Plots" />
+                                                                        <Button fx:id="btn_modeling_save_study_2d" layoutX="14.0" layoutY="530.0" mnemonicParsing="false" onAction="#modelingSaveStudy2D" prefHeight="25.0" prefWidth="168.0" text="Save Study" />
+                                                                        <CheckBox fx:id="check_modeling_refine_2d" layoutX="15.0" layoutY="290.0" mnemonicParsing="false" text="Modeling refine" />
+                                                                        <CheckBox layoutX="15.0" layoutY="317.0" mnemonicParsing="false" text="Choose layer modeling" />
+                                                                        <Slider layoutX="17.0" layoutY="352.0" />
+                                                                        <ToggleButton fx:id="modeling_2d_saveanalysis" layoutX="13.0" layoutY="390.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="166.0" text="SaveModelAnalysis" />
+                                                                        <CheckBox fx:id="check_modeling_2d_holdonresults" layoutX="14.0" layoutY="502.0" mnemonicParsing="false" text="Holdon Results" />
                                                                      </children></AnchorPane>
                                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                                      <children>
                                                                         <BorderPane layoutX="37.0" layoutY="48.0" prefHeight="350.0" prefWidth="465.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                            <center>
-                                                                              <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                                                                              <TabPane fx:id="pane_modeling" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                                                                                 <tabs>
-                                                                                  <Tab text="Modeling">
+                                                                                  <Tab fx:id="tab_modeling_2d_modeling" text="Modeling">
                                                                                     <content>
-                                                                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                                                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                                                             <children>
+                                                                                                <BorderPane layoutX="98.0" layoutY="25.0" prefHeight="321.0" prefWidth="502.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                                                   <top>
+                                                                                                      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                                                                        <items>
+                                                                                                          <Button fx:id="btn_modeling_2d_load" mnemonicParsing="false" onAction="#loadModeling2D" text="Load" />
+                                                                                                            <Button fx:id="btn_modeling_2d_edit" mnemonicParsing="false" text="Edit" />
+                                                                                                            <Button fx:id="btn_modeling_2d_clear" mnemonicParsing="false" text="Clear" />
+                                                                                                            <Button fx:id="btn_modeling_2d_save" mnemonicParsing="false" text="Save" />
+                                                                                                        </items>
+                                                                                                      </ToolBar>
+                                                                                                   </top>
+                                                                                                   <center>
+                                                                                                      <SplitPane dividerPositions="0.5532608695652174" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                                                                        <items>
+                                                                                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                                                                               <children>
+                                                                                                                  <Label layoutX="7.0" layoutY="8.0" text="Fractures properties:" />
+                                                                                                                  <TextField fx:id="txtfield_modeling_numfrat_set1" layoutX="122.0" layoutY="44.0" prefHeight="25.0" prefWidth="57.0" text="100" />
+                                                                                                                  <GridPane layoutX="16.0" layoutY="75.0" prefHeight="90.0" prefWidth="183.0">
+                                                                                                                    <columnConstraints>
+                                                                                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                                    </columnConstraints>
+                                                                                                                    <rowConstraints>
+                                                                                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                    </rowConstraints>
+                                                                                                                     <children>
+                                                                                                                        <Label text="Max Lenght:" />
+                                                                                                                        <Label text="Min Lenght:" GridPane.rowIndex="1" />
+                                                                                                                        <Label text="Mean Lenght:" GridPane.rowIndex="2" />
+                                                                                                                        <TextField fx:id="txtfield_modeling_maxL_set1" text="35" GridPane.columnIndex="1" />
+                                                                                                                        <TextField fx:id="txtfield_modeling_minL_set1" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                                                                        <TextField fx:id="txtfield_modeling_meanL_set1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                                                                     </children>
+                                                                                                                  </GridPane>
+                                                                                                                  <GridPane layoutX="15.0" layoutY="185.0" prefHeight="90.0" prefWidth="183.0">
+                                                                                                                     <columnConstraints>
+                                                                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                                     </columnConstraints>
+                                                                                                                     <rowConstraints>
+                                                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                     </rowConstraints>
+                                                                                                                     <children>
+                                                                                                                        <Label text="Max Aperture:" />
+                                                                                                                        <Label text="Min Aperture:" GridPane.rowIndex="1" />
+                                                                                                                        <Label text="Mean  Aperture:" GridPane.rowIndex="2" />
+                                                                                                                        <TextField fx:id="txtfield_modeling_maxAp_set1" GridPane.columnIndex="1" />
+                                                                                                                        <TextField fx:id="txtfield_modeling_minAp_set1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                                                                        <TextField fx:id="txtfield_modeling_meanAp_set1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                                                                     </children>
+                                                                                                                  </GridPane>
+                                                                                                                  <CheckBox layoutX="19.0" layoutY="420.0" mnemonicParsing="false" text="Put pure patterns:" />
+                                                                                                                  <RadioButton layoutX="19.0" layoutY="478.0" mnemonicParsing="false" text="Pattern X" />
+                                                                                                                  <RadioButton layoutX="18.0" layoutY="451.0" mnemonicParsing="false" text="Pattern I" />
+                                                                                                                  <RadioButton layoutX="18.0" layoutY="504.0" mnemonicParsing="false" text="Patterns Y" />
+                                                                                                                  <CheckBox layoutX="154.0" layoutY="420.0" mnemonicParsing="false" text="Mix patterns:" />
+                                                                                                                  <Label layoutX="154.0" layoutY="451.0" text="Pattern I:" />
+                                                                                                                  <Label layoutX="154.0" layoutY="478.0" text="Pattern X:" />
+                                                                                                                  <Label layoutX="154.0" layoutY="504.0" text="Pattern Y:" />
+                                                                                                                  <TextField layoutX="214.0" layoutY="447.0" prefHeight="25.0" prefWidth="46.0" promptText="\%" />
+                                                                                                                  <TextField layoutX="214.0" layoutY="474.0" prefHeight="25.0" prefWidth="46.0" promptText="\%" />
+                                                                                                                  <TextField layoutX="214.0" layoutY="500.0" prefHeight="25.0" prefWidth="45.0" promptText="\%" />
+                                                                                                                  <SplitMenuButton layoutX="19.0" layoutY="545.0" mnemonicParsing="false" popupSide="TOP" text="Show Exemple" textOverrun="CLIP">
+                                                                                                                    <items>
+                                                                                                                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                                                                                                                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                                                                                                                    </items>
+                                                                                                                  </SplitMenuButton>
+                                                                                                                  <ComboBox layoutX="17.0" layoutY="381.0" prefHeight="25.0" prefWidth="74.0" promptText="Set 1" />
+                                                                                                                  <GridPane layoutX="212.0" layoutY="75.0" prefHeight="90.0" prefWidth="183.0">
+                                                                                                                     <columnConstraints>
+                                                                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                                     </columnConstraints>
+                                                                                                                     <rowConstraints>
+                                                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                     </rowConstraints>
+                                                                                                                     <children>
+                                                                                                                        <TextField fx:id="txtfield_modeling_minL_set3" text="35" GridPane.columnIndex="1">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets left="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField fx:id="txtfield_modeling_maxL_set3" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets left="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField fx:id="txtfield_modeling_meanL_set3" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets left="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField fx:id="txtfield_modeling_minL_set2" text="35">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets right="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField fx:id="txtfield_modeling_maxL_set2" text="0" GridPane.rowIndex="1">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets right="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField fx:id="txtfield_modeling_meanL_set2" GridPane.rowIndex="2">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets right="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                     </children>
+                                                                                                                  </GridPane>
+                                                                                                                  <GridPane layoutX="212.0" layoutY="185.0" prefHeight="90.0" prefWidth="183.0">
+                                                                                                                     <columnConstraints>
+                                                                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                                     </columnConstraints>
+                                                                                                                     <rowConstraints>
+                                                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                     </rowConstraints>
+                                                                                                                     <children>
+                                                                                                                        <TextField fx:id="txtfield_modeling_maxAp_set3" GridPane.columnIndex="1">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets left="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField fx:id="txtfield_modeling_minAp_set3" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets left="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField fx:id="txtfield_modeling_meanAp_set3" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets left="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField fx:id="txtfield_modeling_maxAp_set2">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets right="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField fx:id="txtfield_modeling_minAp_set2" GridPane.rowIndex="1">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets right="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField fx:id="txtfield_modeling_meanAp_set2" GridPane.rowIndex="2">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets right="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                     </children>
+                                                                                                                  </GridPane>
+                                                                                                                  <Label layoutX="16.0" layoutY="46.0" text="Num Frats:" />
+                                                                                                                  <TextField fx:id="txtfield_modeling_numfrat_set2" layoutX="227.0" layoutY="44.0" prefHeight="25.0" prefWidth="57.0" text="100" />
+                                                                                                                  <TextField fx:id="txtfield_modeling_numfrat_set3" layoutX="320.0" layoutY="44.0" prefHeight="25.0" prefWidth="57.0" text="0" />
+                                                                                                                  <TextField fx:id="txtfield_modeling_CVsp_set1" layoutX="124.0" layoutY="288.0" prefHeight="25.0" prefWidth="57.0" />
+                                                                                                                  <Label layoutX="18.0" layoutY="290.0" text="CV spacing:" />
+                                                                                                                  <TextField fx:id="txtfield_modeling_CVsp_set2" layoutX="229.0" layoutY="288.0" prefHeight="25.0" prefWidth="57.0" />
+                                                                                                                  <TextField fx:id="txtfield_modeling_CVsp_set3" layoutX="322.0" layoutY="288.0" prefHeight="25.0" prefWidth="57.0" />
+
+                                                                                                                  <RadioButton fx:id="radio_modeling_2d_loadpl" layoutX="135.0" layoutY="17.0" mnemonicParsing="false" text="Use Power Law Data">
+                                                                                                                     <toggleGroup>
+                                                                                                                        <ToggleGroup fx:id="radioModelingLoad" />
+                                                                                                                     </toggleGroup></RadioButton>
+                                                                                                                  <RadioButton fx:id="radio_modeling_2d_loadexternal" layoutX="279.0" layoutY="17.0" mnemonicParsing="false" text="Load External" toggleGroup="$radioModelingLoad" />
+                                                                                                                  <RadioButton fx:id="radio_modeling_2d_setdefault" layoutX="395.0" layoutY="17.0" mnemonicParsing="false" selected="true" text="Set default" toggleGroup="$radioModelingLoad" />
+
+                                                                                                               </children></AnchorPane>
+                                                                                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                                                                               <children>
+                                                                                                                  <Label layoutX="14.0" layoutY="14.0" text="Spatital Informations:" />
+                                                                                                                  <CheckBox layoutX="14.0" layoutY="42.0" mnemonicParsing="false" text="Use spatial data" />
+                                                                                                                  <GridPane layoutX="14.0" layoutY="73.0">
+                                                                                                                    <columnConstraints>
+                                                                                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                                    </columnConstraints>
+                                                                                                                    <rowConstraints>
+                                                                                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                                    </rowConstraints>
+                                                                                                                     <children>
+                                                                                                                        <Label text="Set 1:" GridPane.rowIndex="1" />
+                                                                                                                        <Label text="Set 2:" GridPane.rowIndex="2" />
+                                                                                                                        <Label text="Set 3:" GridPane.rowIndex="3" />
+                                                                                                                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="96.0" text="AZ(degree)" GridPane.columnIndex="1">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </Label>
+                                                                                                                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="102.0" text="Deep(degree)" GridPane.columnIndex="2">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </Label>
+                                                                                                                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="98.0" text="Strik(degree)" GridPane.columnIndex="3">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </Label>
+                                                                                                                        <TextField fx:id="txtfield_modeling_az_set1" text="90" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField fx:id="txtfield_modeling_az_set2" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField fx:id="txtfield_modeling_az_set3" text="45" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                        <TextField GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                                                                                                           <GridPane.margin>
+                                                                                                                              <Insets bottom="2.5" left="2.5" right="2.5" top="2.5" />
+                                                                                                                           </GridPane.margin>
+                                                                                                                        </TextField>
+                                                                                                                     </children>
+                                                                                                                  </GridPane>
+                                                                                                                  <CheckBox layoutX="14.0" layoutY="279.0" mnemonicParsing="false" text="Clusteres avaliable" />
+                                                                                                                  <RadioButton layoutX="14.0" layoutY="312.0" mnemonicParsing="false" text="Fixed Value" />
+                                                                                                                  <RadioButton layoutX="14.0" layoutY="340.0" mnemonicParsing="false" text="Pointed screen" />
+                                                                                                                  <RadioButton layoutX="14.0" layoutY="369.0" mnemonicParsing="false" text="Random" />
+                                                                                                               </children></AnchorPane>
+                                                                                                        </items>
+                                                                                                      </SplitPane>
+                                                                                                   </center>
+                                                                                                </BorderPane>
+                                                                                             </children></AnchorPane>
                                                                                     </content>
                                                                                   </Tab>
-                                                                                  <Tab text="View">
+                                                                                  <Tab fx:id="tab_modeling_2d_view" text="View">
                                                                                     <content>
-                                                                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                                                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                                                             <children>
+                                                                                                <Canvas fx:id="canvas" height="400.0" layoutX="23.0" layoutY="49.0" width="500.0" />
+                                                                                                <Label layoutX="23.0" layoutY="25.0" text="Referencia das Fraturas:" />
+                                                                                                <GridPane layoutX="23.0" layoutY="474.0">
+                                                                                                  <columnConstraints>
+                                                                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                  </columnConstraints>
+                                                                                                  <rowConstraints>
+                                                                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                                  </rowConstraints>
+                                                                                                   <children>
+                                                                                                      <Label text="Set 1" GridPane.columnIndex="1" />
+                                                                                                      <Label text="Set2" GridPane.columnIndex="2" />
+                                                                                                      <Label text="set 3" GridPane.columnIndex="3" />
+                                                                                                      <Label text="Propries" />
+                                                                                                      <Label text="N of Fractures" GridPane.rowIndex="1" />
+                                                                                                      <Label text="Mean lenght" GridPane.rowIndex="2" />
+                                                                                                      <Label fx:id="modeling_2d_nfrac_se1" alignment="CENTER" text="---" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                                                      <Label fx:id="modeling_2d_nfrac_se2" text="---" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                                                                   </children>
+                                                                                                </GridPane>
+                                                                                             </children></AnchorPane>
                                                                                     </content>
                                                                                   </Tab>
                                                                                 </tabs>
