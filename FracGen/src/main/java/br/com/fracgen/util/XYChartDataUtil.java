@@ -1,5 +1,18 @@
 package br.com.fracgen.util;
 
+import java.awt.Dimension;
+
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.LogarithmicAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 import br.com.fracgen.model.PowerLawOrtega;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -96,4 +109,8 @@ public class XYChartDataUtil {
 
             return dataSerie;
      }
+
+
+
+
 }
