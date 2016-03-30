@@ -36,11 +36,13 @@ public class PowerLawOrtega {
 		double corr = Stat.getCorrelation(x, y);
 
 		pl.setA(Math.pow(10, linearFit[0]));
+		//pl.setA(linearFit[0]);
+
 		pl.setK(linearFit[1]);
 		pl.setR2(corr*corr);
 
 		System.out.println("K = " + linearFit[1]);
-		System.out.println("a = " + linearFit[0]);
+		System.out.println("a = " + Math.pow(10, linearFit[0]));
 		return pl;
 	}
 
@@ -64,11 +66,12 @@ public class PowerLawOrtega {
 		double corr = Stat.getCorrelation(x, y);
 
 		pl.setA(Math.pow(10, linearFit[0]));
+		//pl.setA(linearFit[0]);
 		pl.setK(linearFit[1]);
 		pl.setR2(corr*corr);
 
 		System.out.println("K = " + linearFit[1]);
-		System.out.println("a = " + linearFit[0]);
+		System.out.println("a = " + Math.pow(10, linearFit[0]));
 		return pl;
 	}
 
@@ -79,9 +82,9 @@ public class PowerLawOrtega {
 	}
 
 
-	public static Double[][] findFreqApertureLogOrtega(String file){
+	public static Double[][] findFreqApertureLogOrtega(String fileName){
 
-		DataSCL d = OpenScanlineData.openScl(file);
+		DataSCL d = OpenScanlineData.openScl(fileName);
 
 		Double[] ap = ArrayOperation.arrayListToArray(d.getAperture());
 		Double[] sp = ArrayOperation.arrayListToArray(d.getSpacing());
@@ -101,8 +104,10 @@ public class PowerLawOrtega {
 
 
 		ArrayList<Double> aplog = ArrayOperation.log10(freqAcum_aperture.getAperture());
+//		ArrayList<Double> aplog = freqAcum_aperture.getAperture();
 
 		ArrayList<Double> freqlog = ArrayOperation.log10(freqAcum_aperture.getFrequency());
+//		ArrayList<Double> freqlog = freqAcum_aperture.getFrequency();
 
 		Double[] x = ArrayOperation.arrayListToArray(aplog);
 		Double[] y = ArrayOperation.arrayListToArray(freqlog);
@@ -110,8 +115,8 @@ public class PowerLawOrtega {
 		Double[][] freqAp = new Double[x.length][y.length];
 
 		for (int i = 0; i < freqAp.length; i++) {
-			freqAp[i][0] = y[i];
-			freqAp[i][1] = x[i];
+			freqAp[i][0] = y[i]; //freq
+			freqAp[i][1] = x[i]; //aperture
 		}
 
 		return freqAp;
