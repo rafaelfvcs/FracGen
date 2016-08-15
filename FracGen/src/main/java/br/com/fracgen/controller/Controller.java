@@ -4,22 +4,47 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.LogarithmicAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.RefineryUtilities;
+
+import br.com.fracgen.controller.utils.DrawFractures;
 import br.com.fracgen.model.PowerLawOrtega;
 import br.com.fracgen.model.Scl;
 import br.com.fracgen.statistic.Stat;
 import br.com.fracgen.util.ArrayOperation;
 import br.com.fracgen.util.DataSCL;
+import br.com.fracgen.util.Line;
+import br.com.fracgen.util.LogLog;
 import br.com.fracgen.util.OpenScanlineData;
 import br.com.fracgen.util.PowerLaw;
 import br.com.fracgen.util.RoundUtil;
+import br.com.fracgen.util.SaveData;
+import br.com.fracgen.util.SaveFracturesData;
+import br.com.fracgen.util.SaveScanlineData;
+import br.com.fracgen.util.StatsSCL;
 import br.com.fracgen.util.XYChartDataUtil;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Dimension2D;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -33,6 +58,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
@@ -40,17 +66,27 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import javafx.util.converter.NumberStringConverter;
+
+/*
+ * Atencao: essa classe precisa de refatoracao - atomicidade
+ */
 
 public class Controller {
 
@@ -59,6 +95,10 @@ public class Controller {
 	 */
 	@FXML
 	BorderPane mainPane;
+
+	@FXML
+	static
+	BorderPane mainPane2;
 
 	@FXML
 	Stage stage;
@@ -96,24 +136,87 @@ public class Controller {
 	@FXML
 	private TabPane tabPane_analysis;
 
+	@FXML
+	private Canvas canvas;
+
+	@FXML
+	private Canvas canvas1;
+
+	/*----------------------------
+	 * ------ Tab -----------Output
+	 */
+	@FXML
+	private TextArea textarea_output_comments;
+
+	@FXML
+	private CheckBox check_output_comments;
+
+	@FXML
+	private CheckBox check_output_adv_study;
+
+	@FXML
+	private CheckBox check_output_newproject;
+
+	@FXML
+	private GridPane grid_output_adv_study;
+
+	@FXML
+	private GridPane grid_output_project;
+	/*
+	 * Instancia de Arquivo aberto
+	 */
+	File fileSclOpen;
+
+	//----------- Scanlines-----------
+
 	/*
 	 * CheckBox
 	 */
+
+	@FXML
+	private CheckBox check_scanline_save_ortega;
+
 	@FXML
 	private CheckBox checkbox_filter_scl_data;
 
-	/*
-	 *
-	 */
+	@FXML
+	private CheckBox check_scaline_new_analysis;
 
 	// Others
 	@FXML
 	private ComboBox<String> dataTypeScl;
 
 	/*
-	 *
+	 * RaioButtons
 	 */
-	File fileOpen;
+
+	//-------------Modeling----------
+	@FXML
+	private ToggleGroup radioModelingLoad;
+	@FXML
+	private RadioButton radio_modeling_2d_loadpl;
+	@FXML
+	private RadioButton radio_modeling_2d_loadexternal;
+	@FXML
+	private RadioButton radio_modeling_setdefault;
+
+
+	/*
+	 * Buttons
+	 */
+
+	@FXML
+	private Button btn_modeling_2d_load;
+
+	@FXML
+	private Button btn_modeling_2d_edit;
+
+	@FXML
+	private Button btn_modeling_2d_clear;
+
+	@FXML
+	private Button btn_modeling_2d_save;
+
 
 	/*
 	 * Main Toolbar
@@ -185,6 +288,7 @@ public class Controller {
 	@FXML
 	private TableColumn<Scl, Double> sp;
 
+
 	@FXML
 	private TableView<Scl> scl_table_data_new;
 
@@ -201,8 +305,16 @@ public class Controller {
 	private LineChart<Number, Number> gPowerLaw; // = new LineChart<Number,Number>(xAxis,yAxis);;
 
 	/*
-	 * ---------------------------------- Elements ------------------------------------
+	 * ----------------------------- Modeling - Tab --------------------------------
 	 */
+
+	@FXML
+	private Label modeling_2d_nfrac_se1;
+
+	@FXML
+	private CheckBox check_modeling_refine_2d;
+
+
 
 
 	/*
@@ -241,24 +353,560 @@ public class Controller {
 	/*
 	 * ------------------------------------ Methods--------------------------------------
 	 */
+
+	/*
+	 * -------------------------------------MODELING------------------------------------
+	 */
+
+	@FXML
+	ToggleButton modeling_2d_saveanalysis; //para salvar analysis multiplas
+
+	@FXML
+	Tab tab_modeling_2d_view;
+
+	@FXML
+	TextField txtfield_modeling_numfrat_set1;
+
+	@FXML
+	TextField txtfield_modeling_numfrat_set2;
+
+	@FXML
+	TextField txtfield_modeling_numfrat_set3;
+
+	@FXML
+	TextField txtfield_modeling_maxL_set1;
+	@FXML
+	TextField txtfield_modeling_minL_set1;
+	@FXML
+	TextField txtfield_modeling_meanL_set1;
+	@FXML
+	TextField txtfield_modeling_az_set1;
+
+	@FXML
+	TextField txtfield_modeling_maxAp_set1;
+	@FXML
+	TextField txtfield_modeling_minAp_set1;
+	@FXML
+	TextField txtfield_modeling_meanAp_set1;
+	@FXML
+	TextField txtfield_modeling_CVsp_set1;
+
+
+	@FXML
+	TextField txtfield_modeling_maxL_set2;
+	@FXML
+	TextField txtfield_modeling_minL_set2;
+	@FXML
+	TextField txtfield_modeling_meanL_set2;
+	@FXML
+	TextField txtfield_modeling_az_set2;
+
+	@FXML
+	TextField txtfield_modeling_maxAp_set2;
+	@FXML
+	TextField txtfield_modeling_minAp_set2;
+	@FXML
+	TextField txtfield_modeling_meanAp_set2;
+	@FXML
+	TextField txtfield_modeling_CVsp_set2;
+
+	@FXML
+	TextField txtfield_modeling_maxL_set3;
+	@FXML
+	TextField txtfield_modeling_minL_set3;
+	@FXML
+	TextField txtfield_modeling_meanL_set3;
+	@FXML
+	TextField txtfield_modeling_az_set3;
+
+	@FXML
+	TextField txtfield_modeling_maxAp_set3;
+	@FXML
+	TextField txtfield_modeling_minAp_set3;
+	@FXML
+	TextField txtfield_modeling_meanAp_set3;
+	@FXML
+	TextField txtfield_modeling_CVsp_set3;
+
+	@FXML
+	CheckBox check_modeling_2d_holdonresults;
+
+	@FXML
+	Tab tab_modeling_2d_modeling;
+
+	@FXML
+	TabPane pane_modeling;
+
+	@FXML
+	ComboBox combo_modeling_dataset;
+
+	// Nova instancia;
+	File newFileSclOpen;
+
+
+
+	@FXML
+	public void loadModeling2D(){
+
+		// Carrega modelos baseados em power law ou scanlines para geração de fraturas
+
+//		combo_modeling_dataset.getSelectionModel().selectedItemProperty();
+		String comboSet = (String) combo_modeling_dataset.getSelectionModel().selectedItemProperty().get();
+
+
+		if(radio_modeling_2d_loadexternal.isSelected()){
+
+			newFileSclOpen = dialogOpenFile("*.dat");
+			//TODO: Fazer estruturas de arquivo para salvar no formato numfrats, max, min...
+
+
+		//opcao Load Use Power Law Data
+		}else if(radio_modeling_2d_loadpl.isSelected()){
+
+			DataSCL dscl = OpenScanlineData.openScl("src/main/resources/data.dat"); //depois trocar p linhas abaixo
+//			//*isso abaixo é para quando o arquivo for carregado nao automaticamente
+//			DataSCL dscl = OpenScanlineData.openScl(fileSclOpen.toString());
+
+			StatsSCL statscl = new StatsSCL(dscl.getAperture(), dscl.getSpacing());
+
+			int nfrat = statscl.getNumFrat();
+
+			double maxL = 0;
+			double minL = 0;
+			double meanL = 0;
+
+			double meanAp = statscl.getMeanAp();
+			double maxAp = statscl.getMaxAp();
+			double minAp = statscl.getMinAp();
+			double CVsp = statscl.getCvSp();
+
+
+
+			if(comboSet.equals("SET1")){
+				System.out.println("SET 1");
+				// usar um polimorfismo aqui !!!!!!
+
+				txtfield_modeling_numfrat_set1.setText(String.valueOf(nfrat));
+
+				txtfield_modeling_maxL_set1.setText(String.valueOf(maxL));
+				txtfield_modeling_minL_set1.setText(String.valueOf(minL));
+				txtfield_modeling_meanL_set1.setText(String.valueOf(meanL));
+
+				txtfield_modeling_maxAp_set1.setText(String.valueOf(maxAp));
+				txtfield_modeling_minAp_set1.setText(String.valueOf(minAp));
+				txtfield_modeling_meanAp_set1.setText(String.valueOf(meanAp));
+
+				txtfield_modeling_CVsp_set1.setText(String.valueOf(CVsp));
+
+			}else if(comboSet.equals("SET2")){
+				System.out.println("SET 2");
+				txtfield_modeling_numfrat_set2.setText(String.valueOf(nfrat));
+
+				txtfield_modeling_maxL_set2.setText(String.valueOf(maxL));
+				txtfield_modeling_minL_set2.setText(String.valueOf(minL));
+				txtfield_modeling_meanL_set2.setText(String.valueOf(meanL));
+
+				txtfield_modeling_maxAp_set2.setText(String.valueOf(maxAp));
+				txtfield_modeling_minAp_set2.setText(String.valueOf(minAp));
+				txtfield_modeling_meanAp_set2.setText(String.valueOf(meanAp));
+
+				txtfield_modeling_CVsp_set2.setText(String.valueOf(CVsp));
+
+			}else{
+				System.out.println("SET 3");
+				txtfield_modeling_numfrat_set3.setText(String.valueOf(nfrat));
+
+				txtfield_modeling_maxL_set3.setText(String.valueOf(maxL));
+				txtfield_modeling_minL_set3.setText(String.valueOf(minL));
+				txtfield_modeling_meanL_set3.setText(String.valueOf(meanL));
+
+				txtfield_modeling_maxAp_set3.setText(String.valueOf(maxAp));
+				txtfield_modeling_minAp_set3.setText(String.valueOf(minAp));
+				txtfield_modeling_meanAp_set3.setText(String.valueOf(meanAp));
+
+				txtfield_modeling_CVsp_set3.setText(String.valueOf(CVsp));
+			}
+
+
+			/*
+			txtfield_modeling_numfrat_set1.setText(String.valueOf(dscl.getAperture().size())); // <<<====************
+			txtfield_modeling_maxAp_set1.setText(String.valueOf(RoundUtil.round(Stat.max(dscl.getAperture()),3)));
+			txtfield_modeling_minAp_set1.setText(String.valueOf(RoundUtil.round(Stat.min(dscl.getAperture()),3)));
+			txtfield_modeling_meanAp_set1.setText(String.valueOf(RoundUtil.round(Stat.mean(dscl.getAperture()),3)));
+
+
+			double sclspmean = Stat.calculateMean(ArrayOperation.arrayListToArray(dscl.getSpacing()));
+			double sclspstd = Stat.getStdDev(ArrayOperation.arrayListToArray(dscl.getSpacing()));
+			double sclcvsp = sclspstd/sclspmean;
+
+			txtfield_modeling_CVsp_set1.setText(String.valueOf(RoundUtil.round(sclcvsp, 3)));
+			*/
+
+		}else{
+			txtfield_modeling_numfrat_set2.setText("0");
+			txtfield_modeling_minL_set2.setText("0");
+			txtfield_modeling_maxL_set2.setText("0");
+
+			txtfield_modeling_numfrat_set3.setText(String.valueOf(0));
+
+			txtfield_modeling_maxL_set3.setText(String.valueOf(0));
+			txtfield_modeling_minL_set3.setText(String.valueOf(0));
+			txtfield_modeling_meanL_set3.setText(String.valueOf(0));
+
+			txtfield_modeling_maxAp_set3.setText(String.valueOf(0));
+			txtfield_modeling_minAp_set3.setText(String.valueOf(0));
+			txtfield_modeling_meanAp_set3.setText(String.valueOf(0));
+
+			txtfield_modeling_CVsp_set3.setText(String.valueOf(0));
+		}
+
+		if(fileSclOpen != null){
+			btn_modeling_2d_edit.setDisable(false);
+		}
+
+//		radio_modeling_loadpl.setToggleGroup(radioModelingLoad);
+////	radio_modeling_loadpl.setSelected(true);
+//		radio_modeling_loadexternal.setToggleGroup(radioModelingLoad);
+//		radio_modeling_setdefault.setToggleGroup(radioModelingLoad);
+	}
+
+
+
+	@FXML
+	public void drawFratures2d(){
+
+		/*
+		 * Get modeling properties by user
+		 */
+		int numfrat1 = Integer.parseInt(txtfield_modeling_numfrat_set1.getText());
+		int numfrat2 = Integer.parseInt(txtfield_modeling_numfrat_set2.getText());
+		int numfrat3 = Integer.parseInt(txtfield_modeling_numfrat_set3.getText());
+
+		double maxL1 = Double.parseDouble(txtfield_modeling_maxL_set1.getText());
+		double minL1 = Double.parseDouble(txtfield_modeling_minL_set1.getText());
+		double az1 = Double.parseDouble(txtfield_modeling_az_set1.getText());
+
+//
+		double maxL2 = Double.parseDouble(txtfield_modeling_maxL_set2.getText());
+		double minL2 = Double.parseDouble(txtfield_modeling_minL_set2.getText());
+		double az2 = Double.parseDouble(txtfield_modeling_az_set2.getText());
+
+		double maxL3 = Double.parseDouble(txtfield_modeling_maxL_set3.getText());
+		double minL3 = Double.parseDouble(txtfield_modeling_minL_set3.getText());
+		double az3 = Double.parseDouble(txtfield_modeling_az_set3.getText());
+
+		System.out.println("Set 1: " +maxL1+" "+minL1+" "+az1);
+		/* funcionando bem abaixo
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		gc.setFill(Color.GREEN);
+        gc.setStroke(Color.BLUE);
+        gc.setLineWidth(1);
+
+        ArrayList<double[]> df = new ArrayList<>();
+
+        for (int i = 0; i < 300; i++) {
+
+        	double[] f1 = Line.horizontal(Math.random()*400, Math.random()*400, Math.random()*100);
+        	double[] f2 = Line.oblique(Math.random()*400, Math.random()*400, Math.random()*100,90);
+
+        	gc.strokeLine(f1[0], f1[1], f1[2], f1[3]);
+        	gc.strokeLine(f2[0], f2[1], f2[2], f2[3]);
+        	df.add(f1);
+
+		}
+
+//        for (double[] ds : df) {
+//			System.out.println("pontos = [ " + RoundUtil.round(ds[0],2) +" , "+ds[1] +" , "+ds[2] +" , "+ds[3] +" ] ");
+//		}
+
+        SaveFracturesData.save2D(df, "Fraturas77", ".dat","");
+        modeling_2d_nfrac_se1.setText("300");
+
+        */
+
+//		drawSetFractures2D(int numfrat, double meanL, double maxL,
+//				double minL, double az, int set, double[] region)
+
+		// TODO: colocar a opcao de entrada da regiao - reservatorio
+		double[] regiao = new double[]{10, 10., 400, 400.};
+
+		if(check_modeling_2d_holdonresults.isSelected()){
+
+			//double[] regiao = new double[]{10, 10., 400, 400.};
+
+//			drawSetFractures2D(0,10,70,0, 0,1,regiao);
+
+			drawSetFractures2D(numfrat1,10,maxL1,minL1, az1,1,regiao);
+			drawSetFractures2D(numfrat2,10,maxL2,minL2, az2,2,regiao);
+			drawSetFractures2D(numfrat3,10,maxL3,minL3, az3,3,regiao);
+
+		}else{
+
+			GraphicsContext gc = canvas.getGraphicsContext2D();
+			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+			GraphicsContext gc1 = canvas1.getGraphicsContext2D();
+			gc1.clearRect(0, 0, canvas1.getWidth(), canvas1.getHeight());
+
+			drawSetFractures2D(numfrat1,10,maxL1,minL1, az1,1,regiao);
+			drawSetFractures2D(numfrat2,10,maxL2,minL2, az2,2,regiao);
+			drawSetFractures2D(numfrat3,10,maxL3,minL3, az3,3,regiao);
+
+		}
+
+        /*
+        Random rn1 = new Random();
+        Random rn2 = new Random();
+        Random rn3 = new Random();
+
+        for (int i = 0; i < 100; i++) {
+        	int vh = rn3.nextInt(300);
+			gc.strokeLine(rn1.nextInt(100), vh, rn2.nextInt(100), vh);
+		}
+		*/
+
+
+		/*
+		int width = 600;
+		int height = 400;
+		boolean sharp = true;
+
+		GraphicsContext gc = canvas.getGraphicsContext2D() ;
+        gc.setLineWidth(1.0);
+        for (int x = 0; x < width; x+=10) {
+            double x1 ;
+            if (sharp) {
+                x1 = x + 0.5 ;
+            } else {
+                x1 = x ;
+            }
+            gc.moveTo(x1, 0);
+            gc.lineTo(x1, height);
+            gc.stroke();
+        }
+
+        for (int y = 0; y < height; y+=10) {
+            double y1 ;
+            if (sharp) {
+                y1 = y + 0.5 ;
+            } else {
+                y1 = y ;
+            }
+            gc.moveTo(0, y1);
+            gc.lineTo(width, y1);
+            gc.stroke();
+        }
+        */
+
+
+
+
+//		gc.setFill(Color.BLUE);
+//		gc.fillRect(50,50,100,100);
+//
+//		gc.setFill(Color.GREEN);
+//		gc.fillRect(0,0,25,50);
+//
+//
+//		gc.setFill(Color.BLACK);
+//		gc.fillRect(0,0,5,5);
+
+		pane_modeling.getSelectionModel().select(tab_modeling_2d_view);
+
+	}
+
+
+
+	// tirar esse metodo daqui!
+	private void drawSetFractures2D(int numfrat, double meanL, double maxL,
+			double minL, double az, int set, double[] region){
+
+		DrawFractures.drawSetFractures2D(modeling_2d_saveanalysis, canvas, canvas1, numfrat, meanL, maxL, minL, az, set, region);
+
+		// posso desativar abaixo - organizar todo o codigo
+//		if(numfrat == 0){
+//
+//			//GraphicsContext gc = canvas.getGraphicsContext2D();
+//			System.out.println("Estou aqui dentro");
+//
+//
+//		}else{
+//
+//			// region = diagonais da regiao - region[0] = minX, region[1] = minY
+//			//		region[2] = maxX, region[3] = maxY
+//			double lenght = meanL;
+//			double aperture;
+//
+//			GraphicsContext gc = canvas.getGraphicsContext2D();
+//	        gc.setStroke(Color.BLUE);
+//
+//	        GraphicsContext gc1 = canvas1.getGraphicsContext2D();
+//	        gc1.setStroke(Color.BLUE);
+//
+//	        Random rnd = new Random();
+//
+//	        // colocar relaçao tamanho abertura
+//	        gc.setLineWidth(1);
+//
+//	        gc1.setLineWidth(1);
+//
+//	        ArrayList<double[]> datafrat = new ArrayList<>();;
+//
+//
+//	        for (int i = 0; i < numfrat; i++) {
+//
+//	        	lenght = minL + (maxL - minL)*Math.random();
+//	        	//System.out.println(lenght);
+//
+//	        	double xc = Math.random()*(region[2]-region[0]) + region[0];
+//
+//	        	double yc = Math.random()*(region[3]-region[1]) + region[1];
+//
+//	        	//System.out.println("xc= " + xc + " yc= "+yc);
+//
+//	        	double[] s1 = Line.oblique(xc, yc, lenght, az);
+//
+//	        	gc.strokeLine(s1[0], s1[1], s1[2], s1[3]);
+//
+//	        	gc1.strokeLine(s1[0], s1[1], s1[2], s1[3]);
+//
+//	        	//System.out.println(modeling_2d_saveanalysis.selectedProperty().get());
+//
+//	        	if(modeling_2d_saveanalysis.selectedProperty().get()){
+//
+//	        		datafrat.add(s1);
+//	    		}
+//			}
+//
+//
+//	//        System.out.println(datafrat.size());
+//	//        System.out.println(datafrat.size()>1);
+//
+//	        if (datafrat.size() > 1) {
+//
+//	    		SaveFracturesData.save2D(datafrat, "TESTANDOBOTAO", ".dat","");
+//			}
+//		}
+
+	}
+
+	@FXML
+	private void modelingSaveStudy2D(){
+
+	}
+
+	@FXML
+	private void btn_modeling_back(){
+		//pane_modeling.getSelectionModel().select(tab_modeling_2d_view);
+		tabPane_modeling.getSelectionModel().select(tab_modeling_2d);
+	}
+
+	private Canvas createCanvasGrid(int width, int height, boolean sharp) {
+        Canvas canvas = new Canvas(width, height);
+        GraphicsContext gc = canvas.getGraphicsContext2D() ;
+        gc.setLineWidth(1.0);
+        for (int x = 0; x < width; x+=10) {
+            double x1 ;
+            if (sharp) {
+                x1 = x + 0.5 ;
+            } else {
+                x1 = x ;
+            }
+            gc.moveTo(x1, 0);
+            gc.lineTo(x1, height);
+            gc.stroke();
+        }
+
+        for (int y = 0; y < height; y+=10) {
+            double y1 ;
+            if (sharp) {
+                y1 = y + 0.5 ;
+            } else {
+                y1 = y ;
+            }
+            gc.moveTo(0, y1);
+            gc.lineTo(width, y1);
+            gc.stroke();
+        }
+        return canvas ;
+    }
+
+
+
 	@FXML
 	public void saveSclData(){
 		//TODO: implementar salvar dados
+		System.out.println("--------- Not implemented!!! --------");
 	}
 
 	public void findPlFilter(){
 		//TODO: colocar saída de coeficientes da pawer law
+
+//		dataTypeScl.selectionModelProperty().set(value);
+
+		dataTypeScl.setValue("Selected SCL"); //("Load SCL");
+
+		if(!listNew.isEmpty()){
+		btn_scanline_saveanalysis.setDisable(false);
 		PowerLawOrtega.findFreqApertureLogOrtega(listNew);
+
+		PowerLaw pl = PowerLawOrtega.findCoefficients(listNew);
+
 		setInfoScanline(listNew);
+		setInfoPowerLaw(pl);
+		}else{
+			btn_scanline_findpl.setDisable(true);
+			btn_scanline_clearpl.setDisable(true);
+		}
+
+
 	}
+
 
 	public void clearPlFilter(){
 		//TODO: fazer a limpeza dos campos das analises dos dados selecionados
 	}
 
+	@FXML
 	public void saveAnalysisSclFilter(){
 		//TODO: salvar as análises feitas em arquivo .dat
+
+
+		FileChooser fileChooser = new FileChooser();
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.dat)", "*.dat");
+        fileChooser.getExtensionFilters().add(extFilter);
+        //Show save file dialog
+        File file = fileChooser.showSaveDialog(stage);
+
+        if(file != null){
+           // SaveFile(Santa_Claus_Is_Coming_To_Town, file);
+
+			if(check_scanline_save_ortega.isSelected()){
+				SaveScanlineData.savePath(listNew,file);
+
+				//Double[][] freqAperture = PowerLawOrtega.findFreqApertureLogOrtega(newScl);
+
+				//SaveData.saveValues(Values1, nameValues1, values2, nameValues2, fileName, extension);
+			}else{
+				System.out.println("Tamanho do " + listNew.size());
+
+				SaveScanlineData.save(listNew, "SCL_Filter", ".dat", "");
+			}
+
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Saving in file");
+			alert.setHeaderText("Sucesful");
+			alert.setContentText("OK!!");
+
+			alert.showAndWait();
+        }
+
+
+
+
 	}
+
 
 	/*
 	 * --------------------------- Menu methods -----------------------------
@@ -308,8 +956,8 @@ public class Controller {
 
 		ComboBox<String> cb = new ComboBox<>();
 		cb.getItems().addAll(
-				"Var1", "Var2","Var3");
-		cb.setValue("Var1");
+				"InterativeSave", "AutoSave","ManualSave");
+		cb.setValue("InterativeSave");
 
 
 		grid.add(new Label("Ap Min:"), 0, 0);
@@ -358,18 +1006,12 @@ public class Controller {
 
 	}
 
-	@FXML
-	public void load2(){
 
-		/*
-		for (int i = 0; i < listNew.size(); i++) {
-			System.out.println(listNew.get(i).getAp());
-
-		}
-		System.out.println("\n");
-		System.out.println(listNew.size());
-		*/
-	}
+//	public void mouse(){
+//		sclName.setStyle("-fx-background-color: #682");
+//		sclApStd.setStyle("-fx-background-color: #682");
+//		sclApMean.setStyle("-fx-background-color: #682");
+//	}
 
 	// load scanline data
 	@FXML
@@ -385,6 +1027,9 @@ public class Controller {
 
 		}
 		*/
+		check_scaline_new_analysis.setDisable(false);
+		check_scanline_save_ortega.setDisable(false);
+		checkbox_filter_scl_data.setDisable(false);
 
 		btn_scanline_plotpowerlaw.setDisable(false);
 		btn_scanline_save.setDisable(false);
@@ -432,9 +1077,14 @@ public class Controller {
 
 	}
 
+	LogLog demo = null; // = new LogLog("Teste");
 	// scanline informations clear
+
 	@FXML
 	public void sclInfoClear(){
+
+		// so funciona se tiver sido gerado o grafico previamente
+//			demo.setVisible(false); //para sumir com o grafico
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
@@ -475,7 +1125,9 @@ public class Controller {
 		}
 	}
 
+
 	//Calculate and plot power law
+	@FXML
 	public void plotPowerLaw(){
 		//TODO: Colocar no formato de carregamento - mudar o nome do botão
 		//DataSCL d = OpenScanlineData.openScl("src/main/resources/data.dat");
@@ -484,11 +1136,58 @@ public class Controller {
 
 		PowerLaw pl;
 
-		if(dataTypeScl.getSelectionModel().getSelectedItem().equals("Raw SCL")){
+		if(dataTypeScl.getSelectionModel().getSelectedItem().equals("Load SCL")){
 			pl = PowerLawOrtega.findCoefficients("src/main/resources/data.dat");
 		}else{
 			pl = PowerLawOrtega.findCoefficients(listNew);
+			setInfoScanline(listNew);
 		}
+
+		setInfoPowerLaw(pl);
+
+//		coefA.setText(String.valueOf(RoundUtil.round(pl.getA(),3)));
+//		coefK.setText(String.valueOf(RoundUtil.round(pl.getK(),3)));
+//		sclr2.setText(String.valueOf(RoundUtil.round(pl.getR2(),2)));
+//
+//		coefA.setStyle("-fx-border-style: solid;-fx-border-color:red ");
+//		coefK.setStyle("-fx-border-style: solid;-fx-border-color:red ");
+//		sclr2.setStyle("-fx-border-style: solid;-fx-border-color:red ");
+
+		//System.out.println(pl.getA());
+
+		gPowerLaw.setTitle("Scanline " + dataTypeScl.getSelectionModel().getSelectedItem());
+
+        /*
+        NumberAxis xAxis = new NumberAxis();
+        xAxis.setLabel("Year");
+
+        // Customize the x-axis, so points are scattred uniformly
+        xAxis.setAutoRanging(true);
+
+
+        xAxis.setLowerBound(1900);
+        xAxis.setUpperBound(2300);
+        xAxis.setTickUnit(50);
+//
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Population (in millions)");
+
+        */
+//        br.com.fracgen.application.LogarithmicAxis  yAxis = new br.com.fracgen.application.LogarithmicAxis();
+//        br.com.fracgen.application.LogarithmicAxis  xAxis = new br.com.fracgen.application.LogarithmicAxis();
+
+        //Set the data for the chart
+        ObservableList<XYChart.Series<Number,Number>> chartData =
+                        XYChartDataUtil.getPowerLaw();
+
+        gPowerLaw.setData(chartData);
+
+        plotLogLog();
+
+	}
+
+	// Informações da Lei de potencia
+	private void setInfoPowerLaw(PowerLaw pl){
 
 		coefA.setText(String.valueOf(RoundUtil.round(pl.getA(),3)));
 		coefK.setText(String.valueOf(RoundUtil.round(pl.getK(),3)));
@@ -497,27 +1196,32 @@ public class Controller {
 		coefA.setStyle("-fx-border-style: solid;-fx-border-color:red ");
 		coefK.setStyle("-fx-border-style: solid;-fx-border-color:red ");
 		sclr2.setStyle("-fx-border-style: solid;-fx-border-color:red ");
-		//System.out.println(pl.getA());
-        gPowerLaw.setTitle("Scanline, 2010");
-
-        NumberAxis xAxis = new NumberAxis();
-        xAxis.setLabel("Year");
-
-        // Customize the x-axis, so points are scattred uniformly
-        xAxis.setAutoRanging(true);
-
-        xAxis.setLowerBound(1900);
-        xAxis.setUpperBound(2300);
-        xAxis.setTickUnit(50);
-
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("Population (in millions)");
-
-        //Set the data for the chart
-        ObservableList<XYChart.Series<Number,Number>> chartData =
-                        XYChartDataUtil.getPowerLaw();
-        gPowerLaw.setData(chartData);
 	}
+
+
+	public void plotLogLog(){
+		Double[][] data = PowerLawOrtega.findFreqApertureLogOrtega("src/main/resources/data.dat");
+
+//		(Math.pow(data[i][0], 10), Math.pow(data[i][1],10))
+
+		final XYSeries series = new XYSeries("data");
+
+		for (int i = 0; i < 10; i++) {
+			System.out.println(data[i][0] + "  "+data[i][1]);
+			series.add(Math.pow(data[i][0], 10), Math.pow(data[i][1],10));
+		}
+
+
+
+		demo = new LogLog("Teste",series);
+		demo.pack();
+		RefineryUtilities.centerFrameOnScreen(demo);
+		demo.setVisible(true);
+
+		//demo.setDefaultCloseOperation(demo.DO_NOTHING_ON_CLOSE);
+
+
+    }
 
 	/*
 	 * Inner Methods
@@ -540,7 +1244,7 @@ public class Controller {
 	private void setInfoScanline(DataSCL d){
 
 		//TODO: colocar info sobre a power law
-		sclName.setText("Teste SCL");
+		sclName.setText(dataTypeScl.getSelectionModel().getSelectedItem());
 		sclNumData.setText(String.valueOf(d.getAperture().size()));
 
 		double sclapmean = Stat.calculateMean(ArrayOperation.arrayListToArray(d.getAperture()));
@@ -572,6 +1276,48 @@ public class Controller {
 			splist.add(scldata.get(i).getSp());
 		}
 
+		sclName.setText(dataTypeScl.getSelectionModel().getSelectedItem());
+		sclNumData.setText(String.valueOf(aplist.size()));
+
+		double sclapmean = Stat.calculateMean(ArrayOperation.arrayListToArray(aplist));
+		double sclapstd = Stat.getStdDev(ArrayOperation.arrayListToArray(aplist));
+		sclApStd.setText(String.valueOf(RoundUtil.round(sclapstd, 3)));
+		sclApMean.setText(String.valueOf(RoundUtil.round(sclapmean, 3)));
+
+		double sclspmean = Stat.calculateMean(ArrayOperation.arrayListToArray(splist));
+		double sclspstd = Stat.getStdDev(ArrayOperation.arrayListToArray(splist));
+		sclSpStd.setText(String.valueOf(RoundUtil.round(sclspstd, 3)));
+		sclSpMean.setText(String.valueOf(RoundUtil.round(sclspmean, 3)));
+
+		double sclcvap = sclapstd/sclapmean;
+		double sclcvsp = sclspstd/sclspmean;
+
+		sclCVap.setText(String.valueOf(RoundUtil.round(sclcvap, 3)));
+		sclCVsp.setText(String.valueOf(RoundUtil.round(sclcvsp, 3)));
+		sclName.setStyle("-fx-background-color: #FF2");
+	}
+
+
+	/*
+	private void setInfoScanline(ArrayList<Scl> sclnew){
+
+		Double[][] freqAperture = findFreqApertureLogOrtega(sclnew);
+
+		Double[] x = new Double[freqAperture.length];
+		Double[] y = new Double[freqAperture.length];
+		for (int i = 0; i < freqAperture.length; i++) {
+			y[i] = freqAperture[i][0];
+			x[i] = freqAperture[i][1];
+		}
+
+		ArrayList<Double> aplist = new ArrayList<>();
+		ArrayList<Double> splist = new ArrayList<>();
+
+		for (int i = 0; i < scldata.size(); i++) {
+			aplist.add(scldata.get(i).getAp());
+			splist.add(scldata.get(i).getSp());
+		}
+
 		sclName.setText("Selected New");
 		sclNumData.setText(String.valueOf(aplist.size()));
 
@@ -593,8 +1339,10 @@ public class Controller {
 		sclName.setStyle("-fx-background-color: #FF2");
 	}
 
+*/
+
 	/*
-	 *
+	 * Tirar daqui esse método!
 	 */
 	private void unbindData(Scl scldata){
 
@@ -609,9 +1357,23 @@ public class Controller {
 	ArrayList<Scl> listNew = new ArrayList<Scl>();
 	//TableRow<Scl> currentRow = new TableRow<>();
 
+	//Colocar dados na nova tabela
 	private void bindData(Scl scldata){
 
+		if(check_scaline_new_analysis.isSelected()){
+			if(!listNew.isEmpty()){
+				listNew.clear();
+				checkbox_filter_scl_data.setSelected(false);
+			}
+			ArrayList<Scl> listNew = new ArrayList<Scl>();
+			check_scaline_new_analysis.setSelected(false);
+
+		}
+
 		if(scldata !=null){
+			if(checkbox_filter_scl_data.isSelected()){
+				btn_scanline_findpl.setDisable(false);
+			}
 
 			if(listNew.isEmpty()){
 				listNew.add(scldata);
@@ -649,16 +1411,103 @@ public class Controller {
 	@FXML
 	CheckBox checkbox;
 
+	@FXML
+	TreeView<String> treeview_outs;
+
+
+	@SuppressWarnings("unchecked")
+	public void createTree(String... rootItems) {
+	    //create root
+	    TreeItem<String> root = new TreeItem<>("Output Structure");
+
+	    //root.setExpanded(true);
+	    //create child
+	    TreeItem<String> item1 = new TreeItem<>("Data collect");
+	    TreeItem<String> item1c1 = new TreeItem<>("Data Base");
+	    TreeItem<String> item1c2 = new TreeItem<>("Field Trip");
+	    TreeItem<String> item1c3 = new TreeItem<>("Darwin01");
+	    item1.getChildren().addAll(item1c1, item1c2, item1c3);
+	    //item1.setExpanded(false);
+
+	    TreeItem<String> item2 = new TreeItem<>("Scanline");
+
+	    TreeItem<String> item2C1 = new TreeItem<>("Power Law");
+	    TreeItem<String> item2C2 = new TreeItem<>("New data");
+	    item2.getChildren().addAll(item2C1, item2C2);
+
+	    TreeItem<String> item3 = new TreeItem<>("Modeling");
+
+	    TreeItem<String> item3C1 = new TreeItem<>("2D");
+	    TreeItem<String> item3C2 = new TreeItem<>("3D");
+	    item3.getChildren().addAll(item3C1, item3C2);
+
+	    //itemChild2.setExpanded(false);
+	    //root is the parent of itemChild
+
+	    root.getChildren().addAll(item1, item2, item3);
+
+	    treeview_outs.getSelectionModel().selectedItemProperty().addListener((v, oldvalue, newvalue) -> {
+	    	if(newvalue != null)
+	    		System.out.println(newvalue.toString());
+	    });
+
+	    treeview_outs.setRoot(root);
+	}
+
+	@FXML
+	private void handleButtonAction(ActionEvent event) {
+	    createTree();
+	    grid_output_project.setDisable(true);
+	    check_output_newproject.setDisable(false);
+	}
 	//---------------------+----------------------+-------------------------+-----------------------------+--------
 	/*
 	 * ******************************************** Initialize Method *********************************************
 	 */
 	//---------------------+----------------------+-------------------------+-----------------------------+--------
+
+
 	@FXML
 	public <T> void initialize(){
 
+
+		//Binds
+
+//		check_scaline_new_analysis.selectedProperty()
+//		.bindBidirectional(checkbox_filter_scl_data.disableProperty());
+
+//		check_scaline_new_analysis.selectedProperty()
+//		.bind(checkbox_filter_scl_data.selectedProperty());
+
+
+		check_output_adv_study.selectedProperty().addListener((v, oldv, newv) ->{
+			if(newv == true){
+				grid_output_adv_study.setDisable(false);
+			}else{
+				grid_output_adv_study.setDisable(true);
+			}
+		});
+
+		check_output_comments.selectedProperty().addListener((v, oldv, newv) ->{
+			if(newv == true){
+				textarea_output_comments.setDisable(false);
+			}else{
+				textarea_output_comments.setDisable(true);
+			}
+		});
+
+
+		//check_output_adv_study.selectedProperty().bind(grid_output_adv_study.setDisable(false));
+
+
+
 		//Pane init
 		tabPane_main.getSelectionModel().select(tab_main_scanline);
+
+		//tabPane_main.getSelectionModel().select(tab_main_modeling);
+
+//		pane_modeling.getSelectionModel().select(tab_modeling_2d_view);
+
 		//Buttons disable
 		btn_scanline_plotpowerlaw.setDisable(true);
 		btn_scanline_save.setDisable(true);
@@ -669,12 +1518,41 @@ public class Controller {
 		btn_scanline_findpl.setDisable(true);
 		scl_table_data_new.setDisable(true);
 
+		btn_modeling_2d_edit.setDisable(true);
+
+		check_modeling_refine_2d.setSelected(true);
+
+		check_modeling_2d_holdonresults.setSelected(true);
+
+		check_scanline_save_ortega.setSelected(true);
+
+		checkbox_filter_scl_data.setDisable(true);
+		//-------------Modeling----------------
+		modeling_2d_saveanalysis.setSelected(true);
+
+		/*
+		 * RadioButtons
+		 */
+
+
+		//combobox
+		combo_modeling_dataset.getItems().addAll(
+				"SET1", "SET2", "SET3");
+		combo_modeling_dataset.setValue("SET1");
+
+
+
+
 		/*
 		 * bind checkbox
 		 */
+		tab_modeling_2d_modeling.disableProperty().bind(check_modeling_refine_2d.selectedProperty().not());
+
+		//check_modeling_refine_2d.selectedProperty().bind(tab_modeling_2d_modeling.disabledProperty());
+
 		checkbox_filter_scl_data.selectedProperty().addListener((event, oldValue, newValue) -> {
 			if(checkbox_filter_scl_data.isSelected()){
-				btn_scanline_saveanalysis.setDisable(false);
+				//btn_scanline_saveanalysis.setDisable(false);
 				btn_scanline_clearpl.setDisable(false);
 				btn_scanline_findpl.setDisable(false);
 				scl_table_data_new.setDisable(false);
@@ -696,8 +1574,9 @@ public class Controller {
 
 		// ComboBox initial options
 		dataTypeScl.getItems().addAll(
-				"Raw SCL", "Choose SCL");
-		dataTypeScl.setValue("Raw SCL");
+				"Load SCL", "Selected SCL");
+		dataTypeScl.setValue("Load SCL");
+
 
 		dataTypeScl.getSelectionModel().selectedItemProperty().addListener((e, o, n) -> {
 			String value = n; 						 //for debug only - apagar depois
