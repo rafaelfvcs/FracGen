@@ -571,7 +571,6 @@ public class Controller {
 	}
 
 
-
 	@FXML
 	public void drawFratures2d(){
 

@@ -20,10 +20,8 @@ public class DrawFractures {
 			double minL, double az, int set, double[] region){
 
 		if(numfrat == 0){
-
 			//GraphicsContext gc = canvas.getGraphicsContext2D();
 			System.out.println("Estou aqui dentro");
-
 
 		}else{
 
@@ -46,7 +44,6 @@ public class DrawFractures {
 	        gc1.setLineWidth(1);
 
 	        ArrayList<double[]> datafrat = new ArrayList<>();;
-
 
 	        for (int i = 0; i < numfrat; i++) {
 
@@ -74,13 +71,15 @@ public class DrawFractures {
 			}
 
 	//        System.out.println(datafrat.size());
-	//        System.out.println(datafrat.size()>1);
 
 	        if (datafrat.size() > 1) {
 
 	    		SaveFracturesData.save2D(datafrat, "TESTANDOBOTAO", ".dat","");
 			}
 		}
+	}
+
+	public static void drawSetFractures3D(){
 
 	}
 
