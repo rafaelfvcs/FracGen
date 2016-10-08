@@ -8,4 +8,4 @@ engenharia, geologia e eletrônica. Ao término de 10 meses de desenvolvimento o
 versão Alpha do software FracGen. Esse software oferecerá um ambiente computacional integrado com uma amigável
 interface gráfica para o usuário (GUI), possibilitando ao mesmo acesso remoto via smartphone e web services.
 
-Conheça mais sobre o projeto em: http://www.xxxxx.com
+Conheça mais sobre o projeto em: http://www.nfracgen.com
