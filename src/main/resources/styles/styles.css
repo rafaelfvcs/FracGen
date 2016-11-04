@@ -1,0 +1,28 @@
+.button{
+
+  -fx-background-color:#27998f; /* Verde base para a interface gráfica do software */
+
+}
+
+.text-field{
+	-fx-background-color:#2990ea; /* Azul base para a interface gráfica do software */
+}
+
+.alert{
+	-fx-background-color:#2990ea;
+}
+
+
+.table-view:focused .table-row-cell:selected {
+    -fx-background-color: red;
+    -fx-table-cell-border-color: red;
+}
+
+.table-row-cell:selected-row {
+    -fx-background-color: lightskyblue ;
+}
+
+
+
+
+

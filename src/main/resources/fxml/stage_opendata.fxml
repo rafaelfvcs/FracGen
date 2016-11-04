@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane 
+    id="GridPane" 
+    prefHeight="400.0" 
+    prefWidth="600.0" 
+    styleClass="mainFxmlClass" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="br.com.fracgen.controller.stage_openDataController">
+    
+    <stylesheets>
+        <URL value="@/styles/styles.css"/>
+    </stylesheets>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="0"
+        text="Location" />
+    <HBox 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="1"          
+    >
+        <TextField 
+            fx:id="tfFilename" >
+        </TextField>
+        <Button 
+            text="Locate"
+            onAction="#dialogOpen" 
+        />
+    </HBox>
+            
+    <HBox 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="2" >
+        <CheckBox 
+            fx:id="cbHeader"
+            selected="true" 
+            text="First line as header"             
+        />        
+    </HBox>
+    <HBox 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="3">
+        <Label text="Separator: ">
+            
+        </Label> 
+        
+    </HBox>  
+    
+    <VBox 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="4">
+        <fx:define>
+            <ToggleGroup 
+                fx:id="tgSeparator" />            
+        </fx:define>
+        <children>
+            <HBox >
+                <RadioButton 
+                    fx:id="rbTab" 
+                    selected="true" 
+                    text="Tab"
+                    onAction="#rbTabAction"/>
+                <RadioButton 
+                    fx:id="rbComma" 
+                    text="Comma"
+                    onAction="#rbCommaAction" />
+                <RadioButton 
+                    fx:id="rbSemicolon" 
+                    text="Semicolon"
+                    onAction="#rbSemicolonAction"/>                                
+            </HBox>
+        </children>                                           
+        <children>
+            <HBox >
+                <RadioButton 
+                    fx:id="rbOther" 
+                    text="Other:" 
+                    onAction="#rbOtherAction" />
+                <TextField 
+                    fx:id="tfSeparator"
+                    text="  "
+                >                   
+                </TextField>        
+            </HBox>
+        </children>     
+        
+    </VBox>
+                
+    <ButtonBar 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="5"     
+    >
+        <buttons>
+            <Button 
+                text="Apply"
+                ButtonBar.buttonData="APPLY"
+                onAction="#addToList"/>
+            <Button
+                fx:id="btnClose" 
+                ButtonBar.buttonData="CANCEL_CLOSE" 
+                text="Close"
+                onAction="#closeOpenFileStage"/>
+        </buttons>
+    </ButtonBar>
+</GridPane>
+
