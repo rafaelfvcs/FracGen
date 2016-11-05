@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.NumberAxis?>
+
+<AnchorPane 
+    id="AnchorPane" 
+    minHeight="0.0" 
+    minWidth="0.0" 
+    prefHeight="180.0" 
+    prefWidth="200.0"
+    styleClass="mainFxmlClass" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="nfracgen.controller.Controller">
+    <stylesheets>
+        <URL value="@/styles/styles.css"/>
+    </stylesheets>
+    <children>
+        <BorderPane layoutY="14.0" prefHeight="381.0" prefWidth="700.0" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
+            <top>
+                <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <items>
+                        <Button fx:id="btn_scanline_load" mnemonicParsing="false" onAction="#loadSclData" text="Load" />
+                        <Button fx:id="btn_scanline_plotpowerlaw" mnemonicParsing="false" onAction="#plotPowerLaw" text="Plot PL" />
+                        <Button fx:id="btn_scanline_save" mnemonicParsing="false" onAction="#saveSclData" text="Save" />
+                        <Button fx:id="btn_scanline_clear" mnemonicParsing="false" onAction="#sclInfoClear" text="Clear" />
+                        <Button fx:id="btn_scanline_advancedfilter" mnemonicParsing="false" onAction="#advancedFilter" text="Adv Filter" />
+                    </items>
+                </ToolBar>
+            </top>
+            <left>
+                <SplitPane dividerPositions="0.5357142857142857" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <children>
+                                <Label layoutX="14.0" layoutY="14.0" text="Data Types:" />
+                                <ComboBox fx:id="dataTypeScl" layoutX="14.0" layoutY="38.0" prefHeight="25.0" prefWidth="122.0" />
+                                <Button fx:id="btn_scanline_findpl" layoutX="15.0" layoutY="274.0" mnemonicParsing="false" onAction="#findPlFilter" text="Find PL" />
+                                <Button fx:id="btn_scanline_clearpl" layoutX="77.0" layoutY="274.0" mnemonicParsing="false" onAction="#clearPlFilter" text="Clear PL" />
+                                <CheckBox fx:id="checkbox_filter_scl_data" layoutX="15.0" layoutY="245.0" mnemonicParsing="false" text="Filter Data" />
+                                <Button fx:id="btn_scanline_saveanalysis" layoutX="15.0" layoutY="310.0" mnemonicParsing="false" onAction="#saveAnalysisSclFilter" prefHeight="25.0" prefWidth="120.0" text="Save Analysis" />
+                                <CheckBox fx:id="check_scaline_new_analysis" disable="true" layoutX="15.0" layoutY="140.0" mnemonicParsing="false" text="New Analysis" />
+                                <CheckBox fx:id="check_scanline_save_ortega" disable="true" layoutX="15.0" layoutY="165.0" mnemonicParsing="false" text="Save Ortega Data" />
+                                <Label layoutX="14.0" layoutY="77.0" text="Ap:" />
+                                <Label layoutX="14.0" layoutY="104.0" text="Sp:" />
+                                <RadioButton fx:id="radio_scaline_ap_mm" layoutX="42.0" layoutY="78.0" mnemonicParsing="false" selected="true" text="mm">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="radioGroupScanlineAp" />
+                                    </toggleGroup>
+                                </RadioButton>
+                                <RadioButton fx:id="radio_scaline_ap_m" layoutX="92.0" layoutY="78.0" mnemonicParsing="false" text="m" toggleGroup="$radioGroupScanlineAp" />
+                                <RadioButton fx:id="radio_scaline_sp_mm" layoutX="42.0" layoutY="104.0" mnemonicParsing="false" selected="true" text="mm">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="radioGroupScanlineSp" />
+                                    </toggleGroup>
+                                </RadioButton>
+                                <RadioButton fx:id="radio_scaline_sp_m" layoutX="92.0" layoutY="104.0" mnemonicParsing="false" text="m" toggleGroup="$radioGroupScanlineSp" />
+                                <CheckBox disable="true" layoutX="15.0" layoutY="191.0" mnemonicParsing="false" text="Save Graph" />
+                                <CheckBox disable="true" layoutX="15.0" layoutY="217.0" mnemonicParsing="false" text="Save Graph" />
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <children>
+                                <TableView fx:id="scl_table" layoutX="-33.0" layoutY="14.0" prefHeight="264.0" prefWidth="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn fx:id="ap" prefWidth="70.0" text="AP" />
+                                        <TableColumn fx:id="sp" prefWidth="75.0" text="SP" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </left>
+            <center>
+                <javafx.scene.chart.LineChart fx:id="gPowerLaw" axisSortingPolicy="NONE" title="Lei de Potência" BorderPane.alignment="CENTER">
+                    <xAxis>
+                        <NumberAxis label="Aperture (mm)" side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Freq Acumulada (1/m)" side="TOP" />
+                    </yAxis>
+                </javafx.scene.chart.LineChart>
+            </center>
+            <right>
+                <SplitPane dividerPositions="0.5014749262536873" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <children>
+                                <Label layoutX="5.0" layoutY="1.0" text="Scanline informations:" />
+                                <Label layoutX="14.0" layoutY="34.0" text="F =" />
+                                <Label fx:id="coefA" layoutX="35.0" layoutY="34.0" text="a " />
+                                <Label layoutX="66.0" layoutY="35.0" text="*(X) ^ " />
+                                <Label fx:id="coefK" layoutX="102.0" layoutY="35.0" text="-k" />
+                                <Label layoutX="50.0" layoutY="60.0" text="R2=" />
+                                <Label fx:id="sclr2" layoutX="73.0" layoutY="60.0" text="00" />
+                                <Label layoutX="14.0" layoutY="96.0" text="Name:" />
+                                <Label layoutX="14.0" layoutY="120.0" text="N data:" />
+                                <Label layoutX="14.0" layoutY="141.0" text="Mean: Ap" />
+                                <Label layoutX="14.0" layoutY="163.0" text="Std: Ap" />
+                                <Label fx:id="sclName" alignment="CENTER_RIGHT" layoutX="70.0" layoutY="96.0" text="-" />
+                                <Label fx:id="sclNumData" layoutX="97.0" layoutY="123.0" text="-" />
+                                <Label fx:id="sclApMean" layoutX="97.0" layoutY="144.0" text="-" />
+                                <Label fx:id="sclApStd" layoutX="97.0" layoutY="166.0" text="-" />
+                                <Label fx:id="sclSpMean" layoutX="97.0" layoutY="186.0" text="-" />
+                                <Label layoutX="14.0" layoutY="183.0" text="Mean: Sp" />
+                                <Label layoutX="14.0" layoutY="203.0" text="Std: Sp" />
+                                <Label layoutX="14.0" layoutY="221.0" text="CV Ap (%)" />
+                                <Label layoutX="14.0" layoutY="243.0" text="CV Sp (%)" />
+                                <Label fx:id="sclSpStd" layoutX="97.0" layoutY="206.0" text="-" />
+                                <Label fx:id="sclCVap" layoutX="97.0" layoutY="224.0" text="-" />
+                                <Label fx:id="sclCVsp" layoutX="97.0" layoutY="246.0" text="-" />
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <children>
+                                <TableView fx:id="scl_table_data_new" layoutX="-42.0" prefHeight="166.0" prefWidth="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn fx:id="apn" prefWidth="75.0" text="APN" />
+                                        <TableColumn fx:id="spn" prefWidth="75.0" text="SPN" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </right>
+        </BorderPane>
+    </children>
+</AnchorPane>

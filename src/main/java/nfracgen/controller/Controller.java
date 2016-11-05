@@ -1050,7 +1050,7 @@ public class Controller {
 
     }
 
-    // Informa��es da Lei de potencia
+    // Informações da Lei de potencia
     private void setInfoPowerLaw(PowerLaw pl) {
 
         coefA.setText(String.valueOf(RoundUtil.round(pl.getA(), 3)));
