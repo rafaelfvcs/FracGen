@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 public class JavaFXFracGenApplication extends Application {
     
     private static JavaFXFracGenApplication instance;
+    private Parent root;
     
     public JavaFXFracGenApplication(){
         instance = this;    
@@ -16,6 +17,10 @@ public class JavaFXFracGenApplication extends Application {
     
     public static JavaFXFracGenApplication getInstance(){
         return instance;
+    }
+    
+    public Parent getRoot(){
+        return root;
     }
     
     public Stage stageOpenData;
@@ -26,7 +31,7 @@ public class JavaFXFracGenApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
         Scene scene = new Scene(root);
         setUserAgentStylesheet(STYLESHEET_CASPIAN);
         setUserAgentStylesheet(STYLESHEET_MODENA);

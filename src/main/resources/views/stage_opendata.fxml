@@ -121,6 +121,7 @@
             <Button 
                 text="Apply"
                 ButtonBar.buttonData="APPLY"
+                onAction="#setDatafile" 
             />
             <Button
                 fx:id="btnClose" 

@@ -1,5 +1,6 @@
 package br.com.fracgen.controller;
 
+import br.com.fracgen.analysis.Scanline;
 import br.com.fracgen.javafxapplication.JavaFXFracGenApplication;
 import java.io.File;
 import java.util.ArrayList;
@@ -392,7 +393,7 @@ public class Controller {
     @FXML
     public void loadModeling2D() {
 
-        // Carrega modelos baseados em power law ou scanlines para gera��o de fraturas
+        // Carrega modelos baseados em power law ou scanlines para geração de fraturas
 //		combo_modeling_dataset.getSelectionModel().selectedItemProperty();
         String comboSet = (String) combo_modeling_dataset.getSelectionModel().selectedItemProperty().get();
 
@@ -404,11 +405,11 @@ public class Controller {
             //opcao Load Use Power Law Data
         } else if (radio_modeling_2d_loadpl.isSelected()) {
 
-            DataSCL dscl = OpenScanlineData.openScl("src/main/resources/data.dat"); //depois trocar p linhas abaixo
-//			//*isso abaixo � para quando o arquivo for carregado nao automaticamente
-//			DataSCL dscl = OpenScanlineData.openScl(fileSclOpen.toString());
+            Scanline scanline = OpenScanlineData.openCSVFileToScanline(comboSet,
+                    comboSet, 0, 1, true);
 
-            StatsSCL statscl = new StatsSCL(dscl.getAperture(), dscl.getSpacing());
+            StatsSCL statscl = new StatsSCL(scanline.getApList(),
+                    scanline.getSpList());
 
             int nfrat = statscl.getNumFrat();
 
@@ -917,6 +918,11 @@ public class Controller {
     protected Button btn_scanline_load;
 
     /**
+     * Button for close Open Data Stage
+     */
+    @FXML
+    protected Button btnClose;
+    /**
      * Action for button load scanline data
      */
     @FXML
@@ -936,7 +942,7 @@ public class Controller {
      */
     @FXML
     protected void close_openDataStage() {
-        Stage stage = (Stage) btn_scanline_load.getScene().getWindow();
+        Stage stage = (Stage) btnClose.getScene().getWindow();
         stage.close();
     }
 
@@ -1452,32 +1458,69 @@ public class Controller {
 
     @FXML
     protected void setDatafile() throws Exception {
-        if (cbHeader.isSelected()) {
-            //FractureAnalysis.getInstance().file.setHeader(true);
-        } else {
-            //FractureAnalysis.getInstance().file.setHeader(false);
-        }
+        boolean hasHeader = cbHeader.isSelected();
         String sep = "\t";
         if (rbSemicolon.isSelected()) {
-           sep =";";
+            sep = ";";
         } else if (rbComma.isSelected()) {
             sep = ",";
         } else {
             String aux = tfSeparator.getCharacters().toString();
             if (aux.length() > 0) {
                 sep = aux;
-            } else {                
+            } else {
                 throw new Exception("Invalid Separator");
             }
         }
         if (!tfFilename.getText().trim().isEmpty()) {
-            //File file = new File(tfFilename.getText());
+
+            Scanline sl = OpenScanlineData.openCSVFileToScanline(
+                    tfFilename.getText(), sep, 0, 1, hasHeader);
+
+            //ArrayList<Double> apList = scanline.getApList();
+            //ArrayList<Double> spList = scanline.getSpList();
+            ArrayList<Scl> list = new ArrayList<>();
+
+            for (int i = 0; i < sl.fracturesCount(); i++) {
+
+                list.add(new Scl(RoundUtil.round(sl.getApList().get(i), 3),
+                        RoundUtil.round(sl.getSpList().get(i), 3)));
+            }
+
+            //TODO: put values on tables
+            //ap.setCellValueFactory(new PropertyValueFactory<>("ap"));
+            //sp.setCellValueFactory(new PropertyValueFactory<>("sp"));
+            //ObservableList<Scl> data = FXCollections.observableArrayList(list);
+            //scl_table.setItems(data);
             
+            Label sclName = (Label)JavaFXFracGenApplication.getInstance().getRoot().lookup("#sclName");
+            ComboBox dataTypeScl = (ComboBox)JavaFXFracGenApplication.getInstance().getRoot().lookup("#dataTypeScl");
+            //TODO: fix this
+            //sclName.setText(dataTypeScl.getSelectionModel().getSelectedItem());
+            Label sclNumData = (Label)JavaFXFracGenApplication.getInstance().getRoot().lookup("#sclNumData");
             
-            //TODO
-            
-            
-            
+            //TODO: fix this
+            //sclNumData.setText(String.valueOf(sl.fracturesCount()));
+
+            double sclapmean = Stat.calculateMean(ArrayOperation.arrayListToArray(sl.getApList()));
+            double sclapstd = Stat.getStdDev(ArrayOperation.arrayListToArray(sl.getApList()));
+            //TODO: fix this
+            //sclApStd.setText(String.valueOf(RoundUtil.round(sclapstd, 3)));
+            //sclApMean.setText(String.valueOf(RoundUtil.round(sclapmean, 3)));
+
+            double sclspmean = Stat.calculateMean(ArrayOperation.arrayListToArray(sl.getSpList()));
+            double sclspstd = Stat.getStdDev(ArrayOperation.arrayListToArray(sl.getSpList()));
+            //TODO: fix this
+            //sclSpStd.setText(String.valueOf(RoundUtil.round(sclspstd, 3)));
+            //sclSpMean.setText(String.valueOf(RoundUtil.round(sclspmean, 3)));
+
+            double sclcvap = sclapstd / sclapmean;
+            double sclcvsp = sclspstd / sclspmean;
+
+            //TODO: fix this
+            //sclCVap.setText(String.valueOf(RoundUtil.round(sclcvap, 3)));
+            //sclCVsp.setText(String.valueOf(RoundUtil.round(sclcvsp, 3)));
+            //sclName.setStyle("-fx-background-color: #FF2"); //mudar para css
         }
     }
 }
