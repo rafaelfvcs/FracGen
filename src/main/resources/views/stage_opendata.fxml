@@ -13,7 +13,7 @@
     prefWidth="600.0" 
     styleClass="mainFxmlClass" 
     xmlns:fx="http://javafx.com/fxml/1" 
-    fx:controller="br.com.fracgen.controller.Controller">
+    fx:controller="nfracgen.controller.Controller">
     
     <stylesheets>
         <URL value="@/styles/styles_login.css"/>
