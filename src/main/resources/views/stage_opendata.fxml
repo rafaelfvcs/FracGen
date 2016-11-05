@@ -13,7 +13,7 @@
     prefWidth="600.0" 
     styleClass="mainFxmlClass" 
     xmlns:fx="http://javafx.com/fxml/1" 
-    fx:controller="br.com.fracgen.controller.stage_openDataController">
+    fx:controller="br.com.fracgen.controller.Controller">
     
     <stylesheets>
         <URL value="@/styles/styles.css"/>
@@ -102,12 +102,12 @@
             <Button 
                 text="Apply"
                 ButtonBar.buttonData="APPLY"
-                onAction="#addToList"/>
+                />
             <Button
                 fx:id="btnClose" 
                 ButtonBar.buttonData="CANCEL_CLOSE" 
                 text="Close"
-                onAction="#closeOpenFileStage"/>
+                onAction="#close_openDataStage"/>
         </buttons>
     </ButtonBar>
 </GridPane>

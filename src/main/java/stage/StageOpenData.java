@@ -39,16 +39,15 @@ public class StageOpenData {
      */
     public TextField tfFilename;
 
-    public Stage createWindow() throws IOException {
+    public void createStage() throws IOException {
         FXMLLoader loader = new FXMLLoader(JavaFXFracGenApplication.getInstance().getClass()
-                .getResource("/fxml/stage_opendata.fxml"));
-        Stage stage = new Stage();
+                .getResource("/views/stage_opendata.fxml"));        
         GridPane parent = loader.load();
         Scene scene = new Scene(parent);
+        Stage stage = new Stage();
         stage.setTitle("Open Dataset");
         stage.setScene(scene);
-        stage.show();
-        return stage;
+        stage.show();     
     }
 
     public void setFilename(String fn) {

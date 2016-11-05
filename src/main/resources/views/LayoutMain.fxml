@@ -41,7 +41,17 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fracgen.controller.Controller">
+<BorderPane 
+    fx:id="mainPane" 
+    maxHeight="-Infinity"
+    maxWidth="-Infinity" 
+    minHeight="-Infinity" 
+    minWidth="-Infinity" 
+    prefHeight="480.0" 
+    prefWidth="640.0" 
+    xmlns="http://javafx.com/javafx/8.0.65" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="br.com.fracgen.controller.Controller">
     <top>
         <MenuBar styleClass="alert" BorderPane.alignment="CENTER">
             <menus>

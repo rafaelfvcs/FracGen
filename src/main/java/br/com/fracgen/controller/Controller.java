@@ -63,7 +63,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import javafx.util.converter.NumberStringConverter;
+import stage.StageOpenData;
 
 public class Controller {
 
@@ -934,71 +934,35 @@ public class Controller {
 //		sclApStd.setStyle("-fx-background-color: #682");
 //		sclApMean.setStyle("-fx-background-color: #682");
 //	}
-    // load scanline data
+    /**
+     * Button for load dataset
+     */
     @FXML
-    public void loadSclData() {
+    protected Button btn_scanline_load;
 
-        /*
-		fileOpen = dialogOpenFile("*.dat");
+    /**
+     * Action for button load scanline data
+     */
+    @FXML
+    public void loadSclData() throws IOException {
 
-		if(fileOpen != null){
-			btn_scanline_plotpowerlaw.setDisable(false);
-			btn_scanline_save.setDisable(false);
-			btn_scanline_clear.setDisable(false);
-
-		}
+        /**
+         * Open stage for selection of data file
+         *
          */
-        check_scaline_new_analysis.setDisable(false);
-        check_scanline_save_ortega.setDisable(false);
-        checkbox_filter_scl_data.setDisable(false);
+        StageOpenData stageOpen = new StageOpenData();
+        stageOpen.createStage();
 
-        btn_scanline_plotpowerlaw.setDisable(false);
-        btn_scanline_save.setDisable(false);
-        btn_scanline_clear.setDisable(false);
-        DataSCL d = OpenScanlineData.openScl("src/main/resources/data.dat");
+    }
 
-        //DataSCL d = OpenScanlineData.openScl(fileOpen.toString());
-        ArrayList<Scl> list = new ArrayList<Scl>();
-
-        for (int i = 0; i < d.getAperture().size(); i++) {
-
-            list.add(new Scl(RoundUtil.round(d.getAperture().get(i), 3), RoundUtil.round(d.getSpacing().get(i), 3)));
-        }
-
-        ap.setCellValueFactory(new PropertyValueFactory<Scl, Double>("ap"));
-        sp.setCellValueFactory(new PropertyValueFactory<Scl, Double>("sp"));
-
-        ObservableList<Scl> data = FXCollections.observableArrayList(list);
-
-        scl_table.setItems(data);
-        //*****
-
-        setInfoScanline(d);
-
-//		sclName.setText("Teste SCL");
-//		sclNumData.setText(String.valueOf(d.getAperture().size()));
-//
-//		double sclapmean = Stat.calculateMean(ArrayOperation.arrayListToArray(d.getAperture()));
-//		double sclapstd = Stat.getStdDev(ArrayOperation.arrayListToArray(d.getAperture()));
-//		sclApStd.setText(String.valueOf(RoundUtil.round(sclapstd, 3)));
-//		sclApMean.setText(String.valueOf(RoundUtil.round(sclapmean, 3)));
-//
-//		double sclspmean = Stat.calculateMean(ArrayOperation.arrayListToArray(d.getSpacing()));
-//		double sclspstd = Stat.getStdDev(ArrayOperation.arrayListToArray(d.getSpacing()));
-//		sclSpStd.setText(String.valueOf(RoundUtil.round(sclspstd, 3)));
-//		sclSpMean.setText(String.valueOf(RoundUtil.round(sclspmean, 3)));
-//
-//		double sclcvap = sclapstd/sclapmean;
-//		double sclcvsp = sclspstd/sclspmean;
-//
-//		sclCVap.setText(String.valueOf(RoundUtil.round(sclcvap, 3)));
-//		sclCVsp.setText(String.valueOf(RoundUtil.round(sclcvsp, 3)));
-//		sclName.setStyle("-fx-background-color: #FF2");
-
-
-/**
- * Open stage for selection of data file
- */
+    /**
+     * Action for button 
+     * Close the Stage for opening data
+     */
+    @FXML
+    protected void close_openDataStage() {
+        Stage stage = (Stage) btn_scanline_load.getScene().getWindow();
+        stage.close();
     }
 
     LogLog demo = null; // = new LogLog("Teste");
@@ -1376,7 +1340,6 @@ public class Controller {
 	 * ******************************************** Initialize Method *********************************************
      */
     //---------------------+----------------------+-------------------------+-----------------------------+--------
-
     @FXML
     public <T> void initialize() {
 
@@ -1385,7 +1348,7 @@ public class Controller {
 //		.bindBidirectional(checkbox_filter_scl_data.disableProperty());
 //		check_scaline_new_analysis.selectedProperty()
 //		.bind(checkbox_filter_scl_data.selectedProperty());
-        check_output_adv_study.selectedProperty().addListener((v, oldv, newv) -> {
+/*        check_output_adv_study.selectedProperty().addListener((v, oldv, newv) -> {
             if (newv == true) {
                 grid_output_adv_study.setDisable(false);
             } else {
@@ -1428,19 +1391,19 @@ public class Controller {
         checkbox_filter_scl_data.setDisable(true);
         //-------------Modeling----------------
         modeling_2d_saveanalysis.setSelected(true);
-
+*/
         /*
 		 * RadioButtons
          */
-        //combobox
+  /*      //combobox
         combo_modeling_dataset.getItems().addAll(
                 "SET1", "SET2", "SET3");
         combo_modeling_dataset.setValue("SET1");
-
+*/
         /*
 		 * bind checkbox
          */
-        tab_modeling_2d_modeling.disableProperty().bind(check_modeling_refine_2d.selectedProperty().not());
+  /*      tab_modeling_2d_modeling.disableProperty().bind(check_modeling_refine_2d.selectedProperty().not());
 
         //check_modeling_refine_2d.selectedProperty().bind(tab_modeling_2d_modeling.disabledProperty());
         checkbox_filter_scl_data.selectedProperty().addListener((event, oldValue, newValue) -> {
@@ -1456,11 +1419,11 @@ public class Controller {
                 scl_table_data_new.setDisable(true);
             }
         });
-
+*/
         /*
 		 * Listener scl_table
          */
-        scl_table.getSelectionModel().selectedItemProperty().addListener((event, oldValue, newValue) -> {
+  /*      scl_table.getSelectionModel().selectedItemProperty().addListener((event, oldValue, newValue) -> {
             unbindData(oldValue);
             bindData(newValue);
         });
@@ -1491,7 +1454,7 @@ public class Controller {
         text.textProperty().bindBidirectional(slider.valueProperty(), new NumberStringConverter());
 
         checkbox.selectedProperty().bind(slider.valueProperty().greaterThanOrEqualTo(50));
-
+*/        
     }
 
     /**
