@@ -16,46 +16,65 @@
     fx:controller="br.com.fracgen.controller.Controller">
     
     <stylesheets>
-        <URL value="@/styles/styles.css"/>
+        <URL value="@/styles/styles_login.css"/>
     </stylesheets>
+    
+    <columnConstraints>
+        <ColumnConstraints percentWidth="33"></ColumnConstraints>
+        <ColumnConstraints percentWidth="33"></ColumnConstraints>
+        <ColumnConstraints percentWidth="33"></ColumnConstraints>
+    </columnConstraints>
+    
+    <rowConstraints>
+        <RowConstraints minHeight="30"></RowConstraints>  
+        <RowConstraints minHeight="30"></RowConstraints>  
+        <RowConstraints minHeight="30"></RowConstraints>  
+        <RowConstraints minHeight="30"></RowConstraints>  
+        <RowConstraints minHeight="30"></RowConstraints>  
+        <RowConstraints minHeight="30"></RowConstraints>  
+        <RowConstraints minHeight="30"></RowConstraints>  
+    </rowConstraints>
     
     <Label 
         GridPane.columnIndex="0"
         GridPane.rowIndex="0"
         text="Location" />
-    <HBox 
+
+    <TextField 
+        fx:id="tfFilename"
         GridPane.columnIndex="0"
-        GridPane.rowIndex="1"          
-    >
-        <TextField 
-            fx:id="tfFilename" >
-        </TextField>
-        <Button 
-            text="Locate"
-            onAction="#dialogOpen" 
-        />
-    </HBox>
+        GridPane.rowIndex="1"       
+        GridPane.columnSpan="2"  >
+
+    </TextField>
+
+    <Button 
+        GridPane.columnIndex="2"
+        GridPane.rowIndex="1"                 
+        text="Locate"
+        onAction="#dialogOpen" 
+    />
+    
+    <CheckBox 
+        fx:id="cbHeader"            
+        GridPane.columnIndex="0"
+        GridPane.columnSpan="3"
+        GridPane.rowIndex="2" 
+        selected="true" 
+        text="First line as header"             
+    />        
+
+    <Label
+        GridPane.columnIndex="0"
+        GridPane.columnSpan="3"
+        GridPane.rowIndex="3" 
+        text="Separator: ">
             
-    <HBox 
-        GridPane.columnIndex="0"
-        GridPane.rowIndex="2" >
-        <CheckBox 
-            fx:id="cbHeader"
-            selected="true" 
-            text="First line as header"             
-        />        
-    </HBox>
-    <HBox 
-        GridPane.columnIndex="0"
-        GridPane.rowIndex="3">
-        <Label text="Separator: ">
-            
-        </Label> 
-        
-    </HBox>  
+    </Label>  
     
     <VBox 
         GridPane.columnIndex="0"
+        GridPane.columnSpan="3"
         GridPane.rowIndex="4">
         <fx:define>
             <ToggleGroup 
@@ -102,7 +121,7 @@
             <Button 
                 text="Apply"
                 ButtonBar.buttonData="APPLY"
-                />
+            />
             <Button
                 fx:id="btnClose" 
                 ButtonBar.buttonData="CANCEL_CLOSE" 

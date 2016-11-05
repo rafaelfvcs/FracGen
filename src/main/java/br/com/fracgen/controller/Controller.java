@@ -117,27 +117,7 @@ public class Controller {
 
     @FXML
     private Canvas canvas1;
-
-    /*----------------------------
-	 * ------ Tab -----------Output
-     */
-    @FXML
-    private TextArea textarea_output_comments;
-
-    @FXML
-    private CheckBox check_output_comments;
-
-    @FXML
-    private CheckBox check_output_adv_study;
-
-    @FXML
-    private CheckBox check_output_newproject;
-
-    @FXML
-    private GridPane grid_output_adv_study;
-
-    @FXML
-    private GridPane grid_output_project;
+    
     /*
 	 * Instancia de Arquivo aberto
      */
@@ -1286,54 +1266,8 @@ public class Controller {
     @FXML
     CheckBox checkbox;
 
-    @FXML
-    TreeView<String> treeview_outs;
+    
 
-    @SuppressWarnings("unchecked")
-    public void createTree(String... rootItems) {
-        //create root
-        TreeItem<String> root = new TreeItem<>("Output Structure");
-
-        //root.setExpanded(true);
-        //create child
-        TreeItem<String> item1 = new TreeItem<>("Data collect");
-        TreeItem<String> item1c1 = new TreeItem<>("Data Base");
-        TreeItem<String> item1c2 = new TreeItem<>("Field Trip");
-        TreeItem<String> item1c3 = new TreeItem<>("Darwin01");
-        item1.getChildren().addAll(item1c1, item1c2, item1c3);
-        //item1.setExpanded(false);
-
-        TreeItem<String> item2 = new TreeItem<>("Scanline");
-
-        TreeItem<String> item2C1 = new TreeItem<>("Power Law");
-        TreeItem<String> item2C2 = new TreeItem<>("New data");
-        item2.getChildren().addAll(item2C1, item2C2);
-
-        TreeItem<String> item3 = new TreeItem<>("Modeling");
-
-        TreeItem<String> item3C1 = new TreeItem<>("2D");
-        TreeItem<String> item3C2 = new TreeItem<>("3D");
-        item3.getChildren().addAll(item3C1, item3C2);
-
-        //itemChild2.setExpanded(false);
-        //root is the parent of itemChild
-        root.getChildren().addAll(item1, item2, item3);
-
-        treeview_outs.getSelectionModel().selectedItemProperty().addListener((v, oldvalue, newvalue) -> {
-            if (newvalue != null) {
-                System.out.println(newvalue.toString());
-            }
-        });
-
-        treeview_outs.setRoot(root);
-    }
-
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        createTree();
-        grid_output_project.setDisable(true);
-        check_output_newproject.setDisable(false);
-    }
     //---------------------+----------------------+-------------------------+-----------------------------+--------
 
     /*
