@@ -20,8 +20,7 @@
     <stylesheets>
         <URL value="@/styles/styles.css"/>
     </stylesheets>
-    
-   
+
     <children>
         <BorderPane layoutX="98.0" layoutY="25.0" prefHeight="321.0" prefWidth="502.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <top>
