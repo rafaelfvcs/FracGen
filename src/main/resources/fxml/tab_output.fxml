@@ -8,12 +8,15 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane 
-    minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"
-    xmlns:fx="http://javafx.com/fxml/1" 
-    fx:controller="br.com.fracgen.controller.Tab_outputController"
+    minHeight="0.0" 
+    minWidth="0.0" 
+    prefHeight="180.0" 
+    prefWidth="200.0"
     disable="true" 
     layoutX="14.0" 
     layoutY="274.0" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="br.com.fracgen.controller.Tab_outputController"    
 >
     <stylesheets>
         <URL value="@/styles/styles.css"/>

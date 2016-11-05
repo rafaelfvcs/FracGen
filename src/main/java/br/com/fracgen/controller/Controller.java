@@ -25,7 +25,6 @@ import java.io.IOException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -49,12 +48,9 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -117,7 +113,7 @@ public class Controller {
 
     @FXML
     private Canvas canvas1;
-    
+
     /*
 	 * Instancia de Arquivo aberto
      */
@@ -936,8 +932,7 @@ public class Controller {
     }
 
     /**
-     * Action for button 
-     * Close the Stage for opening data
+     * Action for button Close the Stage for opening data
      */
     @FXML
     protected void close_openDataStage() {
@@ -1266,8 +1261,6 @@ public class Controller {
     @FXML
     CheckBox checkbox;
 
-    
-
     //---------------------+----------------------+-------------------------+-----------------------------+--------
 
     /*
@@ -1325,19 +1318,19 @@ public class Controller {
         checkbox_filter_scl_data.setDisable(true);
         //-------------Modeling----------------
         modeling_2d_saveanalysis.setSelected(true);
-*/
-        /*
+         */
+ /*
 		 * RadioButtons
          */
-  /*      //combobox
+ /*      //combobox
         combo_modeling_dataset.getItems().addAll(
                 "SET1", "SET2", "SET3");
         combo_modeling_dataset.setValue("SET1");
-*/
-        /*
+         */
+ /*
 		 * bind checkbox
          */
-  /*      tab_modeling_2d_modeling.disableProperty().bind(check_modeling_refine_2d.selectedProperty().not());
+ /*      tab_modeling_2d_modeling.disableProperty().bind(check_modeling_refine_2d.selectedProperty().not());
 
         //check_modeling_refine_2d.selectedProperty().bind(tab_modeling_2d_modeling.disabledProperty());
         checkbox_filter_scl_data.selectedProperty().addListener((event, oldValue, newValue) -> {
@@ -1353,11 +1346,11 @@ public class Controller {
                 scl_table_data_new.setDisable(true);
             }
         });
-*/
-        /*
+         */
+ /*
 		 * Listener scl_table
          */
-  /*      scl_table.getSelectionModel().selectedItemProperty().addListener((event, oldValue, newValue) -> {
+ /*      scl_table.getSelectionModel().selectedItemProperty().addListener((event, oldValue, newValue) -> {
             unbindData(oldValue);
             bindData(newValue);
         });
@@ -1388,7 +1381,7 @@ public class Controller {
         text.textProperty().bindBidirectional(slider.valueProperty(), new NumberStringConverter());
 
         checkbox.selectedProperty().bind(slider.valueProperty().greaterThanOrEqualTo(50));
-*/        
+         */
     }
 
     /**
@@ -1454,6 +1447,37 @@ public class Controller {
                     tfFilename.setText(file.getAbsolutePath());
                 }
             }
+        }
+    }
+
+    @FXML
+    protected void setDatafile() throws Exception {
+        if (cbHeader.isSelected()) {
+            //FractureAnalysis.getInstance().file.setHeader(true);
+        } else {
+            //FractureAnalysis.getInstance().file.setHeader(false);
+        }
+        String sep = "\t";
+        if (rbSemicolon.isSelected()) {
+           sep =";";
+        } else if (rbComma.isSelected()) {
+            sep = ",";
+        } else {
+            String aux = tfSeparator.getCharacters().toString();
+            if (aux.length() > 0) {
+                sep = aux;
+            } else {                
+                throw new Exception("Invalid Separator");
+            }
+        }
+        if (!tfFilename.getText().trim().isEmpty()) {
+            //File file = new File(tfFilename.getText());
+            
+            
+            //TODO
+            
+            
+            
         }
     }
 }
