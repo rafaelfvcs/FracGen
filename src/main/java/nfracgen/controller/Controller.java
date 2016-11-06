@@ -60,6 +60,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import nfracgen.model.AnalysisFile;
+import nfracgen.stage.MainStage;
 import nfracgen.stage.StageOpenData;
 
 public class Controller {
@@ -1473,54 +1475,13 @@ public class Controller {
             }
         }
         if (!tfFilename.getText().trim().isEmpty()) {
-
-            Scanline sl = OpenScanlineData.openCSVFileToScanline(
-                    tfFilename.getText(), sep, 0, 1, hasHeader);
-
-            //ArrayList<Double> apList = scanline.getApList();
-            //ArrayList<Double> spList = scanline.getSpList();
-            ArrayList<Scl> list = new ArrayList<>();
-
-            for (int i = 0; i < sl.fracturesCount(); i++) {
-
-                list.add(new Scl(RoundUtil.round(sl.getApList().get(i), 3),
-                        RoundUtil.round(sl.getSpList().get(i), 3)));
-            }
-
-            //TODO: put values on tables
-            //ap.setCellValueFactory(new PropertyValueFactory<>("ap"));
-            //sp.setCellValueFactory(new PropertyValueFactory<>("sp"));
-            //ObservableList<Scl> data = FXCollections.observableArrayList(list);
-            //scl_table.setItems(data);
-            
-            Label sclName = (Label)JavaFXFracGenApplication.getInstance().getRoot().lookup("#sclName");
-            ComboBox dataTypeScl = (ComboBox)JavaFXFracGenApplication.getInstance().getRoot().lookup("#dataTypeScl");
-            //TODO: fix this
-            //sclName.setText(dataTypeScl.getSelectionModel().getSelectedItem());
-            Label sclNumData = (Label)JavaFXFracGenApplication.getInstance().getRoot().lookup("#sclNumData");
-            
-            //TODO: fix this
-            //sclNumData.setText(String.valueOf(sl.fracturesCount()));
-
-            double sclapmean = Stat.calculateMean(ArrayOperation.arrayListToArray(sl.getApList()));
-            double sclapstd = Stat.getStdDev(ArrayOperation.arrayListToArray(sl.getApList()));
-            //TODO: fix this
-            //sclApStd.setText(String.valueOf(RoundUtil.round(sclapstd, 3)));
-            //sclApMean.setText(String.valueOf(RoundUtil.round(sclapmean, 3)));
-
-            double sclspmean = Stat.calculateMean(ArrayOperation.arrayListToArray(sl.getSpList()));
-            double sclspstd = Stat.getStdDev(ArrayOperation.arrayListToArray(sl.getSpList()));
-            //TODO: fix this
-            //sclSpStd.setText(String.valueOf(RoundUtil.round(sclspstd, 3)));
-            //sclSpMean.setText(String.valueOf(RoundUtil.round(sclspmean, 3)));
-
-            double sclcvap = sclapstd / sclapmean;
-            double sclcvsp = sclspstd / sclspmean;
-
-            //TODO: fix this
-            //sclCVap.setText(String.valueOf(RoundUtil.round(sclcvap, 3)));
-            //sclCVsp.setText(String.valueOf(RoundUtil.round(sclcvsp, 3)));
-            //sclName.setStyle("-fx-background-color: #FF2"); //mudar para css
+            AnalysisFile file = new AnalysisFile();
+            file.setFilename(tfFilename.getText());
+            file.setSep(sep);
+            file.setApColumn(0);
+            file.setSpColumn(1);
+            file.setHeader(hasHeader);
+            MainStage.getInstance().refreshStats(file);
         }
     }
 }
