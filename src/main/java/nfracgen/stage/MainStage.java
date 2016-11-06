@@ -19,6 +19,7 @@ import nfracgen.statistic.Mode;
 import nfracgen.statistic.Stat;
 import nfracgen.statistic.StdDeviation;
 import nfracgen.statistic.Variance;
+import nfracgen.statistic.VariationCoefficient;
 import nfracgen.util.ArrayOperation;
 import nfracgen.util.OpenScanlineData;
 import nfracgen.util.RoundUtil;
@@ -109,9 +110,9 @@ public class MainStage {
         sclName.setStyle("-fx-background-color: #FF2"); //mudar para css
         
         /**
-         * Tab Statistics
+         * Tab Ap Statistics
          * 
-         * tab_statistics.fxml
+         * tab_ap_statistics.fxml
          */
         Label lMinValue = (Label)getRoot().lookup("#lMinValue");
         lMinValue.setText(String.valueOf(Stat.min(file.getScanLine().getApList())));
@@ -136,6 +137,43 @@ public class MainStage {
         
         Label lCount = (Label) getRoot().lookup("#lCount");
         lCount.setText(String.valueOf(file.getScanLine().getFracCount()));
+        
+        Label lVariation = (Label)getRoot().lookup("#lVariation");
+        lVariation.setText(String.valueOf(
+                VariationCoefficient.variationCoefficient(file.getScanLine().getApList())));
+        
+        /**
+         * Tab Sp Statistics
+         * 
+         * tab_sp_statistics.fxml
+         */
+        Label lSpMinValue = (Label)getRoot().lookup("#lSpMinValue");
+        lSpMinValue.setText(String.valueOf(Stat.min(file.getScanLine().getSpList())));
+        
+        Label lSpMaxValue = (Label)getRoot().lookup("#lSpMaxValue");
+        lSpMaxValue.setText(String.valueOf(Stat.max(file.getScanLine().getSpList())));
+        
+        Label lSpAvgValue = (Label)getRoot().lookup("#lSpAvgValue");
+        lSpAvgValue.setText(String.valueOf(Stat.mean(file.getScanLine().getSpList())));
+        
+        Label lSpModeValue = (Label) getRoot().lookup("#lSpModeValue");
+        lSpModeValue.setText(String.valueOf(Mode.getMode(file.getScanLine().getSpList())));
+        
+        Label lSpStdDevValue = (Label)getRoot().lookup("#lSpStdDevValue");
+        lSpStdDevValue.setText(String.valueOf(StdDeviation.stdDeviation(file.getScanLine().getSpList())));
+        
+        Label lSpVariance = (Label) getRoot().lookup("#lSpVariance");
+        lSpVariance.setText(String.valueOf(Variance.variance(file.getScanLine().getSpList())));
+        
+        Label lSpGeoAvg = (Label) getRoot().lookup("#lSpGeoAvg");
+        lSpGeoAvg.setText(String.valueOf(Stat.geometricAverage(file.getScanLine().getSpList())));
+        
+        Label lSpCount = (Label) getRoot().lookup("#lSpCount");
+        lSpCount.setText(String.valueOf(file.getScanLine().getFracCount()));
+        
+        Label lSpVariation = (Label)getRoot().lookup("#lSpVariation");
+        lSpVariation.setText(String.valueOf(
+                VariationCoefficient.variationCoefficient(file.getScanLine().getSpList())));
     }
     
 }

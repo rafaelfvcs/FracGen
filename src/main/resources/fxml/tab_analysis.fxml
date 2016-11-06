@@ -41,9 +41,14 @@
             <center>
                 <TabPane fx:id="tabPane_analysis" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                     <tabs>
-                        <Tab fx:id="tab_analysis_statistics" text="Statistics">
+                        <Tab fx:id="tab_ap_statistics" text="Ap Statistics">
                             <content>
-                                <fx:include source="/fxml/tab_statistics.fxml"></fx:include>
+                                <fx:include source="/fxml/tab_ap_statistics.fxml"></fx:include>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="tab_sp_statistics" text="Sp Statistics">
+                            <content>
+                                <fx:include source="/fxml/tab_sp_statistics.fxml"></fx:include>
                             </content>
                         </Tab>
                         <Tab fx:id="tab_analysis_montecarlo" text="Monte Carlo">

@@ -17,7 +17,7 @@
                     <archive>
                         <manifest>
                             <mainClass>
-                                nfracgen.javafxapplication.JavaFXFracGenApplication
+                                nfracgen.javafxapplication.FracGenApplication
                             </mainClass>
                         </manifest>
                     </archive>

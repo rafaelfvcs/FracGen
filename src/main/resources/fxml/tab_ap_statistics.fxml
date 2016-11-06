@@ -42,11 +42,6 @@
            GridPane.rowIndex="1">
     </Label>
     
-    <ComboBox fx:id="cbSColumn"             
-              GridPane.columnIndex="1"
-              GridPane.rowIndex="1">
-    </ComboBox>
-    
     <Label
         GridPane.columnIndex="0"
         GridPane.rowIndex="2"   
@@ -166,7 +161,7 @@
     <javafx.scene.chart.LineChart 
         GridPane.columnIndex="2"
         GridPane.rowIndex="0"
-        GridPane.rowSpan="4"     >
+        GridPane.rowSpan="6"     >
         <xAxis>
             <javafx.scene.chart.NumberAxis label="X" ></javafx.scene.chart.NumberAxis>
         </xAxis>
@@ -178,8 +173,8 @@
     
     <javafx.scene.chart.LineChart 
         GridPane.columnIndex="2"
-        GridPane.rowIndex="4"
-        GridPane.rowSpan="4"     >
+        GridPane.rowIndex="6"
+        GridPane.rowSpan="6"     >
         <xAxis>
             <javafx.scene.chart.NumberAxis label="X" ></javafx.scene.chart.NumberAxis>
         </xAxis>
