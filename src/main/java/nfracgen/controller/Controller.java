@@ -1410,6 +1410,10 @@ public class Controller {
             file.setApColumn(0);
             file.setSpColumn(1);
             file.setHeader(hasHeader);
+            Scanline sl = OpenScanlineData.openCSVFileToScanline(tfFilename.getText(),
+                    sep, 0, 1, hasHeader);
+            file.setScanLine(sl);
+            file.setRowsCount(sl.getFracCount());
             MainStage.getInstance().refreshStats(file);
         }
     }

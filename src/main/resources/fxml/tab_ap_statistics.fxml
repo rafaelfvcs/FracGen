@@ -158,18 +158,19 @@
         text="">
     </Label>   
     
-    <javafx.scene.chart.LineChart 
+    <javafx.scene.chart.BarChart 
+        fx:id="bcApHistogram"
         GridPane.columnIndex="2"
         GridPane.rowIndex="0"
         GridPane.rowSpan="6"     >
         <xAxis>
-            <javafx.scene.chart.NumberAxis label="X" ></javafx.scene.chart.NumberAxis>
+            <javafx.scene.chart.CategoryAxis label="Classes"/> 
         </xAxis>
         <yAxis>
-            <javafx.scene.chart.NumberAxis label="Y"></javafx.scene.chart.NumberAxis> 
+            <javafx.scene.chart.NumberAxis label="Frequency"/> 
         </yAxis>
         
-    </javafx.scene.chart.LineChart>
+    </javafx.scene.chart.BarChart>
     
     <javafx.scene.chart.LineChart 
         GridPane.columnIndex="2"

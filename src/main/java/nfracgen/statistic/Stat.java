@@ -179,5 +179,28 @@ public abstract class Stat {
         }
         return Math.pow(prod, (1.0 / vector.size()));
     }
+    
+    /**     
+     * @param vector
+     * @return Difference(Maximum Value - Minimum Value)
+     */    
+    public static double getAmplitude(ArrayList<Double> vector){
+        double minValue=0.;
+        double maxValue=0.;
+        for(int i = 0; i<vector.size(); i++){
+            if(i ==0){
+                minValue = vector.get(i);
+                maxValue = vector.get(i);
+            } else {
+                if(minValue>vector.get(i)){
+                    minValue = vector.get(i);
+                }
+                if(maxValue<vector.get(i)){
+                    maxValue = vector.get(i);
+                }
+            }            
+        }
+        return (maxValue - minValue);
+    }
 
 }

@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
@@ -25,6 +26,8 @@ import nfracgen.statistic.Stat;
 import nfracgen.statistic.StdDeviation;
 import nfracgen.statistic.Variance;
 import nfracgen.statistic.VariationCoefficient;
+import nfracgen.statistic.histogram.ClassInterval;
+import nfracgen.statistic.histogram.Frequency;
 import nfracgen.statistic.linearregression.LinearRegression;
 import nfracgen.util.ArrayOperation;
 import nfracgen.util.OpenScanlineData;
@@ -182,11 +185,10 @@ public class MainStage {
         /**
          * Plot Power Law
          */
-        
         LineChart gPowerLaw = (LineChart) getRoot().lookup("#gPowerLaw");
         //gPowerLaw.getData().add(PlotSeries.plotLineSeries(file.getScanLine().getSpList(),
-          //      file.getScanLine().getSpList());
-          
+        //      file.getScanLine().getSpList());
+
         FractureIntensityAnalysis fi = new FractureIntensityAnalysis(
                 file.getScanLine());
         Label lFracInt = (Label) getRoot().lookup("#lFracInt");
@@ -195,7 +197,7 @@ public class MainStage {
         lFracInt.setText(String.valueOf(fi.getFractureIntensity()));
         lAvgSpacing.setText(String.valueOf(fi.getAverageSpacing()));
         lScanLen.setText(String.valueOf(file.getScanLine().getLenght()));
-                
+
         ArrayList<Fracture> al = fi.getArrayDistribution();
         ArrayList<Double> cumulative = new ArrayList<>();
         ArrayList<Double> aperture = new ArrayList<>();
@@ -205,10 +207,10 @@ public class MainStage {
 //            cumulative.add(Double.valueOf(values.getCumulativeNumber()));
 //            aperture.add(values.getAperture());
         }
-        gPowerLaw.getData().addAll(PlotSeries.plotLineSeries(aperture, cumulative));        
+        gPowerLaw.getData().addAll(PlotSeries.plotLineSeries(aperture, cumulative));
         /**
          * Add linear regression to graph
-         */ 
+         */
         LinearRegression lr = new LinearRegression(aperture, cumulative);
 //        double min = MinimumValue.getMinValue(aperture);
 //        double max = MaximumValue.getMaxValue(aperture);
@@ -222,6 +224,51 @@ public class MainStage {
         serieRegression.getData().add(new XYChart.Data<>(min, first));
         serieRegression.getData().add(new XYChart.Data<>(max, last));
         gPowerLaw.getData().add(serieRegression);
+        /**
+         * Plot Ap Histogram
+         */        
+        BarChart bcApHistogram = (BarChart)getRoot().lookup("#bcApHistogram");
+        double amplitude = Stat.getAmplitude(file.getScanLine().getApList());
+        double classIntervals = Frequency.sturgesExpression(amplitude, file.getRowsCount());
+        double apMin = Stat.min(file.getScanLine().getApList());
+        double apMax = Stat.max(file.getScanLine().getApList());
+        ArrayList<ClassInterval> intervals = Frequency.classIntervals(apMin, apMax, classIntervals);
+        Frequency.countObsFrequency(file.getScanLine().getApList(), intervals);
+
+        XYChart.Series series = new XYChart.Series();
+        series.setName("Histogram");
+        for (int i = 0; i < intervals.size(); i++) {
+            series.getData().add(
+                    new XYChart.Data(intervals.get(i).getLabel(), intervals.get(i).getObsFrequency()));
+        }
+        bcApHistogram.getData().clear();
+        bcApHistogram.getData().addAll(series);
+        /**
+         * Plot Sp Histogram
+         */        
+        BarChart bcSpHistogram = (BarChart)getRoot().lookup("#bcSpHistogram");
+        System.out.println("Sp list: "+file.getScanLine().getSpList());
+        double amplitudeSp = Stat.getAmplitude(file.getScanLine().getSpList());
+        System.out.println("Amplitude: "+amplitudeSp);
+        System.out.println( "Rows Count: "+file.getRowsCount());
+        double classIntervalsSp = Frequency.sturgesExpression(amplitudeSp, file.getRowsCount());
+        System.out.println("Number of class intervals: "+classIntervalsSp);
+        double spMin = Stat.min(file.getScanLine().getSpList());
+        double spMax = Stat.max(file.getScanLine().getSpList());
+        ArrayList<ClassInterval> intervalsSp = Frequency.classIntervals(spMin, spMax, classIntervalsSp);
+        System.out.println("Intervals Sp: "+intervalsSp);
+        Frequency.countObsFrequency(file.getScanLine().getSpList(), intervalsSp);
+
+        XYChart.Series seriesSp = new XYChart.Series();
+        seriesSp.setName("Histogram");
+        System.out.println("Intervals size: "+intervalsSp.size());
+        for (int i = 0; i < intervalsSp.size(); i++) {
+            seriesSp.getData().add(
+                    new XYChart.Data(intervalsSp.get(i).getLabel(), intervalsSp.get(i).getObsFrequency()));
+            System.out.println( "Obs Freq: "+intervalsSp.get(i).getObsFrequency());
+        }
+        bcSpHistogram.getData().clear();
+        bcSpHistogram.getData().addAll(seriesSp);
     }
-    
+
 }
