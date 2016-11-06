@@ -173,17 +173,23 @@
     </javafx.scene.chart.BarChart>
     
     <javafx.scene.chart.LineChart 
+        fx:id="lcSpFreq"
         GridPane.columnIndex="2"
         GridPane.rowIndex="6"
-        GridPane.rowSpan="6"     >
+        GridPane.rowSpan="6"       >
         <xAxis>
-            <javafx.scene.chart.NumberAxis label="X" ></javafx.scene.chart.NumberAxis>
+            <javafx.scene.chart.NumberAxis label="Data" ></javafx.scene.chart.NumberAxis>
         </xAxis>
         <yAxis>
-            <javafx.scene.chart.NumberAxis label="Y"></javafx.scene.chart.NumberAxis> 
+            <javafx.scene.chart.NumberAxis 
+                lowerBound="0" 
+                upperBound="100"
+                autoRanging="false"  
+                label="Cumulative Frequency">
+            </javafx.scene.chart.NumberAxis> 
         </yAxis>
         
-    </javafx.scene.chart.LineChart>
+    </javafx.scene.chart.LineChart>    
     
 </GridPane>
 
