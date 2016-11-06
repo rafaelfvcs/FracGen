@@ -9,7 +9,7 @@ public class StatsSCL {
     
     public StatsSCL(Scanline scanline) {
         //TODO: colocar info sobre a power law
-        numFrat = scanline.fracturesCount();
+        numFrat = scanline.getFracCount();
 
         meanAp = RoundUtil.round(Stat.calculateMean(ArrayOperation.arrayListToArray(
                 scanline.getApList())), 3);

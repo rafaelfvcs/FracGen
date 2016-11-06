@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane 
+    id="GridPane"             
+    prefHeight="400.0" 
+    prefWidth="600.0" 
+    styleClass="mainFxmlClass" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+>
+    <stylesheets>
+        <URL value="@/styles/styles.css"/>
+    </stylesheets>
+    
+    <columnConstraints>
+        <ColumnConstraints percentWidth="15"></ColumnConstraints> 
+        <ColumnConstraints percentWidth="15"></ColumnConstraints> 
+        <ColumnConstraints percentWidth="70"></ColumnConstraints> 
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="8" ></RowConstraints>
+        <RowConstraints percentHeight="8" ></RowConstraints>
+        <RowConstraints percentHeight="8" ></RowConstraints>
+        <RowConstraints percentHeight="8" ></RowConstraints>
+        <RowConstraints percentHeight="8" ></RowConstraints>
+        <RowConstraints percentHeight="8" ></RowConstraints>
+        <RowConstraints percentHeight="8" ></RowConstraints>
+        <RowConstraints percentHeight="8" ></RowConstraints>
+        <RowConstraints percentHeight="8" ></RowConstraints>
+        <RowConstraints percentHeight="8" ></RowConstraints>
+        <RowConstraints percentHeight="8" ></RowConstraints>
+        <RowConstraints percentHeight="8" ></RowConstraints>
+    </rowConstraints>
+    <Label text="Column: "
+           GridPane.columnIndex="0"
+           GridPane.rowIndex="1">
+    </Label>
+    
+    <ComboBox fx:id="cbSColumn"             
+              GridPane.columnIndex="1"
+              GridPane.rowIndex="1">
+    </ComboBox>
+    
+    <Label
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="2"   
+        text="Minimum Value: ">
+    </Label>
+    
+    <Label
+        fx:id="lMinValue"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="2"   
+        text="">
+    </Label>
+    
+    <Label
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="3"   
+        text="Maximum Value: ">
+    </Label>
+    
+    <Label
+        fx:id="lMaxValue"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="3"   
+        text="">
+    </Label>
+    
+    <Label
+        fx:id="lAvg"
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="4"   
+        text="Average Value: ">
+    </Label>
+    
+    <Label
+        fx:id="lAvgValue"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="4"   
+        text="">
+    </Label>
+    
+    <Label
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="5"   
+        text="Mode: ">
+    </Label>
+    
+    <Label
+        fx:id="lModeValue"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="5"   
+        text="">
+    </Label>
+    
+    <Label
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="6"   
+        text="Standard Deviation: ">
+    </Label>
+    
+    <Label
+        fx:id="lStdDevValue"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="6"   
+        text="">
+    </Label>
+    
+    <Label 
+        GridPane.columnIndex="0" 
+        GridPane.rowIndex="7"
+        text="Variance">
+    </Label> 
+    
+    <Label 
+        fx:id="lVariance"
+        GridPane.columnIndex="1" 
+        GridPane.rowIndex="7"
+        text="">
+    </Label> 
+    
+    <Label 
+        GridPane.columnIndex="0" 
+        GridPane.rowIndex="8"
+        text="Variantion Coefficient">
+    </Label> 
+    
+    <Label 
+        fx:id="lVariation"
+        GridPane.columnIndex="1" 
+        GridPane.rowIndex="8"
+        text="">
+    </Label> 
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="9"
+        text="Geometric Average">
+    </Label>  
+    <Label 
+        fx:id="lGeoAvg"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="9"
+        text="">
+    </Label> 
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="10"
+        text="Count">
+    </Label>
+    <Label 
+        fx:id="lCount"
+        GridPane.columnIndex="1" 
+        GridPane.rowIndex="10"
+        text="">
+    </Label>   
+    
+    <javafx.scene.chart.LineChart 
+        GridPane.columnIndex="2"
+        GridPane.rowIndex="0"
+        GridPane.rowSpan="4"     >
+        <xAxis>
+            <javafx.scene.chart.NumberAxis label="X" ></javafx.scene.chart.NumberAxis>
+        </xAxis>
+        <yAxis>
+            <javafx.scene.chart.NumberAxis label="Y"></javafx.scene.chart.NumberAxis> 
+        </yAxis>
+        
+    </javafx.scene.chart.LineChart>
+    
+    <javafx.scene.chart.LineChart 
+        GridPane.columnIndex="2"
+        GridPane.rowIndex="4"
+        GridPane.rowSpan="4"     >
+        <xAxis>
+            <javafx.scene.chart.NumberAxis label="X" ></javafx.scene.chart.NumberAxis>
+        </xAxis>
+        <yAxis>
+            <javafx.scene.chart.NumberAxis label="Y"></javafx.scene.chart.NumberAxis> 
+        </yAxis>
+        
+    </javafx.scene.chart.LineChart>
+    
+</GridPane>
+

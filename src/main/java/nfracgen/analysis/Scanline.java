@@ -96,7 +96,7 @@ public class Scanline {
      * 
      * @return 
      */
-    public int fracturesCount() {
+    public int getFracCount() {
         return this.fracturesCount;
     }
 

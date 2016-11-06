@@ -7,37 +7,37 @@ import java.util.ArrayList;
  */
 public abstract class Stat {
 
-	public static double min(ArrayList<Double> array) {
-		double minV = array.get(0);
-		for (int i = 0; i < array.size(); i++) {
-			if (array.get(i) < minV) {
-				minV = array.get(i);
-			}
-		}
-		return minV;
-	}
+    public static double min(ArrayList<Double> array) {
+        double minV = array.get(0);
+        for (int i = 0; i < array.size(); i++) {
+            if (array.get(i) < minV) {
+                minV = array.get(i);
+            }
+        }
+        return minV;
+    }
 
-	public static double max(ArrayList<Double> array) {
-		double maxV = array.get(0);
-		for (int i = 0; i < array.size(); i++) {
-			if (array.get(i) > maxV) {
-				maxV = array.get(i);
-			}
-		}
-		return maxV;
-	}
+    public static double max(ArrayList<Double> array) {
+        double maxV = array.get(0);
+        for (int i = 0; i < array.size(); i++) {
+            if (array.get(i) > maxV) {
+                maxV = array.get(i);
+            }
+        }
+        return maxV;
+    }
 
-	public static double sum(ArrayList<Double> array) {
-		double sumv = 0;
-		for (int i = 0; i < array.size(); i++) {
-			sumv += array.get(i);
-		}
-		return sumv;
-	}
+    public static double sum(ArrayList<Double> array) {
+        double sumv = 0;
+        for (int i = 0; i < array.size(); i++) {
+            sumv += array.get(i);
+        }
+        return sumv;
+    }
 
-	public static double calculateMean(Number[] values) {
-		return calculateMean(values, true);
-	}
+    public static double calculateMean(Number[] values) {
+        return calculateMean(values, true);
+    }
 
     public static double calculateMean(Number[] values,
             boolean includeNullAndNaN) {
@@ -49,8 +49,7 @@ public abstract class Stat {
             // treat nulls the same as NaNs
             if (values[i] != null) {
                 current = values[i].doubleValue();
-            }
-            else {
+            } else {
                 current = Double.NaN;
             }
             // calculate the sum and count
@@ -63,12 +62,12 @@ public abstract class Stat {
         return result;
     }
 
-	/*
+    /*
 	 *
-	 */
+     */
     public static double getStdDev(Number[] data) {
 
-    	double avg = calculateMean(data);
+        double avg = calculateMean(data);
         double sum = 0.0;
 
         for (int counter = 0; counter < data.length; counter++) {
@@ -85,7 +84,7 @@ public abstract class Stat {
 
         if (xData.length != yData.length) {
             throw new IllegalArgumentException(
-                "Statistics.getLinearFit(): array lengths must be equal.");
+                    "Statistics.getLinearFit(): array lengths must be equal.");
         }
 
         double[] result = new double[2];
@@ -101,10 +100,9 @@ public abstract class Stat {
     /*
      *
      */
-
     public static double getSlope(Number[] xData, Number[] yData) {
 
-    	if (xData.length != yData.length) {
+        if (xData.length != yData.length) {
             throw new IllegalArgumentException("Array lengths must be equal.");
         }
 
@@ -115,7 +113,6 @@ public abstract class Stat {
         // b = ------------------------------------
         //     sum (x^2) - (sum(x)^2 / n
         // *************************************************
-
         // sum of x, x^2, x * y, y
         double sx = 0.0, sxx = 0.0, sxy = 0.0, sy = 0.0;
         int counter;
@@ -123,7 +120,7 @@ public abstract class Stat {
             sx = sx + xData[counter].doubleValue();
             sxx = sxx + Math.pow(xData[counter].doubleValue(), 2);
             sxy = sxy + yData[counter].doubleValue()
-                      * xData[counter].doubleValue();
+                    * xData[counter].doubleValue();
             sy = sy + yData[counter].doubleValue();
         }
         return (sxy - (sx * sy) / counter) / (sxx - (sx * sx) / counter);
@@ -135,9 +132,9 @@ public abstract class Stat {
      */
     public static double getCorrelation(Number[] data1, Number[] data2) {
 
-    	if (data1.length != data2.length) {
+        if (data1.length != data2.length) {
             throw new IllegalArgumentException(
-                "'data1' and 'data2' arrays must have same length."
+                    "'data1' and 'data2' arrays must have same length."
             );
         }
         int n = data1.length;
@@ -165,11 +162,22 @@ public abstract class Stat {
                 * (n * sumY2 - sumY * sumY), 0.5);
     }
 
-	public static double mean(ArrayList<Double> data) {
+    public static double mean(ArrayList<Double> data) {
+        return sum(data) / data.size();
+    }
 
-		return sum(data)/data.size();
-	}
-
-
+    /**
+     * Calculate geometric average of a vector.
+     *
+     * @param vector
+     * @return
+     */
+    public static double geometricAverage(ArrayList<Double> vector) {
+        double prod = 1.;
+        for (int i = 0; i <= vector.size() - 1; i++) {
+            prod *= vector.get(i);
+        }
+        return Math.pow(prod, (1.0 / vector.size()));
+    }
 
 }

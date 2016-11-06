@@ -16,7 +16,7 @@
  */
 package nfracgen.stage;
 
-import nfracgen.javafxapplication.JavaFXFracGenApplication;
+import nfracgen.javafxapplication.FracGenApplication;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -40,7 +40,7 @@ public class StageOpenData {
     public TextField tfFilename;
 
     public void createStage() throws IOException {
-        FXMLLoader loader = new FXMLLoader(JavaFXFracGenApplication.getInstance().getClass()
+        FXMLLoader loader = new FXMLLoader(FracGenApplication.getInstance().getClass()
                 .getResource("/views/stage_opendata.fxml"));        
         GridPane parent = loader.load();
         Scene scene = new Scene(parent);

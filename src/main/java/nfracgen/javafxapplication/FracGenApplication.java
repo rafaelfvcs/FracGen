@@ -1,31 +1,22 @@
 package nfracgen.javafxapplication;
 
-import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import nfracgen.analysis.Scanline;
-import nfracgen.model.AnalysisFile;
-import nfracgen.model.Scl;
-import nfracgen.statistic.Stat;
-import nfracgen.util.ArrayOperation;
-import nfracgen.util.OpenScanlineData;
-import nfracgen.util.RoundUtil;
 
-public class JavaFXFracGenApplication extends Application {
+
+public class FracGenApplication extends Application {
     
-    private static JavaFXFracGenApplication instance;
+    private static FracGenApplication instance;
     
     
-    public JavaFXFracGenApplication(){
+    public FracGenApplication(){
         instance = this;    
     }
     
-    public static JavaFXFracGenApplication getInstance(){
+    public static FracGenApplication getInstance(){
         return instance;
     }        
     

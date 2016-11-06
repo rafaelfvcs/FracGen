@@ -2,9 +2,6 @@ package nfracgen.stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.beans.property.ReadOnlyDoubleWrapper;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -12,17 +9,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import nfracgen.analysis.Scanline;
-import nfracgen.javafxapplication.JavaFXFracGenApplication;
+import nfracgen.javafxapplication.FracGenApplication;
 import nfracgen.model.AnalysisFile;
 import nfracgen.model.Scl;
+import nfracgen.statistic.Mode;
 import nfracgen.statistic.Stat;
+import nfracgen.statistic.StdDeviation;
+import nfracgen.statistic.Variance;
 import nfracgen.util.ArrayOperation;
 import nfracgen.util.OpenScanlineData;
 import nfracgen.util.RoundUtil;
@@ -46,7 +42,7 @@ public class MainStage {
     }
     
     public static void showMainStage() throws IOException {
-        root = FXMLLoader.load(JavaFXFracGenApplication.getInstance().
+        root = FXMLLoader.load(FracGenApplication.getInstance().
                 getClass().getResource("/views/LayoutMain.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
@@ -65,7 +61,7 @@ public class MainStage {
         ObservableList<Double> olAp = FXCollections.observableArrayList(sl.getApList());
         ArrayList<Scl> list = new ArrayList<>();
         
-        for (int i = 0; i < sl.fracturesCount(); i++) {
+        for (int i = 0; i < sl.getFracCount(); i++) {
             
             list.add(new Scl(RoundUtil.round(sl.getApList().get(i), 3),
                     RoundUtil.round(sl.getSpList().get(i), 3)));
@@ -85,7 +81,7 @@ public class MainStage {
         //sclName.setText(dataTypeScl.getSelectionModel().getSelectedItem());
         Label sclNumData = (Label) getRoot().lookup("#sclNumData");
         
-        sclNumData.setText(String.valueOf(sl.fracturesCount()));
+        sclNumData.setText(String.valueOf(sl.getFracCount()));
         
         double sclapmean = Stat.calculateMean(ArrayOperation.arrayListToArray(sl.getApList()));
         double sclapstd = Stat.getStdDev(ArrayOperation.arrayListToArray(sl.getApList()));
@@ -111,6 +107,35 @@ public class MainStage {
         sclCVap.setText(String.valueOf(RoundUtil.round(sclcvap, 3)));
         sclCVsp.setText(String.valueOf(RoundUtil.round(sclcvsp, 3)));
         sclName.setStyle("-fx-background-color: #FF2"); //mudar para css
+        
+        /**
+         * Tab Statistics
+         * 
+         * tab_statistics.fxml
+         */
+        Label lMinValue = (Label)getRoot().lookup("#lMinValue");
+        lMinValue.setText(String.valueOf(Stat.min(file.getScanLine().getApList())));
+        
+        Label lMaxValue = (Label)getRoot().lookup("#lMaxValue");
+        lMaxValue.setText(String.valueOf(Stat.max(file.getScanLine().getApList())));
+        
+        Label lAvgValue = (Label)getRoot().lookup("#lAvgValue");
+        lAvgValue.setText(String.valueOf(Stat.mean(file.getScanLine().getApList())));
+        
+        Label lModeValue = (Label) getRoot().lookup("#lModeValue");
+        lModeValue.setText(String.valueOf(Mode.getMode(file.getScanLine().getApList())));
+        
+        Label lStdDevValue = (Label)getRoot().lookup("#lStdDevValue");
+        lStdDevValue.setText(String.valueOf(StdDeviation.stdDeviation(file.getScanLine().getApList())));
+        
+        Label lVariance = (Label) getRoot().lookup("#lVariance");
+        lVariance.setText(String.valueOf(Variance.variance(file.getScanLine().getApList())));
+        
+        Label lGeoAvg = (Label) getRoot().lookup("#lGeoAvg");
+        lGeoAvg.setText(String.valueOf(Stat.geometricAverage(file.getScanLine().getApList())));
+        
+        Label lCount = (Label) getRoot().lookup("#lCount");
+        lCount.setText(String.valueOf(file.getScanLine().getFracCount()));
     }
     
 }

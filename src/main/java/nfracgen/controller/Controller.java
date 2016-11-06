@@ -1,7 +1,7 @@
 package nfracgen.controller;
 
 import nfracgen.analysis.Scanline;
-import nfracgen.javafxapplication.JavaFXFracGenApplication;
+import nfracgen.javafxapplication.FracGenApplication;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -1447,8 +1447,7 @@ public class Controller {
     @FXML
     protected void dialogOpen() throws IOException {
         final FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(
-                JavaFXFracGenApplication.getInstance().stageOpenData);
+        File file = fileChooser.showOpenDialog(FracGenApplication.getInstance().stageOpenData);
         if (file != null) {
             if (file.exists()) {
                 if (file.getAbsolutePath() != null) {
