@@ -998,57 +998,6 @@ public class Controller {
     //Calculate and plot power law
     @FXML
     public void plotPowerLaw() {
-        //TODO: Colocar no formato de carregamento - mudar o nome do bot�o
-        //DataSCL d = OpenScanlineData.openScl("src/main/resources/data.dat");
-        //File file = dialogOpenFile("*.dat");
-        //PowerLaw pl = PowerLawOrtega.findCoefficients(fileOpen.toString());
-
-        PowerLaw pl;
-
-        if (dataTypeScl.getSelectionModel().getSelectedItem().equals("Load SCL")) {
-            pl = PowerLawOrtega.findCoefficients("src/main/resources/data.dat");
-        } else {
-            pl = PowerLawOrtega.findCoefficients(listNew);
-            setInfoScanline(listNew);
-        }
-
-        setInfoPowerLaw(pl);
-
-//		coefA.setText(String.valueOf(RoundUtil.round(pl.getA(),3)));
-//		coefK.setText(String.valueOf(RoundUtil.round(pl.getK(),3)));
-//		sclr2.setText(String.valueOf(RoundUtil.round(pl.getR2(),2)));
-//
-//		coefA.setStyle("-fx-border-style: solid;-fx-border-color:red ");
-//		coefK.setStyle("-fx-border-style: solid;-fx-border-color:red ");
-//		sclr2.setStyle("-fx-border-style: solid;-fx-border-color:red ");
-        //System.out.println(pl.getA());
-        gPowerLaw.setTitle("Scanline " + dataTypeScl.getSelectionModel().getSelectedItem());
-
-        /*
-        NumberAxis xAxis = new NumberAxis();
-        xAxis.setLabel("Year");
-
-        // Customize the x-axis, so points are scattred uniformly
-        xAxis.setAutoRanging(true);
-
-
-        xAxis.setLowerBound(1900);
-        xAxis.setUpperBound(2300);
-        xAxis.setTickUnit(50);
-//
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("Population (in millions)");
-
-         */
-//        br.com.fracgen.application.LogarithmicAxis  yAxis = new br.com.fracgen.application.LogarithmicAxis();
-//        br.com.fracgen.application.LogarithmicAxis  xAxis = new br.com.fracgen.application.LogarithmicAxis();
-        //Set the data for the chart
-        ObservableList<XYChart.Series<Number, Number>> chartData
-                = XYChartDataUtil.getPowerLaw();
-
-        gPowerLaw.setData(chartData);
-
-        plotLogLog();
 
     }
 
@@ -1062,25 +1011,6 @@ public class Controller {
         coefA.setStyle("-fx-border-style: solid;-fx-border-color:red ");
         coefK.setStyle("-fx-border-style: solid;-fx-border-color:red ");
         sclr2.setStyle("-fx-border-style: solid;-fx-border-color:red ");
-    }
-
-    public void plotLogLog() {
-        Double[][] data = PowerLawOrtega.findFreqApertureLogOrtega("src/main/resources/data.dat");
-
-//		(Math.pow(data[i][0], 10), Math.pow(data[i][1],10))
-        final XYSeries series = new XYSeries("data");
-
-        for (int i = 0; i < 10; i++) {
-            System.out.println(data[i][0] + "  " + data[i][1]);
-            series.add(Math.pow(data[i][0], 10), Math.pow(data[i][1], 10));
-        }
-
-        demo = new LogLog("Teste", series);
-        demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
-        demo.setVisible(true);
-
-        //demo.setDefaultCloseOperation(demo.DO_NOTHING_ON_CLOSE);
     }
 
     /*

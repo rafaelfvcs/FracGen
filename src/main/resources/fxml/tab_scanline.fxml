@@ -26,7 +26,7 @@
                 <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <items>
                         <Button fx:id="btn_scanline_load" mnemonicParsing="false" onAction="#loadSclData" text="Load" />
-                        <Button fx:id="btn_scanline_plotpowerlaw" mnemonicParsing="false" onAction="#plotPowerLaw" text="Plot PL" />
+                        <Button fx:id="btn_scanline_plotpowerlaw" mnemonicParsing="false" onAction="#plotPowerLaw" text="Estimate PL" />
                         <Button fx:id="btn_scanline_save" mnemonicParsing="false" onAction="#saveSclData" text="Save" />
                         <Button fx:id="btn_scanline_clear" mnemonicParsing="false" onAction="#sclInfoClear" text="Clear" />
                         <Button fx:id="btn_scanline_advancedfilter" mnemonicParsing="false" onAction="#advancedFilter" text="Adv Filter" />
@@ -78,7 +78,11 @@
                 </SplitPane>
             </left>
             <center>
-                <javafx.scene.chart.LineChart fx:id="gPowerLaw" axisSortingPolicy="NONE" title="Lei de Potência" BorderPane.alignment="CENTER">
+                <javafx.scene.chart.LineChart 
+                    fx:id="gPowerLaw" 
+                    axisSortingPolicy="NONE" 
+                    title="Lei de Potência" 
+                    BorderPane.alignment="CENTER">
                     <xAxis>
                         <NumberAxis label="Aperture (mm)" side="BOTTOM" />
                     </xAxis>

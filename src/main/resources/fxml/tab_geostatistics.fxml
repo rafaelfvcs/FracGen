@@ -13,14 +13,68 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.ScatterChart?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-    <children>
-        <BorderPane layoutX="236.0" layoutY="64.0" prefHeight="312.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<GridPane 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    prefHeight="180.0" 
+    prefWidth="200.0">    
+    <columnConstraints>
+        <ColumnConstraints percentWidth="15" ></ColumnConstraints>
+        <ColumnConstraints percentWidth="15" ></ColumnConstraints>
+        <ColumnConstraints percentWidth="70" ></ColumnConstraints>
+    </columnConstraints>
+        <rowConstraints>
+            <RowConstraints percentHeight="10"></RowConstraints> 
+            <RowConstraints percentHeight="10"></RowConstraints> 
+            <RowConstraints percentHeight="10"></RowConstraints> 
+            <RowConstraints percentHeight="70"></RowConstraints> 
+        </rowConstraints>
+        <Label
+            GridPane.columnIndex="0"
+            GridPane.rowIndex="0"            
+            text="Fracture Intensity">
+                
+        </Label>
+        <Label
+            GridPane.columnIndex="0"
+            GridPane.rowIndex="1"
+            text="Average Spacing">
+        </Label>
+        <Label
+            GridPane.columnIndex="0"
+            GridPane.rowIndex="2"
+            text="Scanline lenght">
+        </Label>
+                    
+        <Label
+            fx:id="lFracInt"
+            GridPane.columnIndex="1"
+            GridPane.rowIndex="0"                
+            text=" ">                
+        </Label>
+        
+        <Label
+            fx:id="lAvgSpacing"
+            GridPane.columnIndex="1"
+            GridPane.rowIndex="1"                
+            text=" ">
+        </Label>
+        <Label
+            fx:id="lScanLen"
+            GridPane.columnIndex="1"
+            GridPane.rowIndex="2"
+            text=" ">
+        </Label>                    
+        
+        <BorderPane 
+            
+            GridPane.columnIndex="2"
+            GridPane.rowIndex="0"
+            GridPane.rowSpan="4" >
             <left>
                 <GridPane BorderPane.alignment="CENTER">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -100,5 +154,5 @@
                 </GridPane>
             </center>
         </BorderPane>
-    </children>
-</AnchorPane>
+    
+</GridPane>
