@@ -1,16 +1,25 @@
 .button{
 
-  -fx-background-color:#27998f; /* Verde base para a interface gráfica do software */
+  -fx-background-color:#27998f; /* Verde base para a interface grï¿½fica do software */
 
 }
 
 .text-field{
-	-fx-background-color:#2990ea; /* Azul base para a interface gráfica do software */
+	-fx-background-color:#2990ea; /* Azul base para a interface grï¿½fica do software */
 }
 
 .alert{
-	-fx-background-color:2990ea;
+	-fx-background-color:#2990ea;
 }
+
+#scFractureIntensity .default-color0.chart-series-line {
+    -fx-stroke: transparent;    
+}
+
+#scFractureIntensity .default-color1.chart-line-symbol {
+    -fx-background-color: transparent;
+}
+
 
 
 
