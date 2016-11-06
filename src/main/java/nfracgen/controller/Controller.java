@@ -21,7 +21,6 @@ import nfracgen.util.RoundUtil;
 import nfracgen.util.SaveFracturesData;
 import nfracgen.util.SaveScanlineData;
 import nfracgen.util.StatsSCL;
-import nfracgen.util.XYChartDataUtil;
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -32,7 +31,6 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -62,6 +60,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import nfracgen.model.AnalysisFile;
 import nfracgen.stage.MainStage;
+import nfracgen.stage.PowerLawStage;
 import nfracgen.stage.StageOpenData;
 
 public class Controller {
@@ -995,10 +994,14 @@ public class Controller {
         }
     }
 
-    //Calculate and plot power law
+    /**
+     * Create stage for Power Law plot
+     * @throws IOException 
+     */
     @FXML
-    public void plotPowerLaw() {
-
+    protected void plotPowerLaw() throws IOException {
+        PowerLawStage stagePL = new PowerLawStage();
+        stagePL.createStage();
     }
 
     // Informações da Lei de potencia
