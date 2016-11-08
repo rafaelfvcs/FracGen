@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+
+<AnchorPane 
+    xmlns:fx="http://javafx.com/fxml/1"
+    id="AnchorPane" 
+    minHeight="0.0" 
+    minWidth="0.0" 
+    prefHeight="180.0" 
+    prefWidth="200.0"
+    styleClass="mainFxmlClass" 
+    fx:controller="nfracgen.controller.Controller">
+    <stylesheets>
+        <URL value="@/styles/styles.css"/>
+    </stylesheets>
+    
+    <children>
+        <BorderPane layoutX="250.0" layoutY="74.0" prefHeight="381.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <center>
+                <TabPane fx:id="tabPane_modeling" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                    <tabs>
+                        <Tab fx:id="tab_modeling_2d" text="2D">
+                            <content>
+                                <fx:include source="/fxml/tab_modeling_2d.fxml"/>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="tab_modeling_3d" text="3D">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </center>
+        </BorderPane>
+    </children>
+    
+</AnchorPane>

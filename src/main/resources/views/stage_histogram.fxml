@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane 
+    id="WhitePane" 
+    prefHeight="600.0" 
+    prefWidth="800.0" 
+    styleClass="mainFxmlClass" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="nfracgen.controller.Stage_histogramController">
+    <stylesheets>
+        <URL value="@/styles/styles.css"/>
+    </stylesheets>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="1"  
+        text="Column">
+    </Label>
+    <ComboBox 
+        fx:id="cbColumnIndex"
+        GridPane.columnIndex="1" 
+        GridPane.rowIndex="1"  
+        onAction="#cbColumnAction" 
+    >
+    </ComboBox>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="2" 
+        text="Number of class intervals"
+    >        
+    </Label>
+    <TextField 
+        fx:id="tfIntervals"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="2"
+        text="10"    >
+    </TextField>
+    
+    <Label
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="3" 
+        text="Data cutoff values:">
+    </Label>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="4" 
+        text="Minimum value">
+    </Label>
+    <TextField 
+        fx:id="tfMinValue"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="4" >
+    </TextField>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="5" 
+        text="Maximum value">
+    </Label>
+    <TextField 
+        fx:id="tfMaxValue"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="5" >
+    </TextField>
+    
+    <ButtonBar 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="6"
+        GridPane.columnSpan="2">
+        
+        <buttons>
+            <Button 
+                ButtonBar.buttonData="APPLY"
+                text="Plot"
+                onAction="#plot" >
+            </Button> 
+            <Button 
+                ButtonBar.buttonData="BACK_PREVIOUS"
+                text="Clear"
+                onAction="#clear">
+            </Button> 
+            <Button 
+                ButtonBar.buttonData="CANCEL_CLOSE"
+                text="Cancel">
+            </Button> 
+        </buttons>
+    </ButtonBar>   
+    
+    <javafx.scene.chart.BarChart 
+        fx:id="bcHistogram"
+        GridPane.columnIndex="2"
+        GridPane.rowIndex="0"
+        GridPane.rowSpan="7" >
+        <xAxis>
+            <javafx.scene.chart.CategoryAxis />
+        </xAxis>
+        <yAxis>
+            <javafx.scene.chart.NumberAxis />
+        </yAxis>
+    </javafx.scene.chart.BarChart>  
+</GridPane>

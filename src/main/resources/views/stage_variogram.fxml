@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane 
+    id="WhitePane" 
+    prefHeight="400.0" 
+    prefWidth="600.0" 
+    styleClass="mainFxmlClass" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="nfracgen.controller.Stage_variogramController">
+    <stylesheets>
+        <URL value="@/styles/styles.css"/>
+    </stylesheets>
+    
+    <columnConstraints>
+        <ColumnConstraints percentWidth="20"/>
+        <ColumnConstraints percentWidth="20"/>
+        <ColumnConstraints percentWidth="60"/>   
+    </columnConstraints>
+    
+    <Label
+        GridPane.columnIndex="0" 
+        GridPane.rowIndex="1" 
+        text="Column X">
+    </Label>
+    <ComboBox 
+        fx:id="cbX"
+        GridPane.columnIndex="1" 
+        GridPane.rowIndex="1"
+    >
+    </ComboBox>
+    
+    <Label 
+        GridPane.columnIndex="0" 
+        GridPane.rowIndex="2"
+        text="Column Y">
+    </Label>
+    <ComboBox 
+        fx:id="cbY"
+        GridPane.columnIndex="1" 
+        GridPane.rowIndex="2"
+    >
+    </ComboBox>
+    
+    <Label 
+        GridPane.columnIndex="0" 
+        GridPane.rowIndex="3"
+        text="Column content">        
+    </Label>
+    <ComboBox 
+        fx:id="cbContent"
+        GridPane.columnIndex="1" 
+        GridPane.rowIndex="3"
+    >
+    </ComboBox>
+    
+    <Label 
+        GridPane.columnIndex="0" 
+        GridPane.rowIndex="4"
+        text="Initial value">
+    </Label>
+    <TextField
+        fx:id="tfInitial"
+        GridPane.columnIndex="1" 
+        GridPane.rowIndex="4"
+    >
+    </TextField>
+    
+    <Label 
+        GridPane.columnIndex="0" 
+        GridPane.rowIndex="5"
+        text="Step size">
+    </Label>
+    <TextField 
+        fx:id="tfStep"
+        GridPane.columnIndex="1" 
+        GridPane.rowIndex="5"
+    >
+    </TextField>
+    
+    <Label 
+        GridPane.columnIndex="0" 
+        GridPane.rowIndex="6"
+        text="Maximum distance">
+    </Label>
+    <TextField 
+        fx:id="tfMax"
+        GridPane.columnIndex="1" 
+        GridPane.rowIndex="6"
+    >
+    </TextField>
+    
+    <Label 
+        GridPane.columnIndex="0" 
+        GridPane.rowIndex="7"
+        text="Min angle tolerance">
+    </Label>
+    <TextField 
+        fx:id="tfMinAngle"
+        GridPane.columnIndex="1" 
+        GridPane.rowIndex="7"
+    >
+    </TextField>
+    
+    <Label
+        GridPane.columnIndex="0" 
+        GridPane.rowIndex="8"
+        text="Max angle tolerance">
+    </Label>
+    <TextField 
+        fx:id="tfMaxAngle"
+        GridPane.columnIndex="1" 
+        GridPane.rowIndex="8"
+    >
+    </TextField>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="9"
+        GridPane.columnSpan="2"
+        text="Cutoff values">
+        
+    </Label>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="10"
+        text="min"    >        
+    </Label>
+    <TextField 
+        fx:id="tfMinValue"
+        GridPane.columnIndex="1" 
+        GridPane.rowIndex="10"
+    >        
+    </TextField>
+    
+    <Label
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="11"
+        text="max">
+    </Label>
+    <TextField 
+        fx:id="tfMaxValue"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="11"  >
+        
+    </TextField>
+    
+    <ButtonBar 
+        GridPane.columnIndex="0" 
+        GridPane.rowIndex="12"
+        GridPane.columnSpan="2" 
+    >
+        <buttons>
+            <Button 
+                ButtonBar.buttonData="APPLY"                
+                text="Plot">
+            </Button> 
+            <Button 
+                ButtonBar.buttonData="CANCEL_CLOSE"
+                text="Cancel">
+            </Button>             
+        </buttons>
+    </ButtonBar>
+    
+    <javafx.scene.chart.LineChart 
+        fx:id="lcVariogram"
+        GridPane.columnIndex="2" 
+        GridPane.rowIndex="0"
+        GridPane.rowSpan="12">
+        <xAxis>
+            <javafx.scene.chart.NumberAxis 
+                label="Distance">
+            </javafx.scene.chart.NumberAxis>
+        </xAxis>
+        <yAxis>
+            <javafx.scene.chart.NumberAxis 
+                label="Semivariance" >
+            </javafx.scene.chart.NumberAxis>
+        </yAxis>
+    </javafx.scene.chart.LineChart>
+    
+    <ScrollPane 
+        GridPane.columnIndex="2" 
+        GridPane.rowIndex="12"
+    >
+        <fx:include source="/fxml/pane_curvefit.fxml"/>
+        
+    </ScrollPane>
+    
+</GridPane>

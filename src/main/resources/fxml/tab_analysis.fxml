@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.StackedAreaChart?>
+<?import javafx.scene.chart.StackedBarChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.ScatterChart?>
+
+<AnchorPane 
+    id="AnchorPane" 
+    minHeight="0.0" 
+    minWidth="0.0" 
+    prefHeight="180.0"
+    prefWidth="200.0"
+    styleClass="mainFxmlClass" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="nfracgen.controller.Controller">
+    <stylesheets>
+        <URL value="@/styles/styles.css"/>
+    </stylesheets>
+    
+    <children>
+        <BorderPane layoutX="242.0" layoutY="91.0" prefHeight="381.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <items>
+                        <Button fx:id="btn_analysis_new" mnemonicParsing="false" text="New" />
+                        <Button fx:id="btn_analysis_load" mnemonicParsing="false" text="Load" />
+                        <Button fx:id="btn_analysis_edit" mnemonicParsing="false" text="Edit" />
+                        <Button fx:id="btn_analysis_save" mnemonicParsing="false" text="Save" />
+                    </items>
+                </ToolBar>
+            </top>
+            <center>
+                <TabPane fx:id="tabPane_analysis" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                    <tabs>
+                        <Tab fx:id="tab_ap_statistics" text="Ap Statistics">
+                            <content>
+                                <fx:include source="/fxml/tab_ap_statistics.fxml"></fx:include>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="tab_sp_statistics" text="Sp Statistics">
+                            <content>
+                                <fx:include source="/fxml/tab_sp_statistics.fxml"></fx:include>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="tab_analysis_montecarlo" text="Monte Carlo">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <BorderPane layoutX="219.0" layoutY="44.0" prefHeight="312.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="tab_analysis_geostatistics" text="Geostatistics">
+                            <content>
+                                <fx:include source="/fxml/tab_geostatistics.fxml"></fx:include>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>

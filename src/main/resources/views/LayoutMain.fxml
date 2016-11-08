@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.ScatterChart?>
+<?import javafx.scene.chart.StackedAreaChart?>
+<?import javafx.scene.chart.StackedBarChart?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane 
+    fx:id="WhitePane" 
+    maxHeight="-Infinity"
+    maxWidth="-Infinity" 
+    minHeight="-Infinity" 
+    minWidth="-Infinity" 
+    prefHeight="480.0" 
+    prefWidth="640.0" 
+    xmlns="http://javafx.com/javafx/8.0.65" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="nfracgen.controller.Controller">
+    <top>
+        <MenuBar styleClass="alert" BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="_File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="New" />
+                        <MenuItem mnemonicParsing="false" text="Open" />
+                        <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="_Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Load" />
+                        <MenuItem mnemonicParsing="false" text="Save" />
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="_Study">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Scanline" />
+                        <MenuItem mnemonicParsing="false" text="Statistics" />
+                        <MenuItem mnemonicParsing="false" text="Monte Carlo" />
+                        <MenuItem mnemonicParsing="false" text="Modeling 2D" />
+                        <MenuItem mnemonicParsing="false" text="Modeling 3D" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="_Plot">
+                    <items>
+                        <MenuItem 
+                            mnemonicParsing="false" 
+                            text="Histogram"
+                            onAction="#histogramStage" /> 
+                        <MenuItem 
+                            mnemonicParsing="false" 
+                            text="Line Chart"
+                            onAction="#linechartStage"/>
+                        <MenuItem 
+                            mnemonicParsing="false" 
+                            text="Scatter Chart"
+                            onAction="#scatterchartStage" />
+                        <MenuItem 
+                            mnemonicParsing="false" 
+                            text="Variogram"
+                            onAction="#variogramStage" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="_Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="MaximaProjects" />
+                        <MenuItem mnemonicParsing="false" text="Project" />
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <bottom>
+        <TextField BorderPane.alignment="CENTER" />
+    </bottom>
+    <center>
+        <BorderPane id="background2" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <top>
+                <ToolBar fx:id="btnbar" styleClass="segmented-button-bar" BorderPane.alignment="CENTER">
+                    <items>
+                        <Button 
+                            fx:id="btn_toolbar_mc" 
+                            mnemonicParsing="false" 
+                            onAction="#goToMC" 
+                            prefWidth="50.0" 
+                            styleClass="first" 
+                            text="MC" />
+                        <Button 
+                            fx:id="btn_toolbar_2d" 
+                            layoutX="10.0" 
+                            layoutY="13.0"
+                            mnemonicParsing="false" 
+                            onAction="#goTo2D" 
+                            prefWidth="50.0" text="2D" />
+                        <Button 
+                            fx:id="btn_toolbar_3d" 
+                            layoutX="64.0" 
+                            layoutY="13.0" 
+                            mnemonicParsing="false" 
+                            onAction="#goTo3D" 
+                            prefWidth="50.0" text="3D" />
+                        <Button 
+                            fx:id="btn_toolbar_stats" 
+                            layoutX="118.0" 
+                            layoutY="13.0" 
+                            mnemonicParsing="false" 
+                            onAction="#goToStatistic" 
+                            prefWidth="50.0" 
+                            text="Stats" />
+                        <Button 
+                            fx:id="btn_toolbar_geo" 
+                            layoutX="172.0" 
+                            layoutY="13.0" 
+                            mnemonicParsing="false" 
+                            onAction="#goToGeoModeling" 
+                            prefWidth="50.0" 
+                            styleClass="last"
+                            text="Geo" />
+                        <Button 
+                            fx:id="btn_toolbar_android" 
+                            mnemonicParsing="false" 
+                            text="Android" />
+                    </items>
+                </ToolBar>
+            </top>
+            <center>
+                <TabPane 
+                    fx:id="tabPane_main" 
+                    prefHeight="200.0" 
+                    prefWidth="200.0" 
+                    tabClosingPolicy="UNAVAILABLE" 
+                    BorderPane.alignment="CENTER">
+                    <tabs>
+                        <Tab 
+                            fx:id="tab_main_dbconnect" 
+                            text="DB connect">
+                            <content>
+                                <fx:include source="/fxml/tab_dbconnect.fxml"></fx:include>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="tab_main_scanline" text="Scanline">
+                            <content>
+                                <fx:include source="/fxml/tab_scanline.fxml"></fx:include>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="tab_main_analysis" text="Analysis">
+                            <content>
+                                <fx:include source="/fxml/tab_analysis.fxml"></fx:include>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="tab_main_modeling" text="Modeling">
+                            <content>
+                                <fx:include source="/fxml/tab_modeling.fxml"></fx:include>
+                            </content>
+                        </Tab>
+                        <Tab 
+                            fx:id="tab_main_outputs" 
+                            text="Outputs">
+                            <content>
+                                <fx:include source="/fxml/tab_output.fxml"/>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </center>
+        </BorderPane>
+    </center>
+</BorderPane>

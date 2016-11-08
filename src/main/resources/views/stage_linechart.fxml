@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane 
+    id="WhitePane" 
+    prefHeight="600.0" 
+    prefWidth="800.0" 
+    styleClass="mainFxmlClass" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="nfracgen.controller.Stage_linechartController">
+    <stylesheets>
+        <URL value="@/styles/styles.css"/>
+    </stylesheets>
+    
+    <columnConstraints>
+        <ColumnConstraints percentWidth="15" ></ColumnConstraints>
+        <ColumnConstraints percentWidth="15" ></ColumnConstraints>
+        <ColumnConstraints percentWidth="15" ></ColumnConstraints>
+        <ColumnConstraints percentWidth="55" ></ColumnConstraints>
+    </columnConstraints>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="1" 
+        text="Graph label:"/>
+    <TextField 
+        fx:id="tfGraphLabel"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="1" >
+    </TextField>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="2" 
+        text="X Axis label:" />
+    <TextField 
+        fx:id="tfXLabel"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="2"
+    />
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="3" 
+        text="Y Axis label:"/>
+    <TextField         
+        fx:id="tfYLabel"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="3" /> 
+
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="4" 
+        text="X field data:"/>
+    <ComboBox 
+        fx:id="comboBoxX"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="4" >
+    </ComboBox>
+    
+    <CheckBox fx:id="cbXSorted" 
+              GridPane.columnIndex="2"
+              GridPane.rowIndex="4" 
+              selected="false"
+              text="Sorted"    >
+    </CheckBox>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="5" 
+        text="Y field data:"/>
+    <ComboBox fx:id="comboBoxY"
+              GridPane.columnIndex="1"
+              GridPane.rowIndex="5" >
+    </ComboBox>
+    
+    <CheckBox 
+        fx:id="cbYSorted" 
+        GridPane.columnIndex="2"
+        GridPane.rowIndex="5" 
+        selected="true"
+        text="Sorted"    >
+    </CheckBox>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="6" 
+        text="Serie Name:"/>
+    <TextField         
+        fx:id="tfSerieLabel"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="6"   >
+    </TextField>
+
+    <ButtonBar GridPane.columnIndex="0"
+               GridPane.rowIndex="7"
+               GridPane.columnSpan="2">  
+        <buttons>
+            <Button         
+                text="Add" 
+                onAction="#plotLine"  />
+            <Button 
+                fx:id="btnCloseLine"
+                text="Close" 
+                onAction="#closeLineStage"/>
+            <Button 
+                text="Clear" 
+                onAction="#clearLineChart"/>
+        </buttons>    
+    
+    </ButtonBar>
+    
+    <javafx.scene.chart.LineChart 
+        fx:id="lineChart"
+        GridPane.columnIndex="3"
+        GridPane.rowIndex="0"
+        GridPane.columnSpan="7"
+        GridPane.rowSpan="8" 
+    >
+        <xAxis>
+            <javafx.scene.chart.CategoryAxis 
+                label="X"                 
+            />                
+        </xAxis>
+        <yAxis>
+            <javafx.scene.chart.CategoryAxis 
+                label="Y"
+            /> 
+        </yAxis>        
+    </javafx.scene.chart.LineChart>
+</GridPane>

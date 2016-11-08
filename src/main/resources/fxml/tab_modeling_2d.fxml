@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+
+<AnchorPane 
+    id="AnchorPane" 
+    minHeight="0.0" 
+    minWidth="0.0" 
+    prefHeight="180.0" 
+    prefWidth="200.0"
+    styleClass="mainFxmlClass" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="nfracgen.controller.Controller">
+    <stylesheets>
+        <URL value="@/styles/styles.css"/>
+    </stylesheets>
+    
+   
+    <children>
+        <BorderPane layoutX="292.0" layoutY="44.0" prefHeight="352.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <center>
+                <SplitPane dividerPositions="0.15336463223787167" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                            <children>
+                                <Label fx:id="label" layoutX="11.0" layoutY="179.0" text="- Status-" />
+                                <Slider fx:id="slider" layoutX="10.0" layoutY="154.0" prefHeight="14.0" prefWidth="177.0" />
+                                <TextField fx:id="text" layoutX="72.0" layoutY="173.0" prefHeight="25.0" prefWidth="109.0" />
+                                <CheckBox fx:id="checkbox" layoutX="10.0" layoutY="125.0" mnemonicParsing="false" text="Add noise :" />
+                                <Button layoutX="14.0" layoutY="461.0" mnemonicParsing="false" onAction="#drawFratures2d" text="Plot Frats" />
+                                <Label layoutX="10.0" layoutY="5.0" text="Create de 2D model of DFN" />
+                                <ComboBox fx:id="combo_modeling_dataset" layoutX="113.0" layoutY="32.0" prefHeight="25.0" prefWidth="68.0" />
+                                <Label layoutX="13.0" layoutY="39.0" text="Control DataSet:" />
+                                <RadioButton layoutX="10.0" layoutY="74.0" mnemonicParsing="false" text="Random SEED:" />
+                                <RadioButton layoutX="10.0" layoutY="98.0" mnemonicParsing="false" text="Ramdom Complete" />
+                                <Button layoutX="92.0" layoutY="461.0" mnemonicParsing="false" text="CLC" />
+                                <Label layoutX="13.0" layoutY="213.0" text="PDF Aperture:" />
+                                <ComboBox layoutX="98.0" layoutY="209.0" prefHeight="25.0" prefWidth="84.0" />
+                                <Label layoutX="13.0" layoutY="249.0" text="PDF Length:" />
+                                <ComboBox layoutX="98.0" layoutY="245.0" prefHeight="25.0" prefWidth="84.0" />
+                                <TextField layoutX="113.0" layoutY="70.0" prefHeight="25.0" prefWidth="67.0" />
+                                <Button fx:id="btn_modeling_back" layoutX="134.0" layoutY="461.0" mnemonicParsing="false" onAction="#btn_modeling_back" prefHeight="25.0" prefWidth="47.0" text="&lt;|" />
+                                <CheckBox layoutX="15.0" layoutY="433.0" mnemonicParsing="false" text="Permit External Plots" />
+                                <Button fx:id="btn_modeling_save_study_2d" layoutX="14.0" layoutY="530.0" mnemonicParsing="false" onAction="#modelingSaveStudy2D" prefHeight="25.0" prefWidth="168.0" text="Save Study" />
+                                <CheckBox fx:id="check_modeling_refine_2d" layoutX="15.0" layoutY="290.0" mnemonicParsing="false" text="Modeling refine" />
+                                <CheckBox layoutX="15.0" layoutY="317.0" mnemonicParsing="false" text="Choose layer modeling" />
+                                <Slider layoutX="17.0" layoutY="352.0" />
+                                <ToggleButton fx:id="modeling_2d_saveanalysis" layoutX="13.0" layoutY="390.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="166.0" text="SaveModelAnalysis" />
+                                <CheckBox fx:id="check_modeling_2d_holdonresults" layoutX="14.0" layoutY="502.0" mnemonicParsing="false" text="Holdon Results" />
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                            <children>
+                                <BorderPane layoutX="37.0" layoutY="48.0" prefHeight="350.0" prefWidth="465.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <center>
+                                        <TabPane fx:id="pane_modeling" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                                            <tabs>
+                                                <Tab fx:id="tab_modeling_2d_modeling" text="Modeling">
+                                                    <content>
+                                                        <fx:include source="/fxml/tab_modeling_2d_.fxml"></fx:include>
+                                                    </content>
+                                                </Tab>
+                                                <Tab fx:id="tab_modeling_2d_view" text="View">
+                                                    <content>
+                                                        <fx:include source="/fxml/tab_modeling_2d_view.fxml"></fx:include>
+                                                    </content>
+                                                </Tab>
+                                            </tabs>
+                                        </TabPane>
+                                    </center>
+                                </BorderPane>
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>
+
