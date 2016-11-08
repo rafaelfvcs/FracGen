@@ -42,7 +42,7 @@ public class ScatterChartStage {
     public void createStage() throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 FracGenApplication.getInstance().getClass().getResource(
-                        "views/stage_scatter_chart.fxml"));
+                        "/views/stage_scatterchart.fxml"));
         Parent parent = (Parent) loader.load();
 
         /**

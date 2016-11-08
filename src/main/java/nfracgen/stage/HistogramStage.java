@@ -20,8 +20,6 @@ public class HistogramStage {
      * This stage is used for plotting a histogram with many properties defined
      * by the user(cutoff values, number of classes, etc);
      *
-     * View: views/stage_histogram.fxml Controller:
-     * controller/Stage_histogramController.java
      */
 
     private static HistogramStage instance;
@@ -49,7 +47,7 @@ public class HistogramStage {
     public void createStage() throws IOException {
         FXMLLoader loader = new FXMLLoader(FracGenApplication.getInstance().
                 getClass().getResource(
-                        "views/stage_histogram.fxml"));
+                        "/views/stage_histogram.fxml"));
         Parent parent = (Parent) loader.load();
         
         /**

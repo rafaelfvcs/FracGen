@@ -57,9 +57,13 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import nfracgen.model.AnalysisFile;
+import nfracgen.stage.HistogramStage;
+import nfracgen.stage.LineChartStage;
 import nfracgen.stage.MainStage;
 import nfracgen.stage.PowerLawStage;
+import nfracgen.stage.ScatterChartStage;
 import nfracgen.stage.StageOpenData;
+import nfracgen.stage.VariogramStage;
 
 public class Controller {
 
@@ -1415,7 +1419,36 @@ public class Controller {
                     sep, 0, 1, hasHeader);
             file.setScanLine(sl);
             file.setRowsCount(sl.getFracCount());
-            MainStage.getInstance().refreshStats(file);
+            MainStage.setAnalysisFile(file);
+            MainStage.getInstance().refreshStats();
         }
+    }
+    /*
+     * Handle actions for Menu Item "Plot"
+     * TODO: check if getAnalysisFile() is not null before create stage
+     */    
+    @FXML
+    protected void linechartStage() throws IOException{
+        LineChartStage s = 
+                new LineChartStage(MainStage.getInstance().getAnalysisFile());        
+        s.createStage();
+    }
+    @FXML
+    protected void scatterchartStage() throws IOException{
+        ScatterChartStage s = 
+                new ScatterChartStage(MainStage.getInstance().getAnalysisFile());
+        s.createStage();
+    }
+    @FXML
+    protected void histogramStage() throws IOException{
+        HistogramStage s = 
+                new HistogramStage(MainStage.getInstance().getAnalysisFile());
+        s.createStage();    
+    }
+    @FXML
+    protected void variogramStage() throws IOException{
+        VariogramStage s = 
+                new VariogramStage(MainStage.getInstance().getAnalysisFile());
+        s.createStage();    
     }
 }

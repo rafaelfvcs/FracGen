@@ -80,10 +80,22 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="_Plot">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Histogram"/> 
-                        <MenuItem mnemonicParsing="false" text="Line Chart"/>
-                        <MenuItem mnemonicParsing="false" text="Scatter Chart"/>
-                        <MenuItem mnemonicParsing="false" text="Variogram"/>
+                        <MenuItem 
+                            mnemonicParsing="false" 
+                            text="Histogram"
+                            onAction="#histogramStage" /> 
+                        <MenuItem 
+                            mnemonicParsing="false" 
+                            text="Line Chart"
+                            onAction="#linechartStage"/>
+                        <MenuItem 
+                            mnemonicParsing="false" 
+                            text="Scatter Chart"
+                            onAction="#scatterchartStage" />
+                        <MenuItem 
+                            mnemonicParsing="false" 
+                            text="Variogram"
+                            onAction="#variogramStage" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="_Help">

@@ -38,6 +38,7 @@ import nfracgen.util.RoundUtil;
 public class MainStage {
 
     private static MainStage instance;
+    private static AnalysisFile file;
 
     public MainStage() {
         instance = this;
@@ -45,6 +46,13 @@ public class MainStage {
 
     public static MainStage getInstance() {
         return instance;
+    }
+    
+    public static void setAnalysisFile(AnalysisFile file){
+        MainStage.file = file;
+    }
+    public static AnalysisFile getAnalysisFile(){
+        return file;
     }
 
     private static Parent root;
@@ -63,13 +71,11 @@ public class MainStage {
         stage.show();
     }
 
-    public static void refreshStats(AnalysisFile file) throws Exception {
+    public static void refreshStats() throws Exception {
         Scanline sl = OpenScanlineData.openCSVFileToScanline(
                 file.getFileName(), file.getSep(), file.getApColumn(),
                 file.getSpColumn(), file.getHeader());
-        file.setScanLine(sl);
-                
-               
+        file.setScanLine(sl);                               
         /**
          * Populate table with Ap and Sp values from dataset
          * 
@@ -90,12 +96,10 @@ public class MainStage {
         TableView scl_table = (TableView) getRoot().lookup("#scl_table");
         scl_table.setEditable(true);
         scl_table.getColumns().addAll(ap,sp);
-        scl_table.setItems(data);
-        
-        /**
+        scl_table.setItems(data);        
+        /*
          * Set statistics and properties of dataset
-         */
-        
+         */        
         Label sclName = (Label) getRoot().lookup("#sclName");
         ComboBox dataTypeScl = (ComboBox) getRoot().lookup("#dataTypeScl");
         //TODO: fix this
@@ -127,7 +131,6 @@ public class MainStage {
         sclCVap.setText(String.valueOf(RoundUtil.round(sclcvap, 3)));
         sclCVsp.setText(String.valueOf(RoundUtil.round(sclcvsp, 3)));
         sclName.setStyle("-fx-background-color: #FF2"); //mudar para css
-
         /**
          * Tab Ap Statistics
          *
@@ -160,7 +163,6 @@ public class MainStage {
         Label lVariation = (Label) getRoot().lookup("#lVariation");
         lVariation.setText(String.valueOf(
                 VariationCoefficient.variationCoefficient(file.getScanLine().getApList())));
-
         /**
          * Tab Sp Statistics
          *
@@ -193,7 +195,6 @@ public class MainStage {
         Label lSpVariation = (Label) getRoot().lookup("#lSpVariation");
         lSpVariation.setText(String.valueOf(
                 VariationCoefficient.variationCoefficient(file.getScanLine().getSpList())));
-
         /**
          * Plot Power Law
          */
@@ -274,7 +275,7 @@ public class MainStage {
         }
         bcSpHistogram.getData().clear();
         bcSpHistogram.getData().addAll(seriesSp);
-        /**
+        /*
          * Ap Cumulative Frequency Chart
          * 
          * obs: falta colocar os dados em ordem, maior para menor
@@ -294,8 +295,7 @@ public class MainStage {
         }
         lcApFreq.getData().addAll(PlotSeries.plotLineSeries(x, y));
         lcApFreq.getData().addAll(PlotSeries.plotLineSeries(x, y));
-
-        /**
+        /*
          * Sp Cumulative Frequency Chart
          * 
          * obs: falta colocar os dados em ordem, maior para menor

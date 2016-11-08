@@ -51,7 +51,7 @@ public class LineChartStage {
     public void createStage() throws IOException {        
             FXMLLoader loader = new FXMLLoader(
                     FracGenApplication.getInstance().getClass().getResource(
-                            "views/stage_linechart.fxml"));
+                            "/views/stage_linechart.fxml"));
             Parent parent = (Parent) loader.load();
             
             /**

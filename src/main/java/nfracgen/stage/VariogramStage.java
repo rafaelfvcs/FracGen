@@ -33,7 +33,7 @@ public class VariogramStage {
     public void createStage() throws IOException {        
             FXMLLoader loader = new FXMLLoader(
                     FracGenApplication.getInstance().getClass().getResource(
-                            "views/stage_variogram.fxml"));
+                            "/views/stage_variogram.fxml"));
             Parent parent = (Parent) loader.load();                        
 
             /**
