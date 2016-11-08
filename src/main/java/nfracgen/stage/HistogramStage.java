@@ -1,8 +1,6 @@
 package nfracgen.stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,12 +14,7 @@ public class HistogramStage {
 
     /**
      * Custom Histogram Stage
-     *
-     * This stage is used for plotting a histogram with many properties defined
-     * by the user(cutoff values, number of classes, etc);
-     *
      */
-
     private static HistogramStage instance;
 
     private AnalysisFile file;
@@ -49,7 +42,7 @@ public class HistogramStage {
                 getClass().getResource(
                         "/views/stage_histogram.fxml"));
         Parent parent = (Parent) loader.load();
-        
+
         /**
          * Put columns headers on combobox
          */
@@ -65,5 +58,4 @@ public class HistogramStage {
         stageLine.setScene(scene);
         stageLine.show();
     }
-
 }

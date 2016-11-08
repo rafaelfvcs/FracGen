@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+
+<GridPane 
+    id="AnchorPane" 
+    prefHeight="400.0" 
+    prefWidth="600.0" 
+    styleClass="mainFxmlClass" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="nfracgen.controller.Stage_variogramController">
+    
+    <stylesheets>
+        <URL value="@/styles/styles.css"/>
+    </stylesheets>
+    
+    <columnConstraints>
+        <ColumnConstraints percentWidth="20"></ColumnConstraints> 
+        <ColumnConstraints percentWidth="80"></ColumnConstraints> 
+    </columnConstraints>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="0"
+        GridPane.columnSpan="2"
+        text="Curve fitting"    >
+        
+    </Label>
+    
+    <Label
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="1"        
+        text="Model"    >        
+    </Label>
+    <ComboBox 
+        fx:id="cbModel"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="1"        >
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Spherical" />
+                <String fx:value="Exponential" />
+                <String fx:value="Gaussian" />
+            </FXCollections>                  
+        </items>        
+    </ComboBox>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="2"        
+        text="Sill">        
+    </Label>
+    <TextField 
+        fx:id="tfFitSill"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="2"        
+    >   
+    </TextField>     
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="3"        
+        text="Range">        
+    </Label>
+    <TextField 
+        fx:id="tfFitRange"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="3"        
+    >   
+    </TextField>   
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="4"        
+        text="Step">        
+    </Label>
+    <TextField 
+        fx:id="tfFitStep"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="4"        
+    >   
+    </TextField>     
+    
+    <ButtonBar 
+        GridPane.columnIndex="0"
+        GridPane.columnSpan="2" 
+        GridPane.rowIndex="5">
+        <buttons>
+            <Button 
+                ButtonBar.buttonData="APPLY"                 
+                text="Plot">
+                
+            </Button>  
+            <Button 
+                ButtonBar.buttonData="CANCEL_CLOSE" 
+                text="Clear">
+                
+            </Button>  
+        </buttons>
+    </ButtonBar>  
+</GridPane>

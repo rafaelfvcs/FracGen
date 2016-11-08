@@ -108,4 +108,35 @@ public class PlotSeries {
         return series;
     }
     
+    /**
+     * Return a line chart serie for one vector at fixed X value
+     * 
+     * @param valueX
+     * @param columnY
+     * @return
+     * @throws Exception 
+     */
+    public static XYChart.Series plotLineSeries(double valueX, 
+            ArrayList<Double> columnY) throws Exception{
+        
+        XYChart.Series<Number, Number> series = new XYChart.Series();        
+        Task<List<XYChart.Data<Number, Number>>> task;
+        task = new Task<List<XYChart.Data<Number, Number>>>(){
+            @Override
+            protected List<XYChart.Data<Number, Number>> call() throws Exception {
+                List<XYChart.Data<Number, Number>> chartData = new ArrayList<>();
+                for(int i =0; i<columnY.size(); i++){
+                    chartData.add(new XYChart.Data(valueX,
+                            columnY.get(i)));
+                }
+                return chartData;
+            }
+        };        
+        task.setOnSucceeded(e -> series.getData().addAll(task.getValue()));
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+        return series;        
+    }
+    
 }

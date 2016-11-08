@@ -28,14 +28,14 @@ public class DatasetModel {
     private String datasetFilename = "";
     private String separator = "\t";
     private boolean hasHeader = true;
-    private ArrayList<String> headerStrings;
+    private ArrayList<String> headerStrings = new ArrayList<>();
     private int columnsCount = 0;
     private int rowsCount = 0;
     private int spColumn = -1;
     private int apColumn = -1;
 
     public DatasetModel() {
-
+        
     }
 
     public DatasetModel(String datasetName, String filename, String separator,

@@ -64,6 +64,7 @@ import nfracgen.stage.PowerLawStage;
 import nfracgen.stage.ScatterChartStage;
 import nfracgen.stage.StageOpenData;
 import nfracgen.stage.VariogramStage;
+import nfracgen.util.DatasetUtils;
 
 public class Controller {
 
@@ -925,6 +926,7 @@ public class Controller {
      */
     @FXML
     protected Button btnClose;
+
     /**
      * Action for button load scanline data
      */
@@ -998,7 +1000,8 @@ public class Controller {
 
     /**
      * Create stage for Power Law plot
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     @FXML
     protected void plotPowerLaw() throws IOException {
@@ -1415,40 +1418,57 @@ public class Controller {
             file.setApColumn(0);
             file.setSpColumn(1);
             file.setHeader(hasHeader);
+            if (hasHeader) {
+                file.setHeaderStrings(DatasetUtils.getHeaders(sep, sep));
+            } else {
+                ArrayList<String> al = new ArrayList<>(file.getColumnsCount());
+                for(int i = 0; i <file.getColumnsCount(); i++){
+                    if(i==0){al.add("Ap");}
+                    if(i==1){al.add("Sp");}
+                    if(i>1){
+                        al.add("Column "+String.valueOf(i));
+                    }                   
+                }    
+                file.setHeaderStrings(al);
+            }
             Scanline sl = OpenScanlineData.openCSVFileToScanline(tfFilename.getText(),
                     sep, 0, 1, hasHeader);
             file.setScanLine(sl);
             file.setRowsCount(sl.getFracCount());
             MainStage.setAnalysisFile(file);
-            MainStage.getInstance().refreshStats();
+            MainStage.refreshStats();
         }
     }
+
     /*
      * Handle actions for Menu Item "Plot"
      * TODO: check if getAnalysisFile() is not null before create stage
-     */    
+     */
     @FXML
-    protected void linechartStage() throws IOException{
-        LineChartStage s = 
-                new LineChartStage(MainStage.getInstance().getAnalysisFile());        
+    protected void linechartStage() throws IOException {
+        LineChartStage s
+                = new LineChartStage(MainStage.getAnalysisFile());
         s.createStage();
     }
+
     @FXML
-    protected void scatterchartStage() throws IOException{
-        ScatterChartStage s = 
-                new ScatterChartStage(MainStage.getInstance().getAnalysisFile());
+    protected void scatterchartStage() throws IOException {
+        ScatterChartStage s
+                = new ScatterChartStage(MainStage.getAnalysisFile());
         s.createStage();
     }
+
     @FXML
-    protected void histogramStage() throws IOException{
-        HistogramStage s = 
-                new HistogramStage(MainStage.getInstance().getAnalysisFile());
-        s.createStage();    
+    protected void histogramStage() throws IOException {
+        HistogramStage s
+                = new HistogramStage(MainStage.getAnalysisFile());
+        s.createStage();
     }
+
     @FXML
-    protected void variogramStage() throws IOException{
-        VariogramStage s = 
-                new VariogramStage(MainStage.getInstance().getAnalysisFile());
-        s.createStage();    
+    protected void variogramStage() throws IOException {
+        VariogramStage s
+                = new VariogramStage(MainStage.getAnalysisFile());
+        s.createStage();
     }
 }

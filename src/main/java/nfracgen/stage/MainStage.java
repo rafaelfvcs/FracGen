@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -69,8 +70,8 @@ public class MainStage {
         stage.setScene(scene);
         stage.setTitle("NFracGen - alpha");
         stage.show();
-    }
-
+    }    
+    
     public static void refreshStats() throws Exception {
         Scanline sl = OpenScanlineData.openCSVFileToScanline(
                 file.getFileName(), file.getSep(), file.getApColumn(),
@@ -224,7 +225,7 @@ public class MainStage {
         /**
          * Add linear regression to graph
          */
-        LinearRegression lr = new LinearRegression(aperture, cumulative);
+        LinearRegression lr = new LinearRegression(aperture, cumulative);       
 //        double min = MinimumValue.getMinValue(aperture);
 //        double max = MaximumValue.getMaxValue(aperture);
 //        double first = lr.getValueAt(min);
@@ -315,6 +316,16 @@ public class MainStage {
         }
         lcSpFreq.getData().addAll(PlotSeries.plotLineSeries(xSp, ySp));
         lcSpFreq.getData().addAll(PlotSeries.plotLineSeries(xSp, ySp));
+        /*
+        * Tab Geostatistics
+        *
+        * Plot scatter chart 
+        */
+        ScatterChart scDispersion = (ScatterChart)getRoot().lookup("#scDispersion");
+        scDispersion.getData().add(
+                PlotSeries.plotLineSeries(0, file.getScanLine().getDistanceList()));
+       
+        
     }
 
 }
