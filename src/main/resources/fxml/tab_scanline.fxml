@@ -68,8 +68,7 @@
                             <children>
                                 <TableView fx:id="scl_table" layoutX="-33.0" layoutY="14.0" prefHeight="264.0" prefWidth="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
-                                        <TableColumn fx:id="ap" prefWidth="70.0" text="AP" />
-                                        <TableColumn fx:id="sp" prefWidth="75.0" text="SP" />
+                                        
                                     </columns>
                                 </TableView>
                             </children>

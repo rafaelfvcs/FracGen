@@ -78,6 +78,14 @@
                         <MenuItem mnemonicParsing="false" text="Modeling 3D" />
                     </items>
                 </Menu>
+                <Menu mnemonicParsing="false" text="_Plot">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Histogram"/> 
+                        <MenuItem mnemonicParsing="false" text="Line Chart"/>
+                        <MenuItem mnemonicParsing="false" text="Scatter Chart"/>
+                        <MenuItem mnemonicParsing="false" text="Variogram"/>
+                    </items>
+                </Menu>
                 <Menu mnemonicParsing="false" text="_Help">
                     <items>
                         <MenuItem mnemonicParsing="false" text="MaximaProjects" />

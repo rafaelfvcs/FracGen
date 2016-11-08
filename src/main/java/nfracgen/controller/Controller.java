@@ -6,8 +6,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.ui.RefineryUtilities;
 import nfracgen.model.PowerLawOrtega;
 import nfracgen.model.Scl;
 import nfracgen.statistic.Stat;

@@ -12,7 +12,9 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import nfracgen.analysis.Fracture;
 import nfracgen.analysis.FractureIntensityAnalysis;
@@ -66,33 +68,39 @@ public class MainStage {
                 file.getFileName(), file.getSep(), file.getApColumn(),
                 file.getSpColumn(), file.getHeader());
         file.setScanLine(sl);
+                
+               
+        /**
+         * Populate table with Ap and Sp values from dataset
+         * 
+         * this table is here -> tab_scanline.fxml
+         */
+        TableColumn ap  = new TableColumn("ap");
+        TableColumn sp  = new TableColumn("sp");
+        ap.setCellValueFactory(new PropertyValueFactory<>("ap"));
+        sp.setCellValueFactory(new PropertyValueFactory<>("sp"));        
         
-        //ObservableList<Double> olSp = FXCollections.observableArrayList(sl.getSpList());
-        //ObservableList<Double> olAp = FXCollections.observableArrayList(sl.getApList());
         ArrayList<Scl> list = new ArrayList<>();
-
         for (int i = 0; i < sl.getFracCount(); i++) {
-
             list.add(new Scl(RoundUtil.round(sl.getApList().get(i), 3),
                     RoundUtil.round(sl.getSpList().get(i), 3)));
         }
+        ObservableList<Scl> data = FXCollections.observableArrayList(list); 
+        
+        TableView scl_table = (TableView) getRoot().lookup("#scl_table");
+        scl_table.setEditable(true);
+        scl_table.getColumns().addAll(ap,sp);
+        scl_table.setItems(data);
         
         /**
-         * Populate table with Ap and Sp values
-         * 
-         * TODO: put values on tables
+         * Set statistics and properties of dataset
          */
-        //ap.setCellValueFactory(new PropertyValueFactory<>("ap"));
-        //sp.setCellValueFactory(new PropertyValueFactory<>("sp"));
-        ObservableList<Scl> data = FXCollections.observableArrayList(list);
-        TableView<Double> scl_table = (TableView) getRoot().lookup("#scl_table");
-
+        
         Label sclName = (Label) getRoot().lookup("#sclName");
         ComboBox dataTypeScl = (ComboBox) getRoot().lookup("#dataTypeScl");
         //TODO: fix this
         //sclName.setText(dataTypeScl.getSelectionModel().getSelectedItem());
         Label sclNumData = (Label) getRoot().lookup("#sclNumData");
-
         sclNumData.setText(String.valueOf(sl.getFracCount()));
 
         double sclapmean = Stat.calculateMean(ArrayOperation.arrayListToArray(sl.getApList()));
