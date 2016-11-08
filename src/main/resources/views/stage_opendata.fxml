@@ -16,7 +16,7 @@
     fx:controller="nfracgen.controller.Controller">
     
     <stylesheets>
-        <URL value="@/styles/styles_login.css"/>
+        <URL value="@/styles/styles.css"/>
     </stylesheets>
     
     <columnConstraints>

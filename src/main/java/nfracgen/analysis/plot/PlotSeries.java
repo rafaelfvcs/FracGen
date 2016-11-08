@@ -141,7 +141,7 @@ public class PlotSeries {
     }
     
     /**
-     * Plot line series ofS input matrix
+     * Plot line series of input matrix
      * @param matrix
      * @param colX
      * @param colY

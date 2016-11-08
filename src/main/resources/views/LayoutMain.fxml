@@ -42,7 +42,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 <BorderPane 
-    fx:id="mainPane" 
+    fx:id="WhitePane" 
     maxHeight="-Infinity"
     maxWidth="-Infinity" 
     minHeight="-Infinity" 
