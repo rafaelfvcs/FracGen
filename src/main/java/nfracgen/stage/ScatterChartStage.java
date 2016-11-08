@@ -31,7 +31,7 @@ public class ScatterChartStage {
         return instance;
     }
 
-    public static AnalysisFile getAnalysisFile() {
+    public AnalysisFile getAnalysisFile() {
         return file;
     }
 

@@ -26,6 +26,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.LineChart;
@@ -1215,13 +1216,13 @@ public class Controller {
     //---------------------+----------------------+-------------------------+-----------------------------+--------
     @FXML
     public <T> void initialize() {
-
+/*
         //Binds
 //		check_scaline_new_analysis.selectedProperty()
 //		.bindBidirectional(checkbox_filter_scl_data.disableProperty());
 //		check_scaline_new_analysis.selectedProperty()
 //		.bind(checkbox_filter_scl_data.selectedProperty());
-/*        check_output_adv_study.selectedProperty().addListener((v, oldv, newv) -> {
+        check_output_adv_study.selectedProperty().addListener((v, oldv, newv) -> {
             if (newv == true) {
                 grid_output_adv_study.setDisable(false);
             } else {
@@ -1264,7 +1265,7 @@ public class Controller {
         checkbox_filter_scl_data.setDisable(true);
         //-------------Modeling----------------
         modeling_2d_saveanalysis.setSelected(true);
-         */
+         
  /*
 		 * RadioButtons
          */
@@ -1395,6 +1396,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Load and set the program dataset 
+     * @throws Exception 
+     */
     @FXML
     protected void setDatafile() throws Exception {
         boolean hasHeader = cbHeader.isSelected();
@@ -1419,7 +1424,7 @@ public class Controller {
             file.setSpColumn(1);
             file.setHeader(hasHeader);
             if (hasHeader) {
-                file.setHeaderStrings(DatasetUtils.getHeaders(sep, sep));
+                file.setHeaderStrings(DatasetUtils.getHeaders(file.getFileName(), sep));
             } else {
                 ArrayList<String> al = new ArrayList<>(file.getColumnsCount());
                 for(int i = 0; i <file.getColumnsCount(); i++){
@@ -1431,10 +1436,13 @@ public class Controller {
                 }    
                 file.setHeaderStrings(al);
             }
+            System.out.println("Header Strings: "+file.getHeaderArray());
             Scanline sl = OpenScanlineData.openCSVFileToScanline(tfFilename.getText(),
                     sep, 0, 1, hasHeader);
             file.setScanLine(sl);
-            file.setRowsCount(sl.getFracCount());
+            file.setRowsCount(sl.getFracCount());//TODO fix this
+            Stage s = (Stage) tfFilename.getScene().getWindow();
+            s.close();
             MainStage.setAnalysisFile(file);
             MainStage.refreshStats();
         }

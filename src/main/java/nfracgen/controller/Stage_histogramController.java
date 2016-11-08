@@ -23,6 +23,8 @@ public class Stage_histogramController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -105,7 +107,7 @@ public class Stage_histogramController implements Initializable {
      */
     @FXML
     protected void clear() {
-
+        bcHistogram.getData().clear();
     }
     
 }

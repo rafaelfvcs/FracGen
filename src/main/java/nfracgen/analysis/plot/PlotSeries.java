@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.concurrent.Task;
 import javafx.scene.chart.XYChart;
+import nfracgen.model.Matrix;
 
 public class PlotSeries {
     /**
@@ -50,7 +51,7 @@ public class PlotSeries {
      * @param columnY
      * @return 
      */
-    public XYChart.Series plotLineSeries(String filename, String separator,
+    public static XYChart.Series plotLineSeries(String filename, String separator,
             String serieLabel, int columnX, int columnY) {
         
         XYChart.Series<Number, Number> series = new XYChart.Series();
@@ -137,6 +138,53 @@ public class PlotSeries {
         thread.setDaemon(true);
         thread.start();
         return series;        
+    }
+    
+    /**
+     * Plot line series ofS input matrix
+     * @param matrix
+     * @param colX
+     * @param colY
+     * @return
+     * @throws Exception 
+     */
+    public static XYChart.Series plotLineSeries(Matrix matrix, int colX, 
+            int colY) throws Exception{
+        
+        XYChart.Series<Number, Number> series = new XYChart.Series();
+        Task<List<XYChart.Data<Number, Number>>> task;
+        task = new Task<List<XYChart.Data<Number, Number>>>(){
+            @Override
+            protected List<XYChart.Data<Number, Number>> call() throws Exception {
+                List<XYChart.Data<Number, Number>> chartData = new ArrayList<>();
+                for(int i =0; i<matrix.getLinesCount(); i++){
+                    chartData.add(new XYChart.Data(matrix.get(colX, i).doubleValue(),
+                            matrix.get(colY, i).doubleValue()));
+                }
+                return chartData;
+            }
+        };        
+        task.setOnSucceeded(e -> series.getData().addAll(task.getValue()));
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+        return series;        
+    }
+    
+    /**
+     * Plot curve fitting for variogram
+     * @param matrix
+     * @param colX
+     * @param colY
+     * @param serieName
+     * @return
+     * @throws Exception 
+     */
+    public static XYChart.Series plotVariogramModel(Matrix matrix, int colX, int colY,
+            String serieName) throws Exception{
+        XYChart.Series serie = PlotSeries.plotLineSeries(matrix, colX, colY);
+        serie.setName(serieName);
+        return serie;
     }
     
 }

@@ -1,7 +1,10 @@
 package nfracgen.stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -42,13 +45,19 @@ public class HistogramStage {
                 getClass().getResource(
                         "/views/stage_histogram.fxml"));
         Parent parent = (Parent) loader.load();
-
+        /**
+         * Get the headers of columns
+         */
+        List list = new ArrayList();
+        for (int i = 0; i < getAnalysisFile().getHeaderArray().size(); i++) {
+            list.add(getAnalysisFile().getHeaderArray(i));
+        }
+        ObservableList ol = FXCollections.observableArrayList(list);
         /**
          * Put columns headers on combobox
          */
         ComboBox cbColumns = (ComboBox) parent.lookup("#cbColumnIndex");
-        cbColumns.setItems(FXCollections.observableArrayList(
-                file.getHeaderArray()));
+        cbColumns.setItems(ol);
         /**
          * Create and show stage
          */
