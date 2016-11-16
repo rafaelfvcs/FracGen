@@ -1,17 +1,45 @@
 .button{
 
-  -fx-background-color:#27998f; /* Verde base para a interface gráfica do software */
+    -fx-background-color:#3a3a3a; 
+    -fx-font: 12px "Serif"; 
+    -fx-padding: 6;
+    -fx-text-fill: #FFF;
+    -fx-alignment:CENTER_LEFT;
+    -fx-wrap-text:false;
+    -fx-text-alignment:center;
+    -fx-border:1;
+}
 
+.label{
+    -fx-font: 12px "Courier New";
+    -fx-padding: 9; 
+}
+
+.text-area{
+    -fx-padding: 9;
+    -fx-border: 6;    
 }
 
 .text-field{
-	-fx-background-color:#2990ea; /* Azul base para a interface gráfica do software */
+    -fx-padding: 2;
+    -fx-border: 2;    
+    -fx-background-color:grey;
+}
+.radio-button{
+    -fx-padding: 9;
+}
+
+.check-box {
+    -fx-padding:9;    
+}
+
+.grid {
+    -fx-padding: 9;
 }
 
 .alert{
-	-fx-background-color:#2990ea;
+    -fx-background-color:#2990ea;
 }
-
 
 .table-view:focused .table-row-cell:selected {
     -fx-background-color: red;
@@ -27,6 +55,16 @@
 }
 #scFractureIntensity .default-color1.chart-line-symbol {
     -fx-background-color: transparent;
+}
+
+#scDispersion .default-color0.chart-symbol {
+    -fx-background-radius: 3px;
+    -fx-background-color: #2990ea;
+}
+
+#WhitePane {
+    -fx-background-color:#FFF;    
+    -fx-padding: 2;
 }
 
 

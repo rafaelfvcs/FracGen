@@ -49,6 +49,7 @@ public class Scanline {
                 this.distance.add(this.lenght);
                 this.fracturesCount += 1;
             }
+            this.lenght = this.lenght/1000;
         }
     }
 
