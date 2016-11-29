@@ -31,7 +31,8 @@ public abstract class OpenScanlineData extends DataSCL {
             }
             while ((line = br.readLine()) != null) {
                 String[] lineValues = line.split(separator);
-                values.add(Double.valueOf(lineValues[column].trim()));
+                values.add(Double.valueOf(lineValues[column].trim().
+                        replace(",", ".").replace("\"", "")));
             }
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
@@ -60,8 +61,10 @@ public abstract class OpenScanlineData extends DataSCL {
             while ((line = br.readLine()) != null) {
                 String[] lineValues = line.split(separator);
                 Fracture f = new Fracture(
-                        Double.valueOf(lineValues[apIndex].trim()),
-                        Double.valueOf(lineValues[spIndex].trim()));
+                        Double.valueOf(lineValues[apIndex].trim().
+                        replace(",", ".").replace("\"", "")),
+                        Double.valueOf(lineValues[spIndex].trim().
+                        replace(",", ".").replace("\"", "")));
                 values.add(f);
             }
         } catch (FileNotFoundException e) {
