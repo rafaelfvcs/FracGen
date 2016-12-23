@@ -67,6 +67,22 @@
     -fx-padding: 2;
 }
 
+#bcSpHistogram {
+    -fx-bar-gap: 0;
+    -fx-category-gap: 0;
+}
+#bcApHistogram {
+    -fx-bar-gap: 0;
+    -fx-category-gap: 0;
+}
+
+#scDispersion .chart-symbol { 
+    -fx-background-color: #860061, white;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 1px;
+    -fx-padding: 1px;
+}
+
 
 
 

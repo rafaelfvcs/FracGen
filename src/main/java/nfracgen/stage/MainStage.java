@@ -276,46 +276,7 @@ public class MainStage {
         }
         bcSpHistogram.getData().clear();
         bcSpHistogram.getData().addAll(seriesSp);
-        /*
-         * Ap Cumulative Frequency Chart
-         * 
-         * obs: falta colocar os dados em ordem, maior para menor
-         * 
-         */
-        LineChart lcApFreq = (LineChart) getRoot().lookup("#lcApFreq");
-        lcApFreq.getData().clear();
-                                
-        double sum = Stat.sum(file.getScanLine().getApList());        
-        double cum = 0.;
-        ArrayList<Double> x = new ArrayList<>();
-        ArrayList<Double> y = new ArrayList<>();
-        for (int i = 0; i < file.getScanLine().getFracCount(); i++) {
-            cum += file.getScanLine().getApList().get(i);            
-            x.add(Double.valueOf(i));            
-            y.add(cum / sum * 100);            
-        }
-        lcApFreq.getData().addAll(PlotSeries.plotLineSeries(x, y));
-        lcApFreq.getData().addAll(PlotSeries.plotLineSeries(x, y));
-        /*
-         * Sp Cumulative Frequency Chart
-         * 
-         * obs: falta colocar os dados em ordem, maior para menor
-         * 
-         */
-        LineChart lcSpFreq = (LineChart) getRoot().lookup("#lcSpFreq");
-        lcSpFreq.getData().clear();
-                                
-        double sumSp = Stat.sum(file.getScanLine().getSpList());        
-        double cumSp = 0.;
-        ArrayList<Double> xSp = new ArrayList<>();
-        ArrayList<Double> ySp = new ArrayList<>();
-        for (int i = 0; i < file.getScanLine().getFracCount(); i++) {
-            cumSp += file.getScanLine().getSpList().get(i);            
-            xSp.add(Double.valueOf(i));            
-            ySp.add(cumSp / sumSp * 100);            
-        }
-        lcSpFreq.getData().addAll(PlotSeries.plotLineSeries(xSp, ySp));
-        lcSpFreq.getData().addAll(PlotSeries.plotLineSeries(xSp, ySp));
+        
         /*
         * Tab Geostatistics
         *
