@@ -18,11 +18,13 @@
         <URL value="@styles.css"/>
     </stylesheets>
     
+    <gridLinesVisible>true</gridLinesVisible>
+    
     <columnConstraints>
-        <ColumnConstraints percentWidth="30" />
-        <ColumnConstraints percentWidth="30"/>
-        <ColumnConstraints percentWidth="30"/>        
-        <ColumnConstraints percentWidth="10"/>
+        <ColumnConstraints percentWidth="25" />
+        <ColumnConstraints percentWidth="25"/>
+        <ColumnConstraints percentWidth="25"/>        
+        <ColumnConstraints percentWidth="25"/>
     </columnConstraints>
     <rowConstraints>
         <RowConstraints percentHeight="5"/>
@@ -49,26 +51,24 @@
         verticalGridLinesVisible="false" 
         horizontalGridLinesVisible="false"
         animated="true"
-        translateY="57">
+        translateY="44">
         <xAxis >
-            <javafx.scene.chart.NumberAxis    
+            <nfracgen.application.LogarithmicAxis 
                 label="Aperture"             
                 lowerBound="0.01"
-                upperBound="10"
-                tickUnit="1"
+                upperBound="10"                
                 autoRanging="false"
                 tickLabelsVisible="true"
             /> 
         </xAxis>
         <yAxis> 
-            <javafx.scene.chart.NumberAxis 
+            <nfracgen.application.LogarithmicAxis                             
                 label="Average Spacing"
                 lowerBound="0.001"
-                upperBound="10"
-                tickUnit="1"
+                upperBound="100"                
                 autoRanging="false"
-                side="LEFT"                  
-            />
+                side="LEFT"        
+            />                                      
         </yAxis>
     </javafx.scene.chart.LineChart>    
     
@@ -80,22 +80,20 @@
         legendVisible="false"
         verticalGridLinesVisible="true" 
         horizontalGridLinesVisible="true"
-        translateX="75">
+        translateX="51">
         <xAxis >
-            <javafx.scene.chart.NumberAxis                 
+            <nfracgen.application.LogarithmicAxis                      
                 label="Aperture"
                 lowerBound="0.01"
-                upperBound="10"
-                tickUnit="1"
+                upperBound="10"                
                 autoRanging="false"                
                 side="TOP"/> 
         </xAxis>
         <yAxis> 
-            <javafx.scene.chart.NumberAxis 
+            <nfracgen.application.LogarithmicAxis 
                 label="Cumulative Fracture Intensity"
                 lowerBound="10"
-                upperBound="0.001"
-                tickUnit="0.1"
+                upperBound="0.001"                
                 autoRanging="false"
                 side="RIGHT"                             
             />

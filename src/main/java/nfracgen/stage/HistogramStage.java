@@ -48,16 +48,18 @@ public class HistogramStage {
         /**
          * Get the headers of columns
          */
-        List list = new ArrayList();
-        for (int i = 0; i < getAnalysisFile().getHeaderArray().size(); i++) {
-            list.add(getAnalysisFile().getHeaderArray(i));
+        if (getAnalysisFile() != null) {
+            List list = new ArrayList();
+            for (int i = 0; i < getAnalysisFile().getHeaderArray().size(); i++) {
+                list.add(getAnalysisFile().getHeaderArray(i));
+            }
+            ObservableList ol = FXCollections.observableArrayList(list);
+            /**
+             * Put columns headers on combobox
+             */
+            ComboBox cbColumns = (ComboBox) parent.lookup("#cbColumnIndex");
+            cbColumns.setItems(ol);
         }
-        ObservableList ol = FXCollections.observableArrayList(list);
-        /**
-         * Put columns headers on combobox
-         */
-        ComboBox cbColumns = (ComboBox) parent.lookup("#cbColumnIndex");
-        cbColumns.setItems(ol);
         /**
          * Create and show stage
          */

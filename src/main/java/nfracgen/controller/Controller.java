@@ -26,7 +26,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.LineChart;
@@ -1005,8 +1004,9 @@ public class Controller {
      * @throws IOException
      */
     @FXML
-    protected void plotPowerLaw() throws IOException {
-        PowerLawStage stagePL = new PowerLawStage();
+    protected void plotPowerLaw() throws IOException, Exception {
+        PowerLawStage stagePL = new PowerLawStage(
+                MainStage.getAnalysisFile().getScanLine().getFracIntAnalysis());
         stagePL.createStage();
     }
 
@@ -1194,20 +1194,6 @@ public class Controller {
         }
     }
 
-    // **********  ******  ******  Teste aplication Bind() ***** ****** *********   ******
-    // Apagar:
-    @FXML
-    Slider slider;
-
-    @FXML
-    TextField text;
-
-    @FXML
-    Label label;
-
-    @FXML
-    CheckBox checkbox;
-
     //---------------------+----------------------+-------------------------+-----------------------------+--------
 
     /*
@@ -1216,36 +1202,36 @@ public class Controller {
     //---------------------+----------------------+-------------------------+-----------------------------+--------
     @FXML
     public <T> void initialize() {
-/*
+
         //Binds
 //		check_scaline_new_analysis.selectedProperty()
 //		.bindBidirectional(checkbox_filter_scl_data.disableProperty());
 //		check_scaline_new_analysis.selectedProperty()
 //		.bind(checkbox_filter_scl_data.selectedProperty());
-        check_output_adv_study.selectedProperty().addListener((v, oldv, newv) -> {
-            if (newv == true) {
-                grid_output_adv_study.setDisable(false);
-            } else {
-                grid_output_adv_study.setDisable(true);
-            }
-        });
-
-        check_output_comments.selectedProperty().addListener((v, oldv, newv) -> {
-            if (newv == true) {
-                textarea_output_comments.setDisable(false);
-            } else {
-                textarea_output_comments.setDisable(true);
-            }
-        });
+////        check_output_adv_study.selectedProperty().addListener((v, oldv, newv) -> {
+//            if (newv == true) {
+//                grid_output_adv_study.setDisable(false);
+//            } else {
+//                grid_output_adv_study.setDisable(true);
+//            }
+//        });
+//
+//        check_output_comments.selectedProperty().addListener((v, oldv, newv) -> {
+//            if (newv == true) {
+//                textarea_output_comments.setDisable(false);
+//            } else {
+//                textarea_output_comments.setDisable(true);
+//            }
+//        });
 
         //check_output_adv_study.selectedProperty().bind(grid_output_adv_study.setDisable(false));
         //Pane init
-        tabPane_main.getSelectionModel().select(tab_main_scanline);
+       // tabPane_main.getSelectionModel().select(tab_main_scanline);
 
         //tabPane_main.getSelectionModel().select(tab_main_modeling);
 //		pane_modeling.getSelectionModel().select(tab_modeling_2d_view);
         //Buttons disable
-        btn_scanline_plotpowerlaw.setDisable(true);
+/*        btn_scanline_plotpowerlaw.setDisable(true);
         btn_scanline_save.setDisable(true);
         btn_scanline_clear.setDisable(true);
 
@@ -1253,8 +1239,8 @@ public class Controller {
         btn_scanline_clearpl.setDisable(true);
         btn_scanline_findpl.setDisable(true);
         scl_table_data_new.setDisable(true);
-
-        btn_modeling_2d_edit.setDisable(true);
+*/
+/*        btn_modeling_2d_edit.setDisable(true);
 
         check_modeling_refine_2d.setSelected(true);
 
@@ -1265,7 +1251,7 @@ public class Controller {
         checkbox_filter_scl_data.setDisable(true);
         //-------------Modeling----------------
         modeling_2d_saveanalysis.setSelected(true);
-         
+  */       
  /*
 		 * RadioButtons
          */
@@ -1408,7 +1394,7 @@ public class Controller {
             sep = ";";
         } else if (rbComma.isSelected()) {
             sep = ",";
-        } else {
+        } else if (rbOther.isSelected()){
             String aux = tfSeparator.getCharacters().toString();
             if (aux.length() > 0) {
                 sep = aux;
@@ -1436,7 +1422,6 @@ public class Controller {
                 }    
                 file.setHeaderStrings(al);
             }
-            System.out.println("Header Strings: "+file.getHeaderArray());
             Scanline sl = OpenScanlineData.openCSVFileToScanline(tfFilename.getText(),
                     sep, 0, 1, hasHeader);
             file.setScanLine(sl);

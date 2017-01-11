@@ -83,10 +83,19 @@
                     title="Lei de Potência" 
                     BorderPane.alignment="CENTER">
                     <xAxis>
-                        <NumberAxis label="Aperture (mm)" side="BOTTOM" />
+                        <nfracgen.application.LogarithmicAxis 
+                            label="Aperture (mm)" 
+                            side="BOTTOM"
+                            lowerBound="0.01" 
+                            upperBound="10000"
+                            autoRanging="true"/>
                     </xAxis>
                     <yAxis>
-                        <NumberAxis label="Freq Acumulada (1/m)" side="TOP" />
+                        <nfracgen.application.LogarithmicAxis 
+                            label="Freq Acumulada (1/m)" 
+                            side="TOP"
+                            
+                            autoRanging="true"/>
                     </yAxis>
                 </javafx.scene.chart.LineChart>
             </center>

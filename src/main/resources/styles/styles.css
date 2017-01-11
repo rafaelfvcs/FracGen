@@ -57,6 +57,10 @@
     -fx-background-color: transparent;
 }
 
+#gPowerLaw .default-color0.chart-series-line {
+    -fx-stroke: transparent;    
+}
+
 #scDispersion .default-color0.chart-symbol {
     -fx-background-radius: 3px;
     -fx-background-color: #2990ea;

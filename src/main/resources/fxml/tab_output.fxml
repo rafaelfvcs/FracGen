@@ -86,14 +86,16 @@
                                         <Label 
                                             text="References:" 
                                             GridPane.rowIndex="1" />
-                                        <Label text="User:" 
-                                               GridPane.rowIndex="2" />
+                                        <Label                                           
+                                            text="User:" 
+                                            GridPane.rowIndex="2" />
                                         <TextField 
                                             GridPane.columnIndex="1" />
                                         <TextField 
                                             GridPane.columnIndex="1" 
                                             GridPane.rowIndex="1" />
                                         <TextField 
+                                            fx:id="tfUser"
                                             GridPane.columnIndex="1" 
                                             GridPane.rowIndex="2" />
                                     </children>

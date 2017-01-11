@@ -17,7 +17,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import nfracgen.analysis.Fracture;
 import nfracgen.analysis.FractureIntensityAnalysis;
 import nfracgen.analysis.Scanline;
 import nfracgen.analysis.plot.PlotSeries;
@@ -95,6 +94,7 @@ public class MainStage {
         ObservableList<Scl> data = FXCollections.observableArrayList(list); 
         
         TableView scl_table = (TableView) getRoot().lookup("#scl_table");
+        scl_table.getItems().clear();
         scl_table.setEditable(true);
         scl_table.getColumns().addAll(ap,sp);
         scl_table.setItems(data);        
@@ -138,64 +138,78 @@ public class MainStage {
          * tab_ap_statistics.fxml
          */
         Label lMinValue = (Label) getRoot().lookup("#lMinValue");
-        lMinValue.setText(String.valueOf(Stat.min(file.getScanLine().getApList())));
+        lMinValue.setText(String.valueOf(
+                RoundUtil.round(Stat.min(file.getScanLine().getApList()),3)));
 
         Label lMaxValue = (Label) getRoot().lookup("#lMaxValue");
-        lMaxValue.setText(String.valueOf(Stat.max(file.getScanLine().getApList())));
+        lMaxValue.setText(String.valueOf(
+                RoundUtil.round(Stat.max(file.getScanLine().getApList()),3)));
 
         Label lAvgValue = (Label) getRoot().lookup("#lAvgValue");
-        lAvgValue.setText(String.valueOf(Stat.mean(file.getScanLine().getApList())));
+        lAvgValue.setText(String.valueOf(
+                RoundUtil.round(Stat.mean(file.getScanLine().getApList()),3)));
 
         Label lModeValue = (Label) getRoot().lookup("#lModeValue");
-        lModeValue.setText(String.valueOf(Mode.getMode(file.getScanLine().getApList())));
+        lModeValue.setText(String.valueOf(
+                RoundUtil.round(Mode.getMode(file.getScanLine().getApList()),3)));
 
         Label lStdDevValue = (Label) getRoot().lookup("#lStdDevValue");
-        lStdDevValue.setText(String.valueOf(StdDeviation.stdDeviation(file.getScanLine().getApList())));
+        lStdDevValue.setText(String.valueOf(
+                RoundUtil.round(StdDeviation.stdDeviation(file.getScanLine().getApList()),3)));
 
         Label lVariance = (Label) getRoot().lookup("#lVariance");
-        lVariance.setText(String.valueOf(Variance.variance(file.getScanLine().getApList())));
+        lVariance.setText(String.valueOf(
+                RoundUtil.round(Variance.variance(file.getScanLine().getApList()),3)));
 
         Label lGeoAvg = (Label) getRoot().lookup("#lGeoAvg");
-        lGeoAvg.setText(String.valueOf(Stat.geometricAverage(file.getScanLine().getApList())));
+        lGeoAvg.setText(String.valueOf(
+                RoundUtil.round(Stat.geometricAverage(file.getScanLine().getApList()),3)));
 
         Label lCount = (Label) getRoot().lookup("#lCount");
         lCount.setText(String.valueOf(file.getScanLine().getFracCount()));
 
         Label lVariation = (Label) getRoot().lookup("#lVariation");
-        lVariation.setText(String.valueOf(
-                VariationCoefficient.variationCoefficient(file.getScanLine().getApList())));
+        lVariation.setText(String.valueOf(RoundUtil.round(
+                VariationCoefficient.variationCoefficient(file.getScanLine().getApList()),3)));
         /**
          * Tab Sp Statistics
          *
          * tab_sp_statistics.fxml
          */
         Label lSpMinValue = (Label) getRoot().lookup("#lSpMinValue");
-        lSpMinValue.setText(String.valueOf(Stat.min(file.getScanLine().getSpList())));
+        lSpMinValue.setText(String.valueOf(
+                RoundUtil.round(Stat.min(file.getScanLine().getSpList()),3)));
 
         Label lSpMaxValue = (Label) getRoot().lookup("#lSpMaxValue");
-        lSpMaxValue.setText(String.valueOf(Stat.max(file.getScanLine().getSpList())));
+        lSpMaxValue.setText(String.valueOf(
+                RoundUtil.round(Stat.max(file.getScanLine().getSpList()),3)));
 
         Label lSpAvgValue = (Label) getRoot().lookup("#lSpAvgValue");
-        lSpAvgValue.setText(String.valueOf(Stat.mean(file.getScanLine().getSpList())));
+        lSpAvgValue.setText(String.valueOf(
+                RoundUtil.round(Stat.mean(file.getScanLine().getSpList()),3)));
 
         Label lSpModeValue = (Label) getRoot().lookup("#lSpModeValue");
-        lSpModeValue.setText(String.valueOf(Mode.getMode(file.getScanLine().getSpList())));
+        lSpModeValue.setText(String.valueOf(
+                RoundUtil.round(Mode.getMode(file.getScanLine().getSpList()),3)));
 
         Label lSpStdDevValue = (Label) getRoot().lookup("#lSpStdDevValue");
-        lSpStdDevValue.setText(String.valueOf(StdDeviation.stdDeviation(file.getScanLine().getSpList())));
+        lSpStdDevValue.setText(String.valueOf(
+                RoundUtil.round(StdDeviation.stdDeviation(file.getScanLine().getSpList()),3)));
 
         Label lSpVariance = (Label) getRoot().lookup("#lSpVariance");
-        lSpVariance.setText(String.valueOf(Variance.variance(file.getScanLine().getSpList())));
+        lSpVariance.setText(String.valueOf(
+                RoundUtil.round(Variance.variance(file.getScanLine().getSpList()),3)));
 
         Label lSpGeoAvg = (Label) getRoot().lookup("#lSpGeoAvg");
-        lSpGeoAvg.setText(String.valueOf(Stat.geometricAverage(file.getScanLine().getSpList())));
+        lSpGeoAvg.setText(String.valueOf(
+                RoundUtil.round(Stat.geometricAverage(file.getScanLine().getSpList()),3)));
 
         Label lSpCount = (Label) getRoot().lookup("#lSpCount");
         lSpCount.setText(String.valueOf(file.getScanLine().getFracCount()));
 
         Label lSpVariation = (Label) getRoot().lookup("#lSpVariation");
-        lSpVariation.setText(String.valueOf(
-                VariationCoefficient.variationCoefficient(file.getScanLine().getSpList())));
+        lSpVariation.setText(String.valueOf(RoundUtil.round(
+                VariationCoefficient.variationCoefficient(file.getScanLine().getSpList()),3)));
         /**
          * Plot Power Law
          */
@@ -203,37 +217,32 @@ public class MainStage {
         //gPowerLaw.getData().add(PlotSeries.plotLineSeries(file.getScanLine().getSpList(),
         //      file.getScanLine().getSpList());
 
-        FractureIntensityAnalysis fi = new FractureIntensityAnalysis(
-                file.getScanLine());
+        FractureIntensityAnalysis fi = file.getScanLine().getFracIntAnalysis();
+                //new FractureIntensityAnalysis(file.getScanLine());
+        
         Label lFracInt = (Label) getRoot().lookup("#lFracInt");
         Label lAvgSpacing = (Label) getRoot().lookup("#lAvgSpacing");
         Label lScanLen = (Label) getRoot().lookup("#lScanLen");
         lFracInt.setText(String.valueOf(fi.getFractureIntensity()));
         lAvgSpacing.setText(String.valueOf(fi.getAverageSpacing()));
         lScanLen.setText(String.valueOf(file.getScanLine().getLenght()));
-
-        ArrayList<Fracture> al = fi.getArrayDistribution();
-        ArrayList<Double> cumulative = new ArrayList<>();
-        ArrayList<Double> aperture = new ArrayList<>();
-        for (Fracture values : al) {
-            cumulative.add(Math.log10(Double.valueOf(values.getCumulativeNumber())));
-            aperture.add(Math.log10(values.getAperture()));
-//            cumulative.add(Double.valueOf(values.getCumulativeNumber()));
-//            aperture.add(values.getAperture());
-        }
-        gPowerLaw.getData().addAll(PlotSeries.plotLineSeries(aperture, cumulative));
+        
+        gPowerLaw.getData().addAll(PlotSeries.plotLineSeries(file.getScanLine().getApList(), 
+                file.getScanLine().getFracIntAnalysis().getCumulativeList()));
+        //gPowerLaw.getData().addAll(PlotSeries.plotLineSeries(fi.apLog10, fi.cumLog10));
         /**
          * Add linear regression to graph
          */
-        LinearRegression lr = new LinearRegression(aperture, cumulative);       
+        LinearRegression lr = new LinearRegression(file.getScanLine().getApList(),
+                file.getScanLine().getFracIntAnalysis().getCumulativeList());       
 //        double min = MinimumValue.getMinValue(aperture);
 //        double max = MaximumValue.getMaxValue(aperture);
 //        double first = lr.getValueAt(min);
 //        double last = lr.getValueAt(max);
         double min = 0.001;
-        double max = 10;
+        double max = 100;
         double first = lr.getValueAt(0.001);
-        double last = lr.getValueAt(10);
+        double last = lr.getValueAt(100);
         XYChart.Series serieRegression = new XYChart.Series();
         serieRegression.getData().add(new XYChart.Data<>(min, first));
         serieRegression.getData().add(new XYChart.Data<>(max, last));
@@ -285,8 +294,7 @@ public class MainStage {
         ScatterChart scDispersion = (ScatterChart)getRoot().lookup("#scDispersion");
         scDispersion.getData().add(
                 PlotSeries.plotLineSeries(0, file.getScanLine().getDistanceList()));
-       
-        
+      
     }
 
 }

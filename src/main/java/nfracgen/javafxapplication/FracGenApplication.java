@@ -31,7 +31,7 @@ public class FracGenApplication extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));        
         Scene scene = new Scene(root);
         setUserAgentStylesheet(STYLESHEET_CASPIAN);
-        setUserAgentStylesheet(STYLESHEET_MODENA);
+        //setUserAgentStylesheet(STYLESHEET_MODENA);
         stage.setScene(scene);
 	stage.setTitle("Login");
         stage.setTitle("NFracGen");
