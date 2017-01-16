@@ -16,6 +16,7 @@
  */
 package nfracgen.model;
 
+import javafx.scene.image.WritableImage;
 import nfracgen.analysis.Scanline;
 
 /**
@@ -39,10 +40,32 @@ public class AnalysisFile  extends DatasetModel {
     private String outputFilename = "";
     
     /**
+     * Save the Power Law Graph as WritableImage
+     * Can be exported to PNG image 
+     */
+    private WritableImage powerLaw = null;
+    
+    /**
      * Creates a null scanline.
      */
     public AnalysisFile(){
         
+    }
+    
+    /**
+     * Set the image of Power Law
+     * @param image 
+     */
+    public void setPLGraph(WritableImage image){
+        this.powerLaw = image;
+    }
+    
+    /**
+     * Get the Power Law graph as WritableImage
+     * @return 
+     */
+    public WritableImage getPLGraph(){
+        return this.powerLaw;
     }
     
     /**

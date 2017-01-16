@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.ScatterChart;
@@ -16,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
 import nfracgen.analysis.FractureIntensityAnalysis;
 import nfracgen.analysis.Scanline;
@@ -47,11 +49,12 @@ public class MainStage {
     public static MainStage getInstance() {
         return instance;
     }
-    
-    public static void setAnalysisFile(AnalysisFile file){
+
+    public static void setAnalysisFile(AnalysisFile file) {
         MainStage.file = file;
     }
-    public static AnalysisFile getAnalysisFile(){
+
+    public static AnalysisFile getAnalysisFile() {
         return file;
     }
 
@@ -69,38 +72,38 @@ public class MainStage {
         stage.setScene(scene);
         stage.setTitle("NFracGen - alpha");
         stage.show();
-    }    
-    
+    }
+
     public static void refreshStats() throws Exception {
         Scanline sl = OpenScanlineData.openCSVFileToScanline(
                 file.getFileName(), file.getSep(), file.getApColumn(),
                 file.getSpColumn(), file.getHeader());
-        file.setScanLine(sl);                               
+        file.setScanLine(sl);
         /**
          * Populate table with Ap and Sp values from dataset
-         * 
+         *
          * this table is here -> tab_scanline.fxml
          */
-        TableColumn ap  = new TableColumn("ap");
-        TableColumn sp  = new TableColumn("sp");
+        TableColumn ap = new TableColumn("ap");
+        TableColumn sp = new TableColumn("sp");
         ap.setCellValueFactory(new PropertyValueFactory<>("ap"));
-        sp.setCellValueFactory(new PropertyValueFactory<>("sp"));        
-        
+        sp.setCellValueFactory(new PropertyValueFactory<>("sp"));
+
         ArrayList<Scl> list = new ArrayList<>();
         for (int i = 0; i < sl.getFracCount(); i++) {
             list.add(new Scl(RoundUtil.round(sl.getApList().get(i), 3),
                     RoundUtil.round(sl.getSpList().get(i), 3)));
         }
-        ObservableList<Scl> data = FXCollections.observableArrayList(list); 
-        
+        ObservableList<Scl> data = FXCollections.observableArrayList(list);
+
         TableView scl_table = (TableView) getRoot().lookup("#scl_table");
         scl_table.getItems().clear();
         scl_table.setEditable(true);
-        scl_table.getColumns().addAll(ap,sp);
-        scl_table.setItems(data);        
+        scl_table.getColumns().addAll(ap, sp);
+        scl_table.setItems(data);
         /*
          * Set statistics and properties of dataset
-         */        
+         */
         Label sclName = (Label) getRoot().lookup("#sclName");
         ComboBox dataTypeScl = (ComboBox) getRoot().lookup("#dataTypeScl");
         //TODO: fix this
@@ -139,38 +142,38 @@ public class MainStage {
          */
         Label lMinValue = (Label) getRoot().lookup("#lMinValue");
         lMinValue.setText(String.valueOf(
-                RoundUtil.round(Stat.min(file.getScanLine().getApList()),3)));
+                RoundUtil.round(Stat.min(file.getScanLine().getApList()), 3)));
 
         Label lMaxValue = (Label) getRoot().lookup("#lMaxValue");
         lMaxValue.setText(String.valueOf(
-                RoundUtil.round(Stat.max(file.getScanLine().getApList()),3)));
+                RoundUtil.round(Stat.max(file.getScanLine().getApList()), 3)));
 
         Label lAvgValue = (Label) getRoot().lookup("#lAvgValue");
         lAvgValue.setText(String.valueOf(
-                RoundUtil.round(Stat.mean(file.getScanLine().getApList()),3)));
+                RoundUtil.round(Stat.mean(file.getScanLine().getApList()), 3)));
 
         Label lModeValue = (Label) getRoot().lookup("#lModeValue");
         lModeValue.setText(String.valueOf(
-                RoundUtil.round(Mode.getMode(file.getScanLine().getApList()),3)));
+                RoundUtil.round(Mode.getMode(file.getScanLine().getApList()), 3)));
 
         Label lStdDevValue = (Label) getRoot().lookup("#lStdDevValue");
         lStdDevValue.setText(String.valueOf(
-                RoundUtil.round(StdDeviation.stdDeviation(file.getScanLine().getApList()),3)));
+                RoundUtil.round(StdDeviation.stdDeviation(file.getScanLine().getApList()), 3)));
 
         Label lVariance = (Label) getRoot().lookup("#lVariance");
         lVariance.setText(String.valueOf(
-                RoundUtil.round(Variance.variance(file.getScanLine().getApList()),3)));
+                RoundUtil.round(Variance.variance(file.getScanLine().getApList()), 3)));
 
         Label lGeoAvg = (Label) getRoot().lookup("#lGeoAvg");
         lGeoAvg.setText(String.valueOf(
-                RoundUtil.round(Stat.geometricAverage(file.getScanLine().getApList()),3)));
+                RoundUtil.round(Stat.geometricAverage(file.getScanLine().getApList()), 3)));
 
         Label lCount = (Label) getRoot().lookup("#lCount");
         lCount.setText(String.valueOf(file.getScanLine().getFracCount()));
 
         Label lVariation = (Label) getRoot().lookup("#lVariation");
         lVariation.setText(String.valueOf(RoundUtil.round(
-                VariationCoefficient.variationCoefficient(file.getScanLine().getApList()),3)));
+                VariationCoefficient.variationCoefficient(file.getScanLine().getApList()), 3)));
         /**
          * Tab Sp Statistics
          *
@@ -178,38 +181,38 @@ public class MainStage {
          */
         Label lSpMinValue = (Label) getRoot().lookup("#lSpMinValue");
         lSpMinValue.setText(String.valueOf(
-                RoundUtil.round(Stat.min(file.getScanLine().getSpList()),3)));
+                RoundUtil.round(Stat.min(file.getScanLine().getSpList()), 3)));
 
         Label lSpMaxValue = (Label) getRoot().lookup("#lSpMaxValue");
         lSpMaxValue.setText(String.valueOf(
-                RoundUtil.round(Stat.max(file.getScanLine().getSpList()),3)));
+                RoundUtil.round(Stat.max(file.getScanLine().getSpList()), 3)));
 
         Label lSpAvgValue = (Label) getRoot().lookup("#lSpAvgValue");
         lSpAvgValue.setText(String.valueOf(
-                RoundUtil.round(Stat.mean(file.getScanLine().getSpList()),3)));
+                RoundUtil.round(Stat.mean(file.getScanLine().getSpList()), 3)));
 
         Label lSpModeValue = (Label) getRoot().lookup("#lSpModeValue");
         lSpModeValue.setText(String.valueOf(
-                RoundUtil.round(Mode.getMode(file.getScanLine().getSpList()),3)));
+                RoundUtil.round(Mode.getMode(file.getScanLine().getSpList()), 3)));
 
         Label lSpStdDevValue = (Label) getRoot().lookup("#lSpStdDevValue");
         lSpStdDevValue.setText(String.valueOf(
-                RoundUtil.round(StdDeviation.stdDeviation(file.getScanLine().getSpList()),3)));
+                RoundUtil.round(StdDeviation.stdDeviation(file.getScanLine().getSpList()), 3)));
 
         Label lSpVariance = (Label) getRoot().lookup("#lSpVariance");
         lSpVariance.setText(String.valueOf(
-                RoundUtil.round(Variance.variance(file.getScanLine().getSpList()),3)));
+                RoundUtil.round(Variance.variance(file.getScanLine().getSpList()), 3)));
 
         Label lSpGeoAvg = (Label) getRoot().lookup("#lSpGeoAvg");
         lSpGeoAvg.setText(String.valueOf(
-                RoundUtil.round(Stat.geometricAverage(file.getScanLine().getSpList()),3)));
+                RoundUtil.round(Stat.geometricAverage(file.getScanLine().getSpList()), 3)));
 
         Label lSpCount = (Label) getRoot().lookup("#lSpCount");
         lSpCount.setText(String.valueOf(file.getScanLine().getFracCount()));
 
         Label lSpVariation = (Label) getRoot().lookup("#lSpVariation");
         lSpVariation.setText(String.valueOf(RoundUtil.round(
-                VariationCoefficient.variationCoefficient(file.getScanLine().getSpList()),3)));
+                VariationCoefficient.variationCoefficient(file.getScanLine().getSpList()), 3)));
         /**
          * Plot Power Law
          */
@@ -218,8 +221,8 @@ public class MainStage {
         //      file.getScanLine().getSpList());
 
         FractureIntensityAnalysis fi = file.getScanLine().getFracIntAnalysis();
-                //new FractureIntensityAnalysis(file.getScanLine());
-        
+        //new FractureIntensityAnalysis(file.getScanLine());
+
         Label lFracInt = (Label) getRoot().lookup("#lFracInt");
         Label lAvgSpacing = (Label) getRoot().lookup("#lAvgSpacing");
         Label lScanLen = (Label) getRoot().lookup("#lScanLen");
@@ -227,14 +230,21 @@ public class MainStage {
         lAvgSpacing.setText(String.valueOf(fi.getAverageSpacing()));
         lScanLen.setText(String.valueOf(file.getScanLine().getLenght()));
         
-        gPowerLaw.getData().addAll(PlotSeries.plotLineSeries(file.getScanLine().getApList(), 
+        gPowerLaw.getData().addAll(PlotSeries.plotLineSeries(file.getScanLine().getApList(),
                 file.getScanLine().getFracIntAnalysis().getCumulativeList()));
         //gPowerLaw.getData().addAll(PlotSeries.plotLineSeries(fi.apLog10, fi.cumLog10));
+
+        /**
+         * Save the Power Law graph to Writable Image
+         */        
+        WritableImage imagePL = gPowerLaw.snapshot(new SnapshotParameters(), null);       
+        getAnalysisFile().setPLGraph(imagePL);
+        
         /**
          * Add linear regression to graph
          */
         LinearRegression lr = new LinearRegression(file.getScanLine().getApList(),
-                file.getScanLine().getFracIntAnalysis().getCumulativeList());       
+                file.getScanLine().getFracIntAnalysis().getCumulativeList());
 //        double min = MinimumValue.getMinValue(aperture);
 //        double max = MaximumValue.getMaxValue(aperture);
 //        double first = lr.getValueAt(min);
@@ -269,32 +279,32 @@ public class MainStage {
         /**
          * Plot Sp Histogram
          */
-        BarChart bcSpHistogram = (BarChart) getRoot().lookup("#bcSpHistogram");        
-        double amplitudeSp = Stat.getAmplitude(file.getScanLine().getSpList());                
-        double classIntervalsSp = Frequency.sturgesExpression(amplitudeSp, file.getRowsCount());        
+        BarChart bcSpHistogram = (BarChart) getRoot().lookup("#bcSpHistogram");
+        double amplitudeSp = Stat.getAmplitude(file.getScanLine().getSpList());
+        double classIntervalsSp = Frequency.sturgesExpression(amplitudeSp, file.getRowsCount());
         double spMin = Stat.min(file.getScanLine().getSpList());
         double spMax = Stat.max(file.getScanLine().getSpList());
-        ArrayList<ClassInterval> intervalsSp = Frequency.classIntervals(spMin, spMax, classIntervalsSp);        
+        ArrayList<ClassInterval> intervalsSp = Frequency.classIntervals(spMin, spMax, classIntervalsSp);
         Frequency.countObsFrequency(file.getScanLine().getSpList(), intervalsSp);
 
         XYChart.Series seriesSp = new XYChart.Series();
-        seriesSp.setName("Histogram");        
+        seriesSp.setName("Histogram");
         for (int i = 0; i < intervalsSp.size(); i++) {
             seriesSp.getData().add(
-                    new XYChart.Data(intervalsSp.get(i).getLabel(), intervalsSp.get(i).getObsFrequency()));            
+                    new XYChart.Data(intervalsSp.get(i).getLabel(), intervalsSp.get(i).getObsFrequency()));
         }
         bcSpHistogram.getData().clear();
         bcSpHistogram.getData().addAll(seriesSp);
-        
+
         /*
         * Tab Geostatistics
         *
         * Plot scatter chart 
-        */
-        ScatterChart scDispersion = (ScatterChart)getRoot().lookup("#scDispersion");
+         */
+        ScatterChart scDispersion = (ScatterChart) getRoot().lookup("#scDispersion");
         scDispersion.getData().add(
                 PlotSeries.plotLineSeries(0, file.getScanLine().getDistanceList()));
-      
+
     }
 
 }

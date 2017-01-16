@@ -26,6 +26,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.LineChart;
@@ -40,7 +42,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -49,6 +50,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -56,7 +58,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import javax.imageio.ImageIO;
 import nfracgen.model.AnalysisFile;
+import nfracgen.stage.ExportImageStage;
 import nfracgen.stage.HistogramStage;
 import nfracgen.stage.LineChartStage;
 import nfracgen.stage.MainStage;
@@ -200,6 +204,9 @@ public class Controller {
 
     @FXML
     private Button btn_scanline_saveanalysis;
+    
+    @FXML
+    private Button btn_save_graph;
 
 
     /*
@@ -1223,11 +1230,9 @@ public class Controller {
 //                textarea_output_comments.setDisable(true);
 //            }
 //        });
-
         //check_output_adv_study.selectedProperty().bind(grid_output_adv_study.setDisable(false));
         //Pane init
-       // tabPane_main.getSelectionModel().select(tab_main_scanline);
-
+        // tabPane_main.getSelectionModel().select(tab_main_scanline);
         //tabPane_main.getSelectionModel().select(tab_main_modeling);
 //		pane_modeling.getSelectionModel().select(tab_modeling_2d_view);
         //Buttons disable
@@ -1239,25 +1244,25 @@ public class Controller {
         btn_scanline_clearpl.setDisable(true);
         btn_scanline_findpl.setDisable(true);
         scl_table_data_new.setDisable(true);
-*/
-/*        btn_modeling_2d_edit.setDisable(true);
+         */
+ /*        btn_modeling_2d_edit.setDisable(true);
 
-        check_modeling_refine_2d.setSelected(true);
+        check_modeling_refine_2d.setSelected(true);//feito
 
-        check_modeling_2d_holdonresults.setSelected(true);
+        check_modeling_2d_holdonresults.setSelected(true); //feito
 
         check_scanline_save_ortega.setSelected(true);
 
-        checkbox_filter_scl_data.setDisable(true);
-        //-------------Modeling----------------
-        modeling_2d_saveanalysis.setSelected(true);
-  */       
- /*
-		 * RadioButtons
+        checkbox_filter_scl_data.setDisable(true); //feito
          */
- /*      //combobox
-        combo_modeling_dataset.getItems().addAll(
-                "SET1", "SET2", "SET3");
+        //-------------Modeling----------------
+//        modeling_2d_saveanalysis.setSelected(true); //feito
+        /*
+		 * RadioButtons
+         
+       //combobox
+        combo_modeling_dataset.getItems().addAll( 
+                "SET1", "SET2", "SET3");  //feito
         combo_modeling_dataset.setValue("SET1");
          */
  /*
@@ -1267,7 +1272,7 @@ public class Controller {
 
         //check_modeling_refine_2d.selectedProperty().bind(tab_modeling_2d_modeling.disabledProperty());
         checkbox_filter_scl_data.selectedProperty().addListener((event, oldValue, newValue) -> {
-            if (checkbox_filter_scl_data.isSelected()) {
+            if (checkbox_filter_scl_data.isSelected()) {//procedimento feito, listener nao
                 //btn_scanline_saveanalysis.setDisable(false);
                 btn_scanline_clearpl.setDisable(false);
                 btn_scanline_findpl.setDisable(false);
@@ -1283,13 +1288,13 @@ public class Controller {
  /*
 		 * Listener scl_table
          */
- /*      scl_table.getSelectionModel().selectedItemProperty().addListener((event, oldValue, newValue) -> {
+ /*       scl_table.getSelectionModel().selectedItemProperty().addListener((event, oldValue, newValue) -> {
             unbindData(oldValue);
             bindData(newValue);
         });
-
+         */
         // ComboBox initial options
-        dataTypeScl.getItems().addAll(
+        /*       dataTypeScl.getItems().addAll( //feito
                 "Load SCL", "Selected SCL");
         dataTypeScl.setValue("Load SCL");
 
@@ -1298,7 +1303,8 @@ public class Controller {
             System.out.println("Valor nudado " + n); //for debug only - apagar depois
             dataTypeScl.setValue(n);
         });
-
+         */
+ /*
         //label.textProperty().bind(slider.valueProperty().asString());
         slider.valueProperty().addListener((o, ov, nv) -> {
             Double value = (Double) nv;
@@ -1383,8 +1389,9 @@ public class Controller {
     }
 
     /**
-     * Load and set the program dataset 
-     * @throws Exception 
+     * Load and set the program dataset
+     *
+     * @throws Exception
      */
     @FXML
     protected void setDatafile() throws Exception {
@@ -1394,7 +1401,7 @@ public class Controller {
             sep = ";";
         } else if (rbComma.isSelected()) {
             sep = ",";
-        } else if (rbOther.isSelected()){
+        } else if (rbOther.isSelected()) {
             String aux = tfSeparator.getCharacters().toString();
             if (aux.length() > 0) {
                 sep = aux;
@@ -1413,13 +1420,17 @@ public class Controller {
                 file.setHeaderStrings(DatasetUtils.getHeaders(file.getFileName(), sep));
             } else {
                 ArrayList<String> al = new ArrayList<>(file.getColumnsCount());
-                for(int i = 0; i <file.getColumnsCount(); i++){
-                    if(i==0){al.add("Ap");}
-                    if(i==1){al.add("Sp");}
-                    if(i>1){
-                        al.add("Column "+String.valueOf(i));
-                    }                   
-                }    
+                for (int i = 0; i < file.getColumnsCount(); i++) {
+                    if (i == 0) {
+                        al.add("Ap");
+                    }
+                    if (i == 1) {
+                        al.add("Sp");
+                    }
+                    if (i > 1) {
+                        al.add("Column " + String.valueOf(i));
+                    }
+                }
                 file.setHeaderStrings(al);
             }
             Scanline sl = OpenScanlineData.openCSVFileToScanline(tfFilename.getText(),
@@ -1430,6 +1441,7 @@ public class Controller {
             s.close();
             MainStage.setAnalysisFile(file);
             MainStage.refreshStats();
+            enableButtons();
         }
     }
 
@@ -1463,5 +1475,49 @@ public class Controller {
         VariogramStage s
                 = new VariogramStage(MainStage.getAnalysisFile());
         s.createStage();
+    }
+
+    @FXML
+    protected void saveGraph() throws IOException {
+        //TODO
+        ExportImageStage stage = new ExportImageStage();
+        stage.createStage();
+    }
+
+    /**
+     * Handle action for a checkbox on Tab Scanline
+     */
+    @FXML
+    protected void checkboxChange() {
+        if (checkbox_filter_scl_data.isSelected()) {
+            //btn_scanline_saveanalysis.setDisable(false);
+            btn_scanline_clearpl.setDisable(false);
+            btn_scanline_findpl.setDisable(false);
+            scl_table_data_new.setDisable(false);
+        } else {
+            btn_scanline_saveanalysis.setDisable(true);
+            btn_scanline_clearpl.setDisable(true);
+            btn_scanline_findpl.setDisable(true);
+            scl_table_data_new.setDisable(true);
+        }
+    }
+
+    private void enableButtons() {
+        btn_scanline_save = (Button) MainStage.getRoot().lookup("#btn_scanline_save");
+        btn_scanline_save.setDisable(false);
+        btn_scanline_clear = (Button) MainStage.getRoot().lookup("#btn_scanline_clear");
+        btn_scanline_clear.setDisable(false);
+        btn_scanline_saveanalysis = (Button) MainStage.getRoot().lookup("#btn_scanline_saveanalysis");
+        btn_scanline_saveanalysis.setDisable(false);
+        btn_scanline_clearpl = (Button) MainStage.getRoot().lookup("#btn_scanline_clearpl");
+        btn_scanline_clearpl.setDisable(false);
+        btn_scanline_findpl = (Button) MainStage.getRoot().lookup("#btn_scanline_findpl");
+        btn_scanline_findpl.setDisable(false);
+        btn_save_graph = (Button)MainStage.getRoot().lookup("#btn_save_graph");
+        btn_save_graph.setDisable(false);
+        btn_scanline_plotpowerlaw= (Button)MainStage.getRoot().lookup("#btn_scanline_plotpowerlaw");
+        btn_scanline_plotpowerlaw.setDisable(false);
+        scl_table_data_new = (TableView) MainStage.getRoot().lookup("#scl_table_data_new");
+        scl_table_data_new.setDisable(false);
     }
 }

@@ -48,18 +48,20 @@ public class ScatterChartStage {
         /**
          * Get the headers of columns
          */
-        List list = new ArrayList();
-        for (int i = 0; i < getAnalysisFile().getHeaderArray().size(); i++) {
-            list.add(getAnalysisFile().getHeaderArray(i));
+        if (getAnalysisFile() != null) {
+            List list = new ArrayList();
+            for (int i = 0; i < getAnalysisFile().getHeaderArray().size(); i++) {
+                list.add(getAnalysisFile().getHeaderArray(i));
+            }
+            /**
+             * Put headers on comboboxes
+             */
+            ObservableList ol = FXCollections.observableArrayList(list);
+            ComboBox comboBoxX = (ComboBox) parent.lookup("#cbX");
+            ComboBox comboBoxY = (ComboBox) parent.lookup("#cbY");
+            comboBoxX.setItems(ol);
+            comboBoxY.setItems(ol);
         }
-        /**
-         * Put headers on comboboxes
-         */
-        ObservableList ol = FXCollections.observableArrayList(list);
-        ComboBox comboBoxX = (ComboBox) parent.lookup("#cbX");
-        ComboBox comboBoxY = (ComboBox) parent.lookup("#cbY");
-        comboBoxX.setItems(ol);
-        comboBoxY.setItems(ol);
 
         /**
          * Create and show stage
