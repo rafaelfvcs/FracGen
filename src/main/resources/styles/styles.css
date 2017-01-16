@@ -17,13 +17,14 @@
 
 .text-area{
     -fx-padding: 9;
-    -fx-border: 6;    
+    -fx-border: 1;    
 }
 
 .text-field{
-    -fx-padding: 2;
-    -fx-border: 2;    
+    -fx-padding: 9;
+    -fx-border: 1;    
     -fx-background-color:grey;
+    -fx-font: 12px "Serif"; 
 }
 .radio-button{
     -fx-padding: 9;

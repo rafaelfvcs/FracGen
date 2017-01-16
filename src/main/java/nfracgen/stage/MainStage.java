@@ -25,11 +25,8 @@ import nfracgen.analysis.plot.PlotSeries;
 import nfracgen.javafxapplication.FracGenApplication;
 import nfracgen.model.AnalysisFile;
 import nfracgen.model.Scl;
-import nfracgen.statistic.Mode;
+import nfracgen.model.StatisticsModel;
 import nfracgen.statistic.Stat;
-import nfracgen.statistic.StdDeviation;
-import nfracgen.statistic.Variance;
-import nfracgen.statistic.VariationCoefficient;
 import nfracgen.statistic.histogram.ClassInterval;
 import nfracgen.statistic.histogram.Frequency;
 import nfracgen.statistic.linearregression.LinearRegression;
@@ -103,13 +100,13 @@ public class MainStage {
         scl_table.setItems(data);
         /*
          * Set statistics and properties of dataset
-         */
+         */        
         Label sclName = (Label) getRoot().lookup("#sclName");
         ComboBox dataTypeScl = (ComboBox) getRoot().lookup("#dataTypeScl");
         //TODO: fix this
         //sclName.setText(dataTypeScl.getSelectionModel().getSelectedItem());
         Label sclNumData = (Label) getRoot().lookup("#sclNumData");
-        sclNumData.setText(String.valueOf(sl.getFracCount()));
+        sclNumData.setText(String.valueOf(sl.getFracCount()));                
 
         double sclapmean = Stat.calculateMean(ArrayOperation.arrayListToArray(sl.getApList()));
         double sclapstd = Stat.getStdDev(ArrayOperation.arrayListToArray(sl.getApList()));
@@ -140,79 +137,81 @@ public class MainStage {
          *
          * tab_ap_statistics.fxml
          */
+        StatisticsModel apStats = new StatisticsModel(file.getScanLine().getApList());
         Label lMinValue = (Label) getRoot().lookup("#lMinValue");
         lMinValue.setText(String.valueOf(
-                RoundUtil.round(Stat.min(file.getScanLine().getApList()), 3)));
+                RoundUtil.round(apStats.getMin(), 3)));
 
         Label lMaxValue = (Label) getRoot().lookup("#lMaxValue");
         lMaxValue.setText(String.valueOf(
-                RoundUtil.round(Stat.max(file.getScanLine().getApList()), 3)));
+                RoundUtil.round(apStats.getMax(), 3)));
 
         Label lAvgValue = (Label) getRoot().lookup("#lAvgValue");
         lAvgValue.setText(String.valueOf(
-                RoundUtil.round(Stat.mean(file.getScanLine().getApList()), 3)));
+                RoundUtil.round(apStats.getAvg(), 3)));
 
         Label lModeValue = (Label) getRoot().lookup("#lModeValue");
         lModeValue.setText(String.valueOf(
-                RoundUtil.round(Mode.getMode(file.getScanLine().getApList()), 3)));
+                RoundUtil.round(apStats.getMode(), 3)));
 
         Label lStdDevValue = (Label) getRoot().lookup("#lStdDevValue");
         lStdDevValue.setText(String.valueOf(
-                RoundUtil.round(StdDeviation.stdDeviation(file.getScanLine().getApList()), 3)));
+                RoundUtil.round(apStats.getStdDev(), 3)));
 
         Label lVariance = (Label) getRoot().lookup("#lVariance");
         lVariance.setText(String.valueOf(
-                RoundUtil.round(Variance.variance(file.getScanLine().getApList()), 3)));
+                RoundUtil.round(apStats.getVariance(), 3)));
 
         Label lGeoAvg = (Label) getRoot().lookup("#lGeoAvg");
         lGeoAvg.setText(String.valueOf(
-                RoundUtil.round(Stat.geometricAverage(file.getScanLine().getApList()), 3)));
+                RoundUtil.round(apStats.getGeoAvg(), 3)));
 
         Label lCount = (Label) getRoot().lookup("#lCount");
-        lCount.setText(String.valueOf(file.getScanLine().getFracCount()));
+        lCount.setText(String.valueOf(apStats.getCount()));
 
         Label lVariation = (Label) getRoot().lookup("#lVariation");
         lVariation.setText(String.valueOf(RoundUtil.round(
-                VariationCoefficient.variationCoefficient(file.getScanLine().getApList()), 3)));
+                apStats.getVariation(), 3)));
         /**
          * Tab Sp Statistics
-         *
+         *    Descritive Statistics
          * tab_sp_statistics.fxml
          */
+        StatisticsModel spStats = new StatisticsModel(file.getScanLine().getSpList());
         Label lSpMinValue = (Label) getRoot().lookup("#lSpMinValue");
         lSpMinValue.setText(String.valueOf(
-                RoundUtil.round(Stat.min(file.getScanLine().getSpList()), 3)));
+                RoundUtil.round(spStats.getMin(), 3)));
 
         Label lSpMaxValue = (Label) getRoot().lookup("#lSpMaxValue");
         lSpMaxValue.setText(String.valueOf(
-                RoundUtil.round(Stat.max(file.getScanLine().getSpList()), 3)));
+                RoundUtil.round(spStats.getMax(), 3)));
 
         Label lSpAvgValue = (Label) getRoot().lookup("#lSpAvgValue");
         lSpAvgValue.setText(String.valueOf(
-                RoundUtil.round(Stat.mean(file.getScanLine().getSpList()), 3)));
+                RoundUtil.round(spStats.getAvg(), 3)));
 
         Label lSpModeValue = (Label) getRoot().lookup("#lSpModeValue");
         lSpModeValue.setText(String.valueOf(
-                RoundUtil.round(Mode.getMode(file.getScanLine().getSpList()), 3)));
+                RoundUtil.round(spStats.getMode(), 3)));
 
         Label lSpStdDevValue = (Label) getRoot().lookup("#lSpStdDevValue");
         lSpStdDevValue.setText(String.valueOf(
-                RoundUtil.round(StdDeviation.stdDeviation(file.getScanLine().getSpList()), 3)));
+                RoundUtil.round(spStats.getStdDev(), 3)));
 
         Label lSpVariance = (Label) getRoot().lookup("#lSpVariance");
         lSpVariance.setText(String.valueOf(
-                RoundUtil.round(Variance.variance(file.getScanLine().getSpList()), 3)));
+                RoundUtil.round(spStats.getVariance(), 3)));
 
         Label lSpGeoAvg = (Label) getRoot().lookup("#lSpGeoAvg");
         lSpGeoAvg.setText(String.valueOf(
-                RoundUtil.round(Stat.geometricAverage(file.getScanLine().getSpList()), 3)));
+                RoundUtil.round(spStats.getGeoAvg(), 3)));
 
         Label lSpCount = (Label) getRoot().lookup("#lSpCount");
-        lSpCount.setText(String.valueOf(file.getScanLine().getFracCount()));
+        lSpCount.setText(String.valueOf(spStats.getCount()));
 
         Label lSpVariation = (Label) getRoot().lookup("#lSpVariation");
-        lSpVariation.setText(String.valueOf(RoundUtil.round(
-                VariationCoefficient.variationCoefficient(file.getScanLine().getSpList()), 3)));
+        lSpVariation.setText(String.valueOf(
+                RoundUtil.round(spStats.getVariation(), 3)));
         /**
          * Plot Power Law
          */
