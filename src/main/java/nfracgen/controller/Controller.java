@@ -65,6 +65,7 @@ import nfracgen.stage.HistogramStage;
 import nfracgen.stage.LineChartStage;
 import nfracgen.stage.MainStage;
 import nfracgen.stage.PowerLawStage;
+import nfracgen.stage.SaveAnalysisStage;
 import nfracgen.stage.ScatterChartStage;
 import nfracgen.stage.StageOpenData;
 import nfracgen.stage.VariogramStage;
@@ -1519,5 +1520,12 @@ public class Controller {
         btn_scanline_plotpowerlaw.setDisable(false);
         scl_table_data_new = (TableView) MainStage.getRoot().lookup("#scl_table_data_new");
         scl_table_data_new.setDisable(false);
+    }
+    
+    @FXML
+    protected void saveAnalysis() throws IOException{
+        SaveAnalysisStage s =  
+                new SaveAnalysisStage(MainStage.getAnalysis());
+        s.createStage();
     }
 }

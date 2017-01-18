@@ -145,7 +145,14 @@
                                         <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     </children>
                                 </GridPane>
-                                <GridPane fx:id="grid_output_adv_study" disable="true" layoutX="14.0" layoutY="274.0" prefHeight="90.0" prefWidth="237.0">
+                                <GridPane 
+                                    fx:id="grid_output_adv_study" 
+                                    disable="true" 
+                                    layoutX="14.0" 
+                                    layoutY="274.0" 
+                                    prefHeight="90.0" 
+                                    prefWidth="237.0"
+                                    visible="false">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="91.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="147.0" minWidth="10.0" prefWidth="146.0" />

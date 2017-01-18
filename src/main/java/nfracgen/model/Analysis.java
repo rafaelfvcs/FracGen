@@ -51,4 +51,12 @@ public class Analysis {
     public String getComments() {
         return this.comments;
     }
+    
+    public void setAnalysisFile(AnalysisFile file){
+        this.file = file;
+    }
+    
+    public AnalysisFile getAnalysisFile(){
+        return this.file;
+    }
 }

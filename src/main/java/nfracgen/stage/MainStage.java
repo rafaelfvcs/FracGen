@@ -23,6 +23,7 @@ import nfracgen.analysis.FractureIntensityAnalysis;
 import nfracgen.analysis.Scanline;
 import nfracgen.analysis.plot.PlotSeries;
 import nfracgen.javafxapplication.FracGenApplication;
+import nfracgen.model.Analysis;
 import nfracgen.model.AnalysisFile;
 import nfracgen.model.Scl;
 import nfracgen.model.StatisticsModel;
@@ -37,8 +38,9 @@ import nfracgen.util.RoundUtil;
 public class MainStage {
 
     private static MainStage instance;
-    private static AnalysisFile file;
-
+    //private static AnalysisFile file;
+    private static Analysis analysis = new Analysis();
+ 
     public MainStage() {
         instance = this;
     }
@@ -48,11 +50,19 @@ public class MainStage {
     }
 
     public static void setAnalysisFile(AnalysisFile file) {
-        MainStage.file = file;
+        MainStage.analysis.setAnalysisFile(file);        
     }
 
-    public static AnalysisFile getAnalysisFile() {
-        return file;
+    public static AnalysisFile getAnalysisFile() {        
+        return MainStage.analysis.getAnalysisFile();
+    }
+    
+    public static void setAnalysis(Analysis analysis) {
+        MainStage.analysis = analysis;
+    }
+
+    public static Analysis getAnalysis() {
+        return MainStage.analysis;
     }
 
     private static Parent root;
@@ -73,9 +83,12 @@ public class MainStage {
 
     public static void refreshStats() throws Exception {
         Scanline sl = OpenScanlineData.openCSVFileToScanline(
-                file.getFileName(), file.getSep(), file.getApColumn(),
-                file.getSpColumn(), file.getHeader());
-        file.setScanLine(sl);
+                getAnalysisFile().getFileName(), 
+                getAnalysisFile().getSep(), 
+                getAnalysisFile().getApColumn(),
+                getAnalysisFile().getSpColumn(), 
+                getAnalysisFile().getHeader());
+                getAnalysisFile().setScanLine(sl);
         /**
          * Populate table with Ap and Sp values from dataset
          *
@@ -137,7 +150,8 @@ public class MainStage {
          *
          * tab_ap_statistics.fxml
          */
-        StatisticsModel apStats = new StatisticsModel(file.getScanLine().getApList());
+        StatisticsModel apStats = new StatisticsModel(
+                getAnalysisFile().getScanLine().getApList());
         Label lMinValue = (Label) getRoot().lookup("#lMinValue");
         lMinValue.setText(String.valueOf(
                 RoundUtil.round(apStats.getMin(), 3)));
@@ -177,7 +191,8 @@ public class MainStage {
          *    Descritive Statistics
          * tab_sp_statistics.fxml
          */
-        StatisticsModel spStats = new StatisticsModel(file.getScanLine().getSpList());
+        StatisticsModel spStats = new StatisticsModel(
+                getAnalysisFile().getScanLine().getSpList());
         Label lSpMinValue = (Label) getRoot().lookup("#lSpMinValue");
         lSpMinValue.setText(String.valueOf(
                 RoundUtil.round(spStats.getMin(), 3)));
@@ -219,7 +234,7 @@ public class MainStage {
         //gPowerLaw.getData().add(PlotSeries.plotLineSeries(file.getScanLine().getSpList(),
         //      file.getScanLine().getSpList());
 
-        FractureIntensityAnalysis fi = file.getScanLine().getFracIntAnalysis();
+        FractureIntensityAnalysis fi = getAnalysisFile().getScanLine().getFracIntAnalysis();
         //new FractureIntensityAnalysis(file.getScanLine());
 
         Label lFracInt = (Label) getRoot().lookup("#lFracInt");
@@ -227,10 +242,10 @@ public class MainStage {
         Label lScanLen = (Label) getRoot().lookup("#lScanLen");
         lFracInt.setText(String.valueOf(fi.getFractureIntensity()));
         lAvgSpacing.setText(String.valueOf(fi.getAverageSpacing()));
-        lScanLen.setText(String.valueOf(file.getScanLine().getLenght()));
+        lScanLen.setText(String.valueOf(getAnalysisFile().getScanLine().getLenght()));
         
-        gPowerLaw.getData().addAll(PlotSeries.plotLineSeries(file.getScanLine().getApList(),
-                file.getScanLine().getFracIntAnalysis().getCumulativeList()));
+        gPowerLaw.getData().addAll(PlotSeries.plotLineSeries(getAnalysisFile().getScanLine().getApList(),
+                getAnalysisFile().getScanLine().getFracIntAnalysis().getCumulativeList()));
         //gPowerLaw.getData().addAll(PlotSeries.plotLineSeries(fi.apLog10, fi.cumLog10));
 
         /**
@@ -242,8 +257,8 @@ public class MainStage {
         /**
          * Add linear regression to graph
          */
-        LinearRegression lr = new LinearRegression(file.getScanLine().getApList(),
-                file.getScanLine().getFracIntAnalysis().getCumulativeList());
+        LinearRegression lr = new LinearRegression(getAnalysisFile().getScanLine().getApList(),
+                getAnalysisFile().getScanLine().getFracIntAnalysis().getCumulativeList());
 //        double min = MinimumValue.getMinValue(aperture);
 //        double max = MaximumValue.getMaxValue(aperture);
 //        double first = lr.getValueAt(min);
@@ -260,12 +275,12 @@ public class MainStage {
          * Plot Ap Histogram
          */
         BarChart bcApHistogram = (BarChart) getRoot().lookup("#bcApHistogram");
-        double amplitude = Stat.getAmplitude(file.getScanLine().getApList());
-        double classIntervals = Frequency.sturgesExpression(amplitude, file.getRowsCount());
-        double apMin = Stat.min(file.getScanLine().getApList());
-        double apMax = Stat.max(file.getScanLine().getApList());
+        double amplitude = Stat.getAmplitude(getAnalysisFile().getScanLine().getApList());
+        double classIntervals = Frequency.sturgesExpression(amplitude, getAnalysisFile().getRowsCount());
+        double apMin = Stat.min(getAnalysisFile().getScanLine().getApList());
+        double apMax = Stat.max(getAnalysisFile().getScanLine().getApList());
         ArrayList<ClassInterval> intervals = Frequency.classIntervals(apMin, apMax, classIntervals);
-        Frequency.countObsFrequency(file.getScanLine().getApList(), intervals);
+        Frequency.countObsFrequency(getAnalysisFile().getScanLine().getApList(), intervals);
 
         XYChart.Series series = new XYChart.Series();
         series.setName("Histogram");
@@ -279,12 +294,12 @@ public class MainStage {
          * Plot Sp Histogram
          */
         BarChart bcSpHistogram = (BarChart) getRoot().lookup("#bcSpHistogram");
-        double amplitudeSp = Stat.getAmplitude(file.getScanLine().getSpList());
-        double classIntervalsSp = Frequency.sturgesExpression(amplitudeSp, file.getRowsCount());
-        double spMin = Stat.min(file.getScanLine().getSpList());
-        double spMax = Stat.max(file.getScanLine().getSpList());
+        double amplitudeSp = Stat.getAmplitude(getAnalysisFile().getScanLine().getSpList());
+        double classIntervalsSp = Frequency.sturgesExpression(amplitudeSp, getAnalysisFile().getRowsCount());
+        double spMin = Stat.min(getAnalysisFile().getScanLine().getSpList());
+        double spMax = Stat.max(getAnalysisFile().getScanLine().getSpList());
         ArrayList<ClassInterval> intervalsSp = Frequency.classIntervals(spMin, spMax, classIntervalsSp);
-        Frequency.countObsFrequency(file.getScanLine().getSpList(), intervalsSp);
+        Frequency.countObsFrequency(getAnalysisFile().getScanLine().getSpList(), intervalsSp);
 
         XYChart.Series seriesSp = new XYChart.Series();
         seriesSp.setName("Histogram");
@@ -302,7 +317,7 @@ public class MainStage {
          */
         ScatterChart scDispersion = (ScatterChart) getRoot().lookup("#scDispersion");
         scDispersion.getData().add(
-                PlotSeries.plotLineSeries(0, file.getScanLine().getDistanceList()));
+                PlotSeries.plotLineSeries(0, getAnalysisFile().getScanLine().getDistanceList()));
 
     }
 
