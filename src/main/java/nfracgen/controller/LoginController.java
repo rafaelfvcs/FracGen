@@ -24,7 +24,7 @@ public class LoginController implements Initializable {
 
     @FXML
     private Label lblMessage;
-    //comentario
+
     @FXML
     private TextField txtUsername;
 

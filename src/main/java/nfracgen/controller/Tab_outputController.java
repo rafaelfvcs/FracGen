@@ -16,7 +16,6 @@ package nfracgen.controller;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -40,9 +39,25 @@ public class Tab_outputController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+        check_output_adv_study.selectedProperty().addListener((v, oldv, newv) -> {
+            if (newv == true) {
+                grid_output_adv_study.setDisable(false);
+            } else {
+                grid_output_adv_study.setDisable(true);
+            }
+        });
+        
+        check_output_comments.selectedProperty().addListener((v, oldv, newv) -> {
+            if (newv == true) {
+                textarea_output_comments.setDisable(false);
+            } else {
+                textarea_output_comments.setDisable(true);
+            }
+        });        
+        
+
+    }
+
     @FXML
     private TextArea textarea_output_comments;
 
@@ -60,10 +75,10 @@ public class Tab_outputController implements Initializable {
 
     @FXML
     private GridPane grid_output_project;
-        
+
     @FXML
     TreeView<String> treeview_outs;
-    
+
     @SuppressWarnings("unchecked")
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -106,5 +121,5 @@ public class Tab_outputController implements Initializable {
         grid_output_project.setDisable(true);
         check_output_newproject.setDisable(false);
     }
-    
+
 }

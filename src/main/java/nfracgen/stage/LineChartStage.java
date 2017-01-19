@@ -11,19 +11,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import nfracgen.javafxapplication.FracGenApplication;
-import nfracgen.model.AnalysisFile;
+import nfracgen.model.ScanlineAnalysisFile;
 
 public class LineChartStage {
 
     private static LineChartStage instance;
 
-    private static AnalysisFile file;
+    private static ScanlineAnalysisFile file;
 
     /**
      *
      * @param datasets
      */
-    public LineChartStage(AnalysisFile file) {
+    public LineChartStage(ScanlineAnalysisFile file) {
         instance = this;
         this.file = file;
     }
@@ -40,7 +40,7 @@ public class LineChartStage {
      *
      * @return
      */
-    public AnalysisFile getAnalysisFile() {
+    public ScanlineAnalysisFile getAnalysisFile() {
         return file;
     }
 

@@ -17,7 +17,7 @@
     prefHeight="180.0" 
     prefWidth="200.0"
     styleClass="mainFxmlClass" 
-    fx:controller="nfracgen.controller.Controller">
+    fx:controller="nfracgen.controller.Tab_modellingController">
     <stylesheets>
         <URL value="@/styles/styles.css"/>
     </stylesheets>

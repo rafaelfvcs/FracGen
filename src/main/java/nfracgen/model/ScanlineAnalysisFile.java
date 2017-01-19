@@ -23,7 +23,7 @@ import nfracgen.analysis.Scanline;
  *
  * @author elidioxg
  */
-public class AnalysisFile  extends DatasetModel {
+public class ScanlineAnalysisFile  extends DatasetModel {
     
     /**
      * The AnalysisFile works with a Scanline class. The Scanline is represented
@@ -48,7 +48,7 @@ public class AnalysisFile  extends DatasetModel {
     /**
      * Creates a null scanline.
      */
-    public AnalysisFile(){
+    public ScanlineAnalysisFile(){
         
     }
     

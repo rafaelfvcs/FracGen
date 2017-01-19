@@ -6,13 +6,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nfracgen.javafxapplication.FracGenApplication;
-import nfracgen.model.Analysis;
+import nfracgen.model.ScanlineAnalysis;
 
 public class SaveAnalysisStage {
     
-    private final Analysis analysis;
+    private final ScanlineAnalysis analysis;
     
-    public SaveAnalysisStage(Analysis analysis){
+    public SaveAnalysisStage(ScanlineAnalysis analysis){
         this.analysis = analysis;
     }
     

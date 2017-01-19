@@ -1,8 +1,8 @@
 package nfracgen.model;
 
-public class Analysis {
+public class ScanlineAnalysis {
     
-    private AnalysisFile file;
+    private ScanlineAnalysisFile file;
     
     //private FieldImage images;
     
@@ -52,11 +52,11 @@ public class Analysis {
         return this.comments;
     }
     
-    public void setAnalysisFile(AnalysisFile file){
+    public void setAnalysisFile(ScanlineAnalysisFile file){
         this.file = file;
     }
     
-    public AnalysisFile getAnalysisFile(){
+    public ScanlineAnalysisFile getAnalysisFile(){
         return this.file;
     }
 }

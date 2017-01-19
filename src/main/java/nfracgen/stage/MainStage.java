@@ -12,6 +12,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -23,8 +24,8 @@ import nfracgen.analysis.FractureIntensityAnalysis;
 import nfracgen.analysis.Scanline;
 import nfracgen.analysis.plot.PlotSeries;
 import nfracgen.javafxapplication.FracGenApplication;
-import nfracgen.model.Analysis;
-import nfracgen.model.AnalysisFile;
+import nfracgen.model.ScanlineAnalysis;
+import nfracgen.model.ScanlineAnalysisFile;
 import nfracgen.model.Scl;
 import nfracgen.model.StatisticsModel;
 import nfracgen.statistic.Stat;
@@ -39,7 +40,7 @@ public class MainStage {
 
     private static MainStage instance;
     //private static AnalysisFile file;
-    private static Analysis analysis = new Analysis();
+    private static ScanlineAnalysis analysis = new ScanlineAnalysis();
  
     public MainStage() {
         instance = this;
@@ -49,19 +50,19 @@ public class MainStage {
         return instance;
     }
 
-    public static void setAnalysisFile(AnalysisFile file) {
+    public static void setAnalysisFile(ScanlineAnalysisFile file) {
         MainStage.analysis.setAnalysisFile(file);        
     }
 
-    public static AnalysisFile getAnalysisFile() {        
+    public static ScanlineAnalysisFile getAnalysisFile() {        
         return MainStage.analysis.getAnalysisFile();
     }
     
-    public static void setAnalysis(Analysis analysis) {
+    public static void setAnalysis(ScanlineAnalysis analysis) {
         MainStage.analysis = analysis;
     }
 
-    public static Analysis getAnalysis() {
+    public static ScanlineAnalysis getAnalysis() {
         return MainStage.analysis;
     }
 
@@ -320,6 +321,25 @@ public class MainStage {
         scDispersion.getData().add(
                 PlotSeries.plotLineSeries(0, getAnalysisFile().getScanLine().getDistanceList()));
 
+    }
+    
+    public static void enableButtons() {
+        Button btn_scanline_save = (Button) MainStage.getRoot().lookup("#btn_scanline_save");
+        btn_scanline_save.setDisable(false);
+        Button btn_scanline_clear = (Button) MainStage.getRoot().lookup("#btn_scanline_clear");
+        btn_scanline_clear.setDisable(false);
+        Button btn_scanline_saveanalysis = (Button) MainStage.getRoot().lookup("#btn_scanline_saveanalysis");
+        btn_scanline_saveanalysis.setDisable(false);
+        Button btn_scanline_clearpl = (Button) MainStage.getRoot().lookup("#btn_scanline_clearpl");
+        btn_scanline_clearpl.setDisable(false);
+        Button btn_scanline_findpl = (Button) MainStage.getRoot().lookup("#btn_scanline_findpl");
+        btn_scanline_findpl.setDisable(false);
+        Button btn_save_graph = (Button) MainStage.getRoot().lookup("#btn_save_graph");
+        btn_save_graph.setDisable(false);
+        Button btn_scanline_plotpowerlaw = (Button) MainStage.getRoot().lookup("#btn_scanline_plotpowerlaw");
+        btn_scanline_plotpowerlaw.setDisable(false);
+        TableView scl_table_data_new = (TableView) MainStage.getRoot().lookup("#scl_table_data_new");
+        scl_table_data_new.setDisable(false);
     }
 
 }

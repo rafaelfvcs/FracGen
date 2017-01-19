@@ -8,8 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import nfracgen.model.Analysis;
-import nfracgen.model.AnalysisFile;
+import nfracgen.model.ScanlineAnalysis;
+import nfracgen.model.ScanlineAnalysisFile;
 import nfracgen.stage.MainStage;
 import org.sqlite.SQLiteJDBCLoader;
 
@@ -98,7 +98,7 @@ public class InternalDatabase {
     }
 
     //todo: saveNewAnalysis()
-    public void saveAnalysis(Analysis analysis) throws Exception {
+    public void saveAnalysis(ScanlineAnalysis analysis) throws Exception {
         /**
          * Create table if not exists Insert values from Analysis Object to
          * Database
@@ -125,6 +125,7 @@ public class InternalDatabase {
                     + analysis.getComments() + "','"
                     + analysis.getAnalysisFile().getFileName() + "','"
                     + analysis.getAnalysisFile().getSep() + "')"
+                    //ArrayOperation.arrayListToArray()
             );
             st.close();
         } catch (Exception e) {
@@ -137,11 +138,11 @@ public class InternalDatabase {
         Statement st = getConection().createStatement();
         ResultSet result = st.executeQuery("SELECT * FROM " + tableAnalysis
                 + " WHERE " + fieldName + " = '" + name + "'");
-        Analysis analysis = new Analysis();
+        ScanlineAnalysis analysis = new ScanlineAnalysis();
         analysis.setName(result.getString(fieldName));
         analysis.setUser(result.getString(fieldUser));
         analysis.setComments(result.getString(fieldCom));
-        AnalysisFile file = new AnalysisFile();
+        ScanlineAnalysisFile file = new ScanlineAnalysisFile();
         file.setFilename(fieldDataset);
         //file.setHeader();
         file.setSep(fieldSep);

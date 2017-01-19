@@ -17,7 +17,7 @@
     prefWidth="200.0"
     styleClass="mainFxmlClass" 
     xmlns:fx="http://javafx.com/fxml/1" 
-    fx:controller="nfracgen.controller.Controller">
+    fx:controller="nfracgen.controller.Tab_scanlineController">
     <stylesheets>
         <URL value="@/styles/styles.css"/>
     </stylesheets>

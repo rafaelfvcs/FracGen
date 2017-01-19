@@ -11,7 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import nfracgen.javafxapplication.FracGenApplication;
-import nfracgen.model.AnalysisFile;
+import nfracgen.model.ScanlineAnalysisFile;
 
 public class HistogramStage {
 
@@ -20,9 +20,9 @@ public class HistogramStage {
      */
     private static HistogramStage instance;
 
-    private AnalysisFile file;
+    private ScanlineAnalysisFile file;
 
-    public HistogramStage(AnalysisFile file) {
+    public HistogramStage(ScanlineAnalysisFile file) {
         instance = this;
         this.file = file;
     }
@@ -31,7 +31,7 @@ public class HistogramStage {
         return instance;
     }
 
-    public AnalysisFile getAnalysisFile() {
+    public ScanlineAnalysisFile getAnalysisFile() {
         return file;
     }
 

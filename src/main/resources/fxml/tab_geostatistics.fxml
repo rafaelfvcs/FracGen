@@ -79,7 +79,8 @@
                 lowerBound="-1" 
                 upperBound="1"
                 autoRanging="false"
-                visible="false" />
+                visible="false"
+                tickLabelsVisible="false" />
         </xAxis>
         <yAxis>
             <NumberAxis 
