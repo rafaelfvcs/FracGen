@@ -44,14 +44,29 @@ fx:controller="nfracgen.controller.LoginController" fx:id="WhitePane">
                         <Label layoutX="14.0" layoutY="14.0" text="Informações do usuário:" />
                         <Label layoutX="14.0" layoutY="44.0" text="Nome:" />
                         <Label layoutX="14.0" layoutY="78.0" text="Email:" />
-                        <TextField layoutX="67.0" layoutY="40.0" />
-                        <TextField layoutX="67.0" layoutY="74.0" />
+                        <TextField 
+                            fx:id="tfName"
+                            layoutX="67.0" 
+                            layoutY="40.0" />
+                        <TextField 
+                            fx:id="tfEmail"
+                            layoutX="67.0" 
+                            layoutY="74.0" />
                         <Label layoutX="15.0" layoutY="115.0" text="Profissão:" />
                         <Label layoutX="15.0" layoutY="149.0" text="Empresa:" />
                         <Label layoutX="15.0" layoutY="181.0" text="País:" />
-                        <TextField layoutX="67.0" layoutY="111.0" />
-                        <TextField layoutX="67.0" layoutY="145.0" />
-                        <TextField layoutX="67.0" layoutY="177.0" />
+                        <TextField 
+                            fx:id="tfProf"
+                            layoutX="67.0" 
+                            layoutY="111.0" />
+                        <TextField 
+                            fx:id="tfComp"
+                            layoutX="67.0" 
+                            layoutY="145.0" />
+                        <TextField 
+                            fx:id="tfCountry"
+                            layoutX="67.0" 
+                            layoutY="177.0" />
                         <Button fx:id="sendEmail" layoutX="164.0" layoutY="214.0" mnemonicParsing="false" onAction="#sendToNfracgen" text="Enviar" />
                         <Text layoutX="228.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Favor aguardar nosso" />
                         <Text layoutX="267.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email!" />
