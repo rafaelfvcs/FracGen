@@ -26,8 +26,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.LineChart;
@@ -50,7 +48,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -58,7 +55,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import javax.imageio.ImageIO;
 import nfracgen.model.AnalysisFile;
 import nfracgen.stage.ExportImageStage;
 import nfracgen.stage.HistogramStage;
@@ -1004,19 +1000,7 @@ public class Controller {
         } else {
             // ... user chose CANCEL or closed the dialog
         }
-    }
-
-    /**
-     * Create stage for Power Law plot
-     *
-     * @throws IOException
-     */
-    @FXML
-    protected void plotPowerLaw() throws IOException, Exception {
-        PowerLawStage stagePL = new PowerLawStage(
-                MainStage.getAnalysisFile().getScanLine().getFracIntAnalysis());
-        stagePL.createStage();
-    }
+    }   
 
     // Informações da Lei de potencia
     private void setInfoPowerLaw(PowerLaw pl) {
@@ -1477,14 +1461,26 @@ public class Controller {
                 = new VariogramStage(MainStage.getAnalysisFile());
         s.createStage();
     }
-
+    
+    /**
+     * Create stage for Power Law plot
+     *
+     * @throws IOException
+     */
+    @FXML
+    protected void plotPowerLaw() throws IOException, Exception {
+        PowerLawStage stagePL = new PowerLawStage(
+                MainStage.getAnalysisFile().getScanLine().getFracIntAnalysis());
+        stagePL.createStage();
+    }
+    
     @FXML
     protected void saveGraph() throws IOException {
         //TODO
         ExportImageStage stage = new ExportImageStage();
         stage.createStage();
     }
-
+    
     /**
      * Handle action for a checkbox on Tab Scanline
      */

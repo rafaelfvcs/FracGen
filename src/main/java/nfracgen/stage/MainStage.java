@@ -71,13 +71,14 @@ public class MainStage {
         return root;
     }
 
-    public static void showMainStage() throws IOException {
+    public static void showMainStage(String user) throws IOException {
         root = FXMLLoader.load(FracGenApplication.getInstance().
                 getClass().getResource("/views/LayoutMain.fxml"));
+        getAnalysis().setUser(user);
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("NFracGen - alpha");
+        stage.setTitle("NFracGen - alpha -  User: "+user);
         stage.show();
     }
 

@@ -21,7 +21,7 @@
 }
 
 .text-field{
-    -fx-padding: 9;
+    -fx-padding: 3;
     -fx-border: 1;    
     -fx-background-color:grey;
     -fx-font: 12px "Serif"; 

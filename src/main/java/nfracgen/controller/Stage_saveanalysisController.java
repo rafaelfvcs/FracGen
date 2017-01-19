@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-import nfracgen.database.DatabaseHelper;
+import nfracgen.database.InternalDatabase;
 import nfracgen.stage.MainStage;
 
 /**
@@ -46,7 +46,7 @@ public class Stage_saveanalysisController implements Initializable {
     protected void save() throws Exception {
         String databaseName = tfName.getText().trim();
         String user = tfUser.getText();
-        DatabaseHelper database = new DatabaseHelper(databaseName);
+        InternalDatabase database = new InternalDatabase(databaseName);
         if (database.isConnected()) {
             database.saveAnalysis(MainStage.getAnalysis());
         } else {

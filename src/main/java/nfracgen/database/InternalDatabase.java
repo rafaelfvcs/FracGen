@@ -5,12 +5,15 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import nfracgen.model.Analysis;
+import nfracgen.model.AnalysisFile;
+import nfracgen.stage.MainStage;
 import org.sqlite.SQLiteJDBCLoader;
 
-public class DatabaseHelper {
+public class InternalDatabase {
 
     private Connection connection = null;
     private String database;
@@ -19,12 +22,16 @@ public class DatabaseHelper {
     private final String tableAnalysis = "table_analysis";
 
     private final String fieldName = "field_name";
-    private final String user = "field_user";
-    private final String references = "field_ref";
-    private final String comments = "field_comments";
-    private final String outputFilename = "field_output";
+    private final String fieldUser = "field_user";
+    private final String fieldRef = "field_ref";
+    private final String fieldCom = "field_comments";
+    private final String fieldOut = "field_output";
+    private final String fieldDataset = "field_dataset";
+    private final String fieldSep = "field_separator";
+    private final String fieldHasHeader = "field_hasheader";
+    private final String fieldHeader = "field_header_strings";
 
-    public DatabaseHelper(String database) {        
+    public InternalDatabase(String database) {
         this.database = database;
         try {
             Class.forName("org.sqlite.JDBC");
@@ -98,13 +105,51 @@ public class DatabaseHelper {
          */
         try {
             Statement st = getConection().createStatement();
-            st.execute("CREATE TABLE IF NOT EXISTS " + tableAnalysis + " (" + fieldName + " TEXT)");
-            //st.execute("CREATE TABLE IF NOT EXISTS "+tableStatistics+"("+fieldName+" TEXT)");
+            st.execute("CREATE TABLE IF NOT EXISTS " + tableAnalysis + " ("
+                    + fieldName + " TEXT,"
+                    + fieldUser + " TEXT, "
+                    + fieldCom + " TEXT, "
+                    + fieldDataset + " TEXT,"
+                    + fieldSep + " TEXT,"
+                    + fieldHeader + " TEXT)");
 
-            //st.execute("INSERT INTO "+tableAnalysis+" ("+fieldName+") VALUES ('"+analysis.getName()+"')");            
+            st.execute("INSERT INTO " + tableAnalysis + " ("
+                    + fieldName + ","
+                    + fieldUser + ","
+                    + fieldCom + ","
+                    + fieldDataset + ","
+                    + fieldSep
+                    + ") VALUES ('"
+                    + analysis.getName() + "','"
+                    + analysis.getUser() + "','"
+                    + analysis.getComments() + "','"
+                    + analysis.getAnalysisFile().getFileName() + "','"
+                    + analysis.getAnalysisFile().getSep() + "')"
+            );
+            st.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
+
+    public void loadAnalysis(String name) throws SQLException, Exception {
+        Statement st = getConection().createStatement();
+        ResultSet result = st.executeQuery("SELECT * FROM " + tableAnalysis
+                + " WHERE " + fieldName + " = '" + name + "'");
+        Analysis analysis = new Analysis();
+        analysis.setName(result.getString(fieldName));
+        analysis.setUser(result.getString(fieldUser));
+        analysis.setComments(result.getString(fieldCom));
+        AnalysisFile file = new AnalysisFile();
+        file.setFilename(fieldDataset);
+        //file.setHeader();
+        file.setSep(fieldSep);
+        //file.setHeaderStrings();        
+        analysis.setAnalysisFile(file);
+        st.close();        
+        MainStage.setAnalysis(analysis);
+        MainStage.refreshStats();        
+    }
+
 }

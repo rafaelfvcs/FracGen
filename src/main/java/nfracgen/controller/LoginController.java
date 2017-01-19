@@ -2,6 +2,7 @@ package nfracgen.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,13 +32,26 @@ public class LoginController implements Initializable {
     private PasswordField txtPassword;
 
     @FXML
-    private void btnLoginAction(ActionEvent event) throws IOException {
+    protected void btnLoginAction(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
+//        ExternalDatabase database = new ExternalDatabase();
+//        if (database.connect()) {
+//            if (database.validateLogin(txtUsername.getText(), txtPassword.getText())) {
+//                ((Node) (event.getSource())).getScene().getWindow().hide();
+//                MainStage.showMainStage();
+//            } else {
+//                lblMessage.setText("Username or Password invalid");
+//                txtUsername.setText("");
+//                txtPassword.setText("");
+//            }
+//        } else {
+//            lblMessage.setText("Connection Error");
+//        }
         if (txtUsername.getText().equals("admin") && txtPassword.getText().equals("admin")) {
 
             ((Node) (event.getSource())).getScene().getWindow().hide();
 
             //lblMessage.setText("Bem vindo: " + txtUsername.getText());
-            MainStage.showMainStage();
+            MainStage.showMainStage(txtUsername.getText());
 
         } else {
             lblMessage.setText("Username or Password invalid");
@@ -51,20 +65,20 @@ public class LoginController implements Initializable {
 
     //not working
     @FXML
-    private void siteLink() {
+    protected void siteLink() {
         site_nfracgen = new Hyperlink("http://www.ngracgen.com");
         mainPane.getChildren().addAll(site_nfracgen);
     }
 
     @FXML
     protected TextField tfName, tfEmail, tfProf, tfComp, tfCountry;
-    
+
     @FXML
     protected void sendToNfracgen() throws MessagingException {
         String name = tfName.getText();
         String mail = tfEmail.getText();
         String prof = tfProf.getText();
-        String comp  = tfComp.getText();
+        String comp = tfComp.getText();
         String country = tfCountry.getText();
         Email email = new Email(name, mail, prof, comp, country);
         email.sendMessage();
@@ -73,6 +87,6 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-    }        
-       
+    }
+
 }
