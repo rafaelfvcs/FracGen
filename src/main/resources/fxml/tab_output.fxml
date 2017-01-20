@@ -89,7 +89,7 @@
                                         <Label                                           
                                             text="User:" 
                                             GridPane.rowIndex="2" />
-                                        <TextField 
+                                        <TextField                                             
                                             GridPane.columnIndex="1" />
                                         <TextField 
                                             GridPane.columnIndex="1" 

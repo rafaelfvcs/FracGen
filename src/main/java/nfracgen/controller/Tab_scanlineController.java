@@ -361,7 +361,7 @@ public class Tab_scanlineController implements Initializable {
     @FXML
     protected void plotPowerLaw() throws IOException, Exception {
         PowerLawStage stagePL = new PowerLawStage(
-                MainStage.getAnalysisFile().getScanLine().getFracIntAnalysis());
+                MainStage.getSclAnalysisFile().getScanLine().getFracIntAnalysis());
         stagePL.createStage();
     }
 

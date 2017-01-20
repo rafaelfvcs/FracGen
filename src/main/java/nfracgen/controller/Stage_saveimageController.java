@@ -40,7 +40,9 @@ public class Stage_saveimageController implements Initializable {
     @FXML
     protected void exportPL() throws IOException {
         if (!tfLocation.getText().isEmpty()) {
-            WritableImage imagePL = MainStage.getAnalysisFile().getPLGraph();
+            //passar a imagem para o stage, e dar o snapshot a partir dela
+            //da maneira que esta abaixo nao funciona
+            WritableImage imagePL = MainStage.getSclAnalysisFile().getPLGraph();
             if (imagePL != null) {
                 File imageFile = new File(tfLocation.getText().trim());
                 ImageIO.write(SwingFXUtils.fromFXImage(imagePL, null), "png", imageFile);

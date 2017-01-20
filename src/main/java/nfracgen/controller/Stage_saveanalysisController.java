@@ -48,7 +48,7 @@ public class Stage_saveanalysisController implements Initializable {
         String user = tfUser.getText();
         InternalDatabase database = new InternalDatabase(databaseName);
         if (database.isConnected()) {
-            database.saveAnalysis(MainStage.getAnalysis());
+            database.saveAnalysis(MainStage.getScanlineAnalysis());
         } else {
             System.out.println("Not conected");
         }

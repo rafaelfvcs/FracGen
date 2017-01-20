@@ -14,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javax.mail.MessagingException;
+import nfracgen.javafxapplication.FracGenApplication;
 import nfracgen.model.Email;
 import nfracgen.stage.MainStage;
 
@@ -51,7 +52,8 @@ public class LoginController implements Initializable {
             ((Node) (event.getSource())).getScene().getWindow().hide();
 
             //lblMessage.setText("Bem vindo: " + txtUsername.getText());
-            MainStage.showMainStage(txtUsername.getText());
+            MainStage main = FracGenApplication.getInstance().getMainStage();
+            main.showMainStage(txtUsername.getText());
 
         } else {
             lblMessage.setText("Username or Password invalid");

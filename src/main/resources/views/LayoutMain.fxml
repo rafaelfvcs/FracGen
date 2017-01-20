@@ -180,8 +180,7 @@
                     prefWidth="200.0" 
                     tabClosingPolicy="UNAVAILABLE" 
                     BorderPane.alignment="CENTER">
-                    <tabs>
-                        <!--
+                    <tabs>                        
                         <Tab 
                             fx:id="tab_main_dbconnect" 
                             text="DB connect"
@@ -189,8 +188,7 @@
                             <content>
                                 <fx:include source="/fxml/tab_dbconnect.fxml"></fx:include>
                             </content>
-                        </Tab>
-                        -->
+                        </Tab>                        
                         <Tab fx:id="tab_main_scanline" text="Scanline">
                             <content>
                                 <fx:include source="/fxml/tab_scanline.fxml"></fx:include>

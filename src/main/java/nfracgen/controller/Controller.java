@@ -197,7 +197,7 @@ public class Controller {
             file.setRowsCount(sl.getFracCount());//TODO fix this
             Stage s = (Stage) tfFilename.getScene().getWindow();
             s.close();
-            MainStage.setAnalysisFile(file);
+            MainStage.setSclAnalysisFile(file);
             MainStage.refreshStats();
             MainStage.enableButtons();
         }
@@ -210,35 +210,35 @@ public class Controller {
     @FXML
     protected void linechartStage() throws IOException {
         LineChartStage s
-                = new LineChartStage(MainStage.getAnalysisFile());
+                = new LineChartStage(MainStage.getSclAnalysisFile());
         s.createStage();
     }
 
     @FXML
     protected void scatterchartStage() throws IOException {
         ScatterChartStage s
-                = new ScatterChartStage(MainStage.getAnalysisFile());
+                = new ScatterChartStage(MainStage.getSclAnalysisFile());
         s.createStage();
     }
 
     @FXML
     protected void histogramStage() throws IOException {
         HistogramStage s
-                = new HistogramStage(MainStage.getAnalysisFile());
+                = new HistogramStage(MainStage.getSclAnalysisFile());
         s.createStage();
     }
 
     @FXML
     protected void variogramStage() throws IOException {
         VariogramStage s
-                = new VariogramStage(MainStage.getAnalysisFile());
+                = new VariogramStage(MainStage.getSclAnalysisFile());
         s.createStage();
     }
 
     @FXML
     protected void saveAnalysis() throws IOException {
         SaveAnalysisStage s
-                = new SaveAnalysisStage(MainStage.getAnalysis());
+                = new SaveAnalysisStage(MainStage.getScanlineAnalysis());
         s.createStage();
     }
 }

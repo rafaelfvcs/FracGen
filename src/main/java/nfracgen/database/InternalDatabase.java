@@ -149,7 +149,7 @@ public class InternalDatabase {
         //file.setHeaderStrings();        
         analysis.setAnalysisFile(file);
         st.close();        
-        MainStage.setAnalysis(analysis);
+        MainStage.setScanlineAnalysis(analysis);
         MainStage.refreshStats();        
     }
 

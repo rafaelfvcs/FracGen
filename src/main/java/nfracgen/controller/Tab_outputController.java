@@ -23,9 +23,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.GridPane;
+import nfracgen.javafxapplication.FracGenApplication;
+import nfracgen.stage.MainStage;
 
 /**
  * FXML Controller class
@@ -33,6 +36,9 @@ import javafx.scene.layout.GridPane;
  * @author elidioxg
  */
 public class Tab_outputController implements Initializable {
+    
+    @FXML
+    protected TextField tfUser;
 
     /**
      * Initializes the controller class.
@@ -53,9 +59,8 @@ public class Tab_outputController implements Initializable {
             } else {
                 textarea_output_comments.setDisable(true);
             }
-        });        
-        
-
+        });                    
+        tfUser.setText(MainStage.getScanlineAnalysis().getUser());
     }
 
     @FXML

@@ -144,9 +144,10 @@
                     fx:id="gPowerLaw" 
                     axisSortingPolicy="NONE" 
                     title="Lei de Potência" 
-                    BorderPane.alignment="CENTER">
+                    BorderPane.alignment="CENTER"
+                    legendVisible="false" >
                     <xAxis>
-                        <nfracgen.application.LogarithmicAxis 
+                        <NumberAxis 
                             label="Aperture (mm)" 
                             side="BOTTOM"
                             lowerBound="0.01" 
@@ -154,7 +155,7 @@
                             autoRanging="true"/>
                     </xAxis>
                     <yAxis>
-                        <nfracgen.application.LogarithmicAxis 
+                        <NumberAxis
                             label="Freq Acumulada (1/m)" 
                             side="TOP"
                             lowerBound="0.001"
