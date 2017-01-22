@@ -2,7 +2,7 @@
 
     -fx-background-color:#3a3a3a; 
     -fx-font: 12px "Serif"; 
-    -fx-padding: 6;
+    -fx-padding: 3;
     -fx-text-fill: #FFF;
     -fx-alignment:CENTER_LEFT;
     -fx-wrap-text:false;
@@ -50,6 +50,16 @@
 .table-row-cell:selected-row {
     -fx-background-color: lightskyblue ;
 }
+/* 
+ * Chart of Power Law Stage
+ */
+#scFractureIntensity {
+    -fx-background-color: transparent;
+}
+
+#scFractureIntensity .chart-plot-background {
+    -fx-background-color:transparent;
+}
 
 #scFractureIntensity .default-color0.chart-series-line {
     -fx-stroke: transparent;    
@@ -58,6 +68,43 @@
     -fx-background-color: transparent;
 }
 
+#scFractureIntensity .chart-alternative-row-fill {
+    -fx-fill:transparent;
+    -fx-stroke: transparent;
+}
+
+#scFractureIntensity .chart-title {
+    -fx-text-fill: black;    
+}
+
+#scFractureIntensity .axis-label {
+    -fx-text-fill: black;
+}
+/*
+ * This is the second Chart on Power Law Stage
+ * This chart is behind the scFractureIntensity chart
+ */
+#lcAux  {
+    -fx-background-color: transparent;
+}
+
+#lcAux .axis-label {
+    -fx-text-fill: black;
+}
+#lcAux .chart-alternative-row-fill {
+    -fx-fill:white;
+    -fx-stroke: black;
+}
+#lcAux .chart-vertical-grid-lines {
+    -fx-stroke:white;
+}
+
+#lcAux .chart-horizontal-grid-lines {
+    -fx-stroke: white;
+}
+/*
+ * Chart of Tab Scanline
+ */
 #gPowerLaw .default-color0.chart-series-line {
     -fx-stroke: transparent;    
 }
@@ -66,7 +113,9 @@
     -fx-background-radius: 3px;
     -fx-background-color: #2990ea;
 }
-
+/*
+ * Most panes of application 
+ */
 #WhitePane {
     -fx-background-color:#FFF;    
     -fx-padding: 2;
@@ -80,6 +129,14 @@
     -fx-bar-gap: 0;
     -fx-category-gap: 0;
 }
+#bcSpHistogram {
+    -fx-bar-gap: 0;
+    -fx-category-gap: 0;
+}
+#bcHistogram {
+    -fx-bar-gap: 0;
+    -fx-category-gap: 0;
+}
 
 #scDispersion .chart-symbol { 
     -fx-background-color: #860061, white;
@@ -87,8 +144,3 @@
     -fx-background-radius: 1px;
     -fx-padding: 1px;
 }
-
-
-
-
-
