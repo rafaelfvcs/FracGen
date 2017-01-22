@@ -68,16 +68,16 @@
         animated="true"
         translateY="56">
         <xAxis >
-            <javafx.scene.chart.NumberAxis  
+            <nfracgen.application.LogarithmicAxis   
                 label="Aperture"             
                 lowerBound="0.01"
-                upperBound="10"                
+                upperBound="10000"                
                 autoRanging="false"
                 tickLabelsVisible="true"
             /> 
         </xAxis>
         <yAxis> 
-            <javafx.scene.chart.NumberAxis
+            <nfracgen.application.LogarithmicAxis
                 label="Average Spacing"
                 lowerBound="0.001"
                 upperBound="100"                
@@ -97,15 +97,15 @@
         horizontalGridLinesVisible="false"
         translateX="73">
         <xAxis >
-            <javafx.scene.chart.NumberAxis
+            <nfracgen.application.LogarithmicAxis
                 label="Aperture"
                 lowerBound="0.01"
-                upperBound="100"                
+                upperBound="10000"                
                 autoRanging="false"                
                 side="TOP"/> 
         </xAxis>
         <yAxis> 
-            <javafx.scene.chart.NumberAxis
+            <nfracgen.application.LogarithmicAxis
                 label="Cumulative Fracture Intensity"
                 lowerBound="10"
                 upperBound="0.001"                

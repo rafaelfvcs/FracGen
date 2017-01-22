@@ -147,19 +147,19 @@
                     BorderPane.alignment="CENTER"
                     legendVisible="false" >
                     <xAxis>
-                        <NumberAxis 
+                        <nfracgen.application.LogarithmicAxis 
                             label="Aperture (mm)" 
                             side="BOTTOM"
                             lowerBound="0.01" 
-                            upperBound="10"
-                            autoRanging="true"/>
+                            upperBound="10000"
+                            autoRanging="false"/>
                     </xAxis>
                     <yAxis>
-                        <NumberAxis
+                        <nfracgen.application.LogarithmicAxis
                             label="Freq Acumulada (1/m)" 
                             side="TOP"
-                            lowerBound="0.001"
-                            upperBound="100"   
+                            lowerBound="0.01"
+                            upperBound="1000"   
                             autoRanging="false"/>
                     </yAxis>
                 </javafx.scene.chart.LineChart>

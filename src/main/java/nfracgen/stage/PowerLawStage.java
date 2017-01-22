@@ -17,8 +17,8 @@ public class PowerLawStage {
     
     private final FractureIntensityAnalysis analysis;
     private Scene scene;
-    private final double initX = 0.001;
-    private final double endX = 100;
+    private final double initX = 0.01;
+    private final double endX = 10000;
     
     public PowerLawStage(FractureIntensityAnalysis analysis){
         this.analysis = analysis;
@@ -44,14 +44,15 @@ public class PowerLawStage {
     
     private void plot() throws Exception{
         LineChart chartAux = (LineChart) scene.getRoot().lookup("#lcAux");
-        LinearRegression lr  = new LinearRegression(analysis.apLog10, analysis.cumLog10);                
+        LinearRegression lr  = new LinearRegression(analysis.ap, analysis.cumLog10);                
         LineChart.Series seriesAux = new XYChart.Series();
         seriesAux.getData().add(new XYChart.Data(initX, lr.getValueAt(initX)));
         seriesAux.getData().add(new XYChart.Data(endX, lr.getValueAt(endX)));
         chartAux.getData().add(seriesAux);
-        LineChart.Series series = PlotSeries.plotLineSeries(analysis.apLog10, analysis.cumLog10);
-        //LineChart chart = (LineChart) scene.getRoot().lookup("#scFractureIntensity");
+        LineChart.Series series = PlotSeries.plotLineSeries(analysis.ap, analysis.cumLog10);
+        LineChart chart = (LineChart) scene.getRoot().lookup("#scFractureIntensity");
         //Series series = PlotSeries.plotLineSeries(analysis.apLog10,analysis.cumLog10);
-        chartAux.getData().add(series);
+        //chartAux.getData().add(series);
+        chart.getData().add(series);
     }
 }

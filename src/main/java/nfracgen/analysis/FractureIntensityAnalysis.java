@@ -15,6 +15,8 @@ public class FractureIntensityAnalysis {
     /* List with values of cumulative size distribution of fractures */
     private ArrayList<Double> cumulative;
     
+    public ArrayList<Double> ap;
+    
     public ArrayList<Double> apLog10;
     public ArrayList<Double> cumLog10;
     
@@ -32,6 +34,7 @@ public class FractureIntensityAnalysis {
                 scanline.getLenght());
         estimateDistribution(generateFractures(scanline), 
                 scanline.getLenght());
+        ap = scanline.getApList();
         apLog10 = new ArrayList<>();
         cumLog10 = new ArrayList<>();
         cumulative = new ArrayList<>();
