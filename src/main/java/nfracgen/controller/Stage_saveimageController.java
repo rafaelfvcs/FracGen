@@ -7,13 +7,16 @@ import java.util.ResourceBundle;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
-import nfracgen.stage.MainStage;
+import nfracgen.javafxapplication.FracGenApplication;
+import nfracgen.stage.ExportImageStage;
 
 /**
  * FXML Controller class
@@ -34,19 +37,22 @@ public class Stage_saveimageController implements Initializable {
     @FXML
     protected Button bCancel;
 
+    @FXML
+    protected LineChart lcPowerLaw;
     /**
      * Export Power Law Graph to PNG image
      */
     @FXML
     protected void exportPL() throws IOException {
-        if (!tfLocation.getText().isEmpty()) {
-            //passar a imagem para o stage, e dar o snapshot a partir dela
-            //da maneira que esta abaixo nao funciona
-            WritableImage imagePL = MainStage.getSclAnalysisFile().getPLGraph();
+        if (!tfLocation.getText().isEmpty()) {            
+            WritableImage imagePL
+                    = ExportImageStage.getImage();
+                    //= lcPowerLaw.snapshot(new SnapshotParameters(), null);
             if (imagePL != null) {
                 File imageFile = new File(tfLocation.getText().trim());
-                ImageIO.write(SwingFXUtils.fromFXImage(imagePL, null), "png", imageFile);
-            }
+                ImageIO.write(SwingFXUtils.fromFXImage(
+                        imagePL, null), "png", imageFile);
+            }            
         }
     }
 

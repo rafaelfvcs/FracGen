@@ -89,9 +89,11 @@
                                         <Label                                           
                                             text="User:" 
                                             GridPane.rowIndex="2" />
-                                        <TextField                                             
+                                        <TextField        
+                                            fx:id="tfName"                                     
                                             GridPane.columnIndex="1" />
                                         <TextField 
+                                            fx:id="tfRef"
                                             GridPane.columnIndex="1" 
                                             GridPane.rowIndex="1" />
                                         <TextField 

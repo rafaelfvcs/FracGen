@@ -60,7 +60,7 @@ public class Tab_outputController implements Initializable {
                 textarea_output_comments.setDisable(true);
             }
         });                    
-        tfUser.setText(MainStage.getScanlineAnalysis().getUser());
+        //tfUser.setText();
     }
 
     @FXML

@@ -7,8 +7,48 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nfracgen.controller.Stage_loadanalysisController">
+<GridPane 
+    id="AnchorPane" 
+    prefHeight="400.0" 
+    prefWidth="600.0" 
+    styleClass="mainFxmlClass" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="nfracgen.controller.Stage_loadanalysisController">
+    
     <stylesheets>
         <URL value="@/styles/styles.css"/>
     </stylesheets>
-</AnchorPane>
+    
+    <TextField
+        fx:id="tfFilename"
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="0">
+        
+    </TextField>
+    
+    <ListView 
+        fx:id="lvAnalysisNames"
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="1"
+        GridPane.columnSpan="2">        
+        
+    </ListView>
+    
+    <ButtonBar 
+        GridPane.columnIndex="0"
+        GridPane.columnSpan="2" 
+        GridPane.rowIndex="1">
+        <buttons>
+            <Button 
+                text="Load">
+        
+            </Button>
+            <Button 
+                cancelButton="true" 
+                text="Cancel">
+        
+            </Button>
+        </buttons>    
+    </ButtonBar>
+    
+</GridPane>

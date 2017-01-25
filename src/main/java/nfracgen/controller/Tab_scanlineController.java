@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -27,6 +28,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -373,8 +375,8 @@ public class Tab_scanlineController implements Initializable {
 
     @FXML
     protected void saveGraph() throws IOException {
-        //TODO
-        ExportImageStage stage = new ExportImageStage();
+        WritableImage image = gPowerLaw.snapshot(new SnapshotParameters(), null);
+        ExportImageStage stage = new ExportImageStage(image);
         stage.createStage();
     }
 

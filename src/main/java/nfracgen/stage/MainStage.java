@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
@@ -78,10 +79,11 @@ public class MainStage {
         FXMLLoader loader = new FXMLLoader(FracGenApplication.getInstance().
                 getClass().getResource("/views/LayoutMain.fxml"));
         root = loader.load();
-        getScanlineAnalysis().setUser(user);
-
-        Stage stage = new Stage();
         Scene scene = new Scene(root);
+        
+        getScanlineAnalysis().setUser(user);                
+
+        Stage stage = new Stage();        
         stage.setScene(scene);
         stage.setTitle("NFracGen - alpha -  User: " + user);
         stage.show();
@@ -320,7 +322,15 @@ public class MainStage {
          */
         ScatterChart scDispersion = (ScatterChart) getRoot().lookup("#scDispersion");
         scDispersion.getData().add(PlotSeries.plotLineSeries(0, getSclAnalysisFile().getScanLine().getDistanceList()));
-
+        /**
+         * Tab Output
+         */
+        TextField tfName = (TextField)getRoot().lookup("#tfName");
+        tfName.setText(getScanlineAnalysis().getName());
+        TextField tfRef = (TextField)getRoot().lookup("#tfRef");
+        tfRef.setText(getScanlineAnalysis().getRef());
+        TextField tfUser = (TextField)getRoot().lookup("#tfUser");
+        tfUser.setText(getScanlineAnalysis().getUser());
     }
 
     public static void enableButtons() {

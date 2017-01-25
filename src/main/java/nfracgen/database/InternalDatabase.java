@@ -152,5 +152,21 @@ public class InternalDatabase {
         MainStage.setScanlineAnalysis(analysis);
         MainStage.refreshStats();        
     }
+    
+    /**
+     * List all analysis saved on application database
+     * @return 
+     * @throws java.sql.SQLException
+     */
+    public ArrayList<String> loadAnalysisNames() throws SQLException{
+        Statement st = getConection().createStatement();
+        ResultSet result = st.executeQuery("SELECT "+fieldName+" FROM "+tableAnalysis);
+        ArrayList<String> names = new ArrayList();
+        result.first();
+        while(result.next()){
+            names.add(result.getString(fieldName));            
+        }
+        return names;
+    }
 
 }
