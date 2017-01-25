@@ -11,7 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nfracgen.analysis.plot.PlotSeries;
-import nfracgen.model.AnalysisFile;
+import nfracgen.model.ScanlineAnalysisFile;
 import nfracgen.stage.LineChartStage;
 
 /**
@@ -46,7 +46,7 @@ public class Stage_linechartController implements Initializable {
      */
     @FXML
     protected void plotLine() {
-        AnalysisFile file = LineChartStage.getInstance().getAnalysisFile();       
+        ScanlineAnalysisFile file = LineChartStage.getInstance().getAnalysisFile();       
         int indexX = comboBoxX.getSelectionModel().getSelectedIndex();
         int indexY = comboBoxY.getSelectionModel().getSelectedIndex();
         lineChart.setTitle(tfGraphLabel.getText());

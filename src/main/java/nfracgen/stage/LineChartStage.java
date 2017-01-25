@@ -11,19 +11,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import nfracgen.javafxapplication.FracGenApplication;
-import nfracgen.model.AnalysisFile;
+import nfracgen.model.ScanlineAnalysisFile;
 
 public class LineChartStage {
 
     private static LineChartStage instance;
 
-    private static AnalysisFile file;
+    private static ScanlineAnalysisFile file;
 
     /**
      *
      * @param datasets
      */
-    public LineChartStage(AnalysisFile file) {
+    public LineChartStage(ScanlineAnalysisFile file) {
         instance = this;
         this.file = file;
     }
@@ -40,7 +40,7 @@ public class LineChartStage {
      *
      * @return
      */
-    public AnalysisFile getAnalysisFile() {
+    public ScanlineAnalysisFile getAnalysisFile() {
         return file;
     }
 
@@ -56,18 +56,21 @@ public class LineChartStage {
         /**
          * Get the headers of columns
          */
-        List list = new ArrayList();
-        for (int i = 0; i < getAnalysisFile().getHeaderArray().size(); i++) {
-            list.add(getAnalysisFile().getHeaderArray(i));
+        if (getAnalysisFile() != null) {
+            List list = new ArrayList();
+            for (int i = 0; i < getAnalysisFile().getHeaderArray().size(); i++) {
+                list.add(getAnalysisFile().getHeaderArray(i));
+            }
+            ObservableList ol = FXCollections.observableArrayList(list);
+            /**
+             * Put columns headers on comboboxes
+             */
+            ComboBox comboBoxX = (ComboBox) parent.lookup("#comboBoxX");
+            ComboBox comboBoxY = (ComboBox) parent.lookup("#comboBoxY");
+            comboBoxX.setItems(ol);
+            comboBoxY.setItems(ol);
         }
-        ObservableList ol = FXCollections.observableArrayList(list);
-        /**
-         * Put columns headers on comboboxes
-         */
-        ComboBox comboBoxX = (ComboBox) parent.lookup("#comboBoxX");
-        ComboBox comboBoxY = (ComboBox) parent.lookup("#comboBoxY");
-        comboBoxX.setItems(ol);
-        comboBoxY.setItems(ol);
+
         /**
          * Create and show stage
          */

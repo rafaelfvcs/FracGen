@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane 
+    id="WhitePane" 
+    prefHeight="400.0" 
+    prefWidth="600.0" 
+    styleClass="mainFxmlClass" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="nfracgen.controller.Stage_saveanalysisController">
+    <stylesheets>
+        <URL value="@/styles/styles.css"/>
+    </stylesheets>
+    
+    <Label
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="1"  
+        text="Name"
+    >
+    </Label>
+    <TextField
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="1"
+        fx:id="tfName">
+        
+    </TextField>
+    
+    <Label
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="2"
+        text="User"
+    >
+    </Label>
+    <TextField 
+        fx:id="tfUser"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="2">
+        
+    </TextField>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="3"
+        text="References">
+        
+    </Label>
+    <TextField
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="3"    >
+        
+    </TextField>
+    
+    <Label 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="4"
+        text="Date">
+        
+    </Label>    
+    
+    <ButtonBar 
+        GridPane.columnIndex="0"
+        GridPane.columnSpan="2" 
+        GridPane.rowIndex="5">
+        <buttons>
+            <Button 
+                text="Save"
+                onAction="#save"
+            >
+            </Button>
+        </buttons>
+                
+    </ButtonBar>
+    
+</GridPane>

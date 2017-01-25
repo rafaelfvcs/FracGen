@@ -16,13 +16,14 @@
  */
 package nfracgen.model;
 
+import javafx.scene.image.WritableImage;
 import nfracgen.analysis.Scanline;
 
 /**
  *
  * @author elidioxg
  */
-public class AnalysisFile  extends DatasetModel {
+public class ScanlineAnalysisFile  extends DatasetModel {
     
     /**
      * The AnalysisFile works with a Scanline class. The Scanline is represented
@@ -30,13 +31,41 @@ public class AnalysisFile  extends DatasetModel {
      * This class extends the DatasetModel class, that is a handler of a
      * specific dataset file, with all their properties.
      */
-    private Scanline scanline = new Scanline(null);
+    private Scanline scanline = new Scanline(null);        
+    
+    /**
+     * Save the Power Law Graph as WritableImage
+     * Can be exported to PNG image 
+     */
+    private WritableImage powerLaw = null;
+    
+    /**
+     * Descriptive Statistics for columns 
+     * Considering a Scanline file with two columns: Ap, Sp
+     */
+    private StatisticsModel apS, spS;
     
     /**
      * Creates a null scanline.
      */
-    public AnalysisFile(){
+    public ScanlineAnalysisFile(){
         
+    }
+    
+    /**
+     * Set the image of Power Law
+     * @param image 
+     */
+    public void setPLGraph(WritableImage image){
+        this.powerLaw = image;
+    }
+    
+    /**
+     * Get the Power Law graph as WritableImage
+     * @return 
+     */
+    public WritableImage getPLGraph(){
+        return this.powerLaw;
     }
     
     /**
@@ -44,12 +73,29 @@ public class AnalysisFile  extends DatasetModel {
      * @param scanline 
      */
     public void setScanLine(Scanline scanline){
-        this.scanline = scanline;
+        this.scanline = scanline;      
+        apS = new StatisticsModel(scanline.getApList());
+        spS = new StatisticsModel(scanline.getSpList());
     }
     
     public Scanline getScanLine(){
         return this.scanline;
     }
-
+    
+    /**
+     * Get the descriptive statistics for Ap data
+     * @return 
+     */
+    public StatisticsModel getApStatistics(){
+        return this.apS;
+    }
+    
+    /**
+     * Get the descriptive statistics for Sp data
+     * @return 
+     */
+    public StatisticsModel getSpStatistics(){
+        return this.spS;
+    }
     
 }

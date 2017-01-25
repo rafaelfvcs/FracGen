@@ -15,27 +15,44 @@
     fx:controller="nfracgen.controller.Stage_powerlawController">
     
     <stylesheets>
-        <URL value="@styles.css"/>
+        <URL value="@/styles/styles.css"/>
     </stylesheets>
     
+    <gridLinesVisible>true</gridLinesVisible>
+    
     <columnConstraints>
-        <ColumnConstraints percentWidth="30" />
-        <ColumnConstraints percentWidth="30"/>
-        <ColumnConstraints percentWidth="30"/>        
-        <ColumnConstraints percentWidth="10"/>
+        <ColumnConstraints percentWidth="25" />
+        <ColumnConstraints percentWidth="25"/>
+        <ColumnConstraints percentWidth="25"/>        
+        <ColumnConstraints percentWidth="25"/>
     </columnConstraints>
     <rowConstraints>
         <RowConstraints percentHeight="5"/>
         <RowConstraints percentHeight="5"/>
         <RowConstraints percentHeight="5"/>
         <RowConstraints percentHeight="75"/>
-        <RowConstraints percentHeight="10"/>
+        <RowConstraints percentHeight="5"/>
+        <RowConstraints percentHeight="5"/>
     </rowConstraints>
+    
+    <MenuBar 
+        GridPane.columnIndex="0"
+        GridPane.rowIndex="0"
+        GridPane.columnSpan="4">
+        
+        <menus>
+            <Menu 
+                text="Export to PNG"
+                onAction="#exportGraph" 
+            >
+            </Menu>
+        </menus>
+    </MenuBar>  
     
     <Label 
         GridPane.columnIndex="0"
         GridPane.columnSpan="3" 
-        GridPane.rowIndex="0" 
+        GridPane.rowIndex="2" 
         text="Estimative of cumulative-frequency fracture-size distribution">        
     </Label>                   
     
@@ -46,29 +63,27 @@
         GridPane.rowIndex="3"
         GridPane.columnSpan="3"        
         legendVisible="false"
-        verticalGridLinesVisible="false" 
-        horizontalGridLinesVisible="false"
+        verticalGridLinesVisible="true" 
+        horizontalGridLinesVisible="true"
         animated="true"
-        translateY="57">
+        translateY="56">
         <xAxis >
-            <javafx.scene.chart.NumberAxis    
+            <nfracgen.application.LogarithmicAxis   
                 label="Aperture"             
                 lowerBound="0.01"
-                upperBound="10"
-                tickUnit="1"
+                upperBound="10000"                
                 autoRanging="false"
                 tickLabelsVisible="true"
             /> 
         </xAxis>
         <yAxis> 
-            <javafx.scene.chart.NumberAxis 
+            <nfracgen.application.LogarithmicAxis
                 label="Average Spacing"
                 lowerBound="0.001"
-                upperBound="10"
-                tickUnit="1"
+                upperBound="100"                
                 autoRanging="false"
-                side="LEFT"                  
-            />
+                side="LEFT"        
+            />                                      
         </yAxis>
     </javafx.scene.chart.LineChart>    
     
@@ -78,24 +93,22 @@
         GridPane.rowIndex="3"
         GridPane.columnSpan="3"        
         legendVisible="false"
-        verticalGridLinesVisible="true" 
-        horizontalGridLinesVisible="true"
-        translateX="75">
+        verticalGridLinesVisible="false" 
+        horizontalGridLinesVisible="false"
+        translateX="73">
         <xAxis >
-            <javafx.scene.chart.NumberAxis                 
+            <nfracgen.application.LogarithmicAxis
                 label="Aperture"
                 lowerBound="0.01"
-                upperBound="10"
-                tickUnit="1"
+                upperBound="10000"                
                 autoRanging="false"                
                 side="TOP"/> 
         </xAxis>
         <yAxis> 
-            <javafx.scene.chart.NumberAxis 
+            <nfracgen.application.LogarithmicAxis
                 label="Cumulative Fracture Intensity"
                 lowerBound="10"
-                upperBound="0.001"
-                tickUnit="0.1"
+                upperBound="0.001"                
                 autoRanging="false"
                 side="RIGHT"                             
             />

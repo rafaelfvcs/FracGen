@@ -7,6 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.collections.*?>
 <?import javafx.scene.canvas.Canvas?>
 
 <AnchorPane 
@@ -17,7 +18,7 @@
     prefWidth="200.0"
     styleClass="mainFxmlClass" 
     xmlns:fx="http://javafx.com/fxml/1" 
-    fx:controller="nfracgen.controller.Controller">
+    fx:controller="nfracgen.controller.Tab_modellingController">
     <stylesheets>
         <URL value="@/styles/styles.css"/>
     </stylesheets>
@@ -36,7 +37,20 @@
                                 <CheckBox fx:id="checkbox" layoutX="10.0" layoutY="125.0" mnemonicParsing="false" text="Add noise :" />
                                 <Button layoutX="14.0" layoutY="461.0" mnemonicParsing="false" onAction="#drawFratures2d" text="Plot Frats" />
                                 <Label layoutX="10.0" layoutY="5.0" text="Create de 2D model of DFN" />
-                                <ComboBox fx:id="combo_modeling_dataset" layoutX="113.0" layoutY="32.0" prefHeight="25.0" prefWidth="68.0" />
+                                <ComboBox 
+                                    fx:id="combo_modeling_dataset" 
+                                    layoutX="113.0" 
+                                    layoutY="32.0" 
+                                    prefHeight="25.0" 
+                                    prefWidth="68.0">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="SET1"></String>
+                                            <String fx:value="SET2"></String>
+                                            <String fx:value="SET3"></String>
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
                                 <Label layoutX="13.0" layoutY="39.0" text="Control DataSet:" />
                                 <RadioButton layoutX="10.0" layoutY="74.0" mnemonicParsing="false" text="Random SEED:" />
                                 <RadioButton layoutX="10.0" layoutY="98.0" mnemonicParsing="false" text="Ramdom Complete" />
@@ -46,14 +60,34 @@
                                 <Label layoutX="13.0" layoutY="249.0" text="PDF Length:" />
                                 <ComboBox layoutX="98.0" layoutY="245.0" prefHeight="25.0" prefWidth="84.0" />
                                 <TextField layoutX="113.0" layoutY="70.0" prefHeight="25.0" prefWidth="67.0" />
-                                <Button fx:id="btn_modeling_back" layoutX="134.0" layoutY="461.0" mnemonicParsing="false" onAction="#btn_modeling_back" prefHeight="25.0" prefWidth="47.0" text="&lt;|" />
+                                <Button fx:id="btn_modeling_back" layoutX="134.0" layoutY="461.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="47.0" text="&lt;|" />
                                 <CheckBox layoutX="15.0" layoutY="433.0" mnemonicParsing="false" text="Permit External Plots" />
                                 <Button fx:id="btn_modeling_save_study_2d" layoutX="14.0" layoutY="530.0" mnemonicParsing="false" onAction="#modelingSaveStudy2D" prefHeight="25.0" prefWidth="168.0" text="Save Study" />
-                                <CheckBox fx:id="check_modeling_refine_2d" layoutX="15.0" layoutY="290.0" mnemonicParsing="false" text="Modeling refine" />
+                                <CheckBox 
+                                    fx:id="check_modeling_refine_2d" 
+                                    layoutX="15.0" 
+                                    layoutY="290.0" 
+                                    mnemonicParsing="false" 
+                                    text="Modeling refine"
+                                    selected="true"/>
                                 <CheckBox layoutX="15.0" layoutY="317.0" mnemonicParsing="false" text="Choose layer modeling" />
                                 <Slider layoutX="17.0" layoutY="352.0" />
-                                <ToggleButton fx:id="modeling_2d_saveanalysis" layoutX="13.0" layoutY="390.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="166.0" text="SaveModelAnalysis" />
-                                <CheckBox fx:id="check_modeling_2d_holdonresults" layoutX="14.0" layoutY="502.0" mnemonicParsing="false" text="Holdon Results" />
+                                <ToggleButton 
+                                    fx:id="modeling_2d_saveanalysis" 
+                                    layoutX="13.0" 
+                                    layoutY="390.0" 
+                                    mnemonicParsing="false" 
+                                    prefHeight="25.0" 
+                                    prefWidth="166.0" 
+                                    text="SaveModelAnalysis"
+                                    selected="true"/>
+                                <CheckBox 
+                                    fx:id="check_modeling_2d_holdonresults" 
+                                    layoutX="14.0" 
+                                    layoutY="502.0" 
+                                    mnemonicParsing="false" 
+                                    text="Holdon Results"
+                                    selected="true"/>
                             </children>
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">

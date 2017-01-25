@@ -9,7 +9,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import nfracgen.analysis.plot.PlotSeries;
-import nfracgen.model.AnalysisFile;
+import nfracgen.model.ScanlineAnalysisFile;
 import nfracgen.model.Matrix;
 import nfracgen.stage.VariogramStage;
 import nfracgen.statistic.Variogram;
@@ -49,7 +49,7 @@ public class Stage_variogramController implements Initializable {
      */
     @FXML
     protected void plot() throws Exception{
-        AnalysisFile file = VariogramStage.getInstance().getAnalysisFile();        
+        ScanlineAnalysisFile file = VariogramStage.getInstance().getAnalysisFile();        
         
         int xIndex = cbX.getSelectionModel().getSelectedIndex();
         ArrayList<Double> x = OpenScanlineData.openCSVFileToDouble(file.getFileName(), 

@@ -9,7 +9,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import nfracgen.model.AnalysisFile;
+import nfracgen.model.ScanlineAnalysisFile;
 import nfracgen.stage.HistogramStage;
 import nfracgen.statistic.Stat;
 import nfracgen.statistic.histogram.ClassInterval;
@@ -50,7 +50,7 @@ public class Stage_histogramController implements Initializable {
     protected void cbColumnAction() throws Exception {
         if (cbColumnIndex.getSelectionModel().getSelectedIndex() >= 0) {            
             int columnIndex = cbColumnIndex.getSelectionModel().getSelectedIndex();
-            AnalysisFile file = HistogramStage.getInstance().getAnalysisFile();
+            ScanlineAnalysisFile file = HistogramStage.getInstance().getAnalysisFile();
             ArrayList<Double> vector = OpenScanlineData.openCSVFileToDouble(
                     file.getFileName(),
                     file.getSep(), columnIndex, file.getHeader());
@@ -75,7 +75,7 @@ public class Stage_histogramController implements Initializable {
 
             if (!tfIntervals.getText().isEmpty()) {                
                 int columnIndex = cbColumnIndex.getSelectionModel().getSelectedIndex();
-                AnalysisFile file = HistogramStage.getInstance().getAnalysisFile();
+                ScanlineAnalysisFile file = HistogramStage.getInstance().getAnalysisFile();
                 ArrayList<Double> vector = OpenScanlineData.openCSVFileToDouble(
                         file.getFileName(),
                         file.getSep(), columnIndex, file.getHeader());

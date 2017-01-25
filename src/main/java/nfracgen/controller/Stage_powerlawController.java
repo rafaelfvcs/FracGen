@@ -16,9 +16,18 @@
  */
 package nfracgen.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.WritableImage;
+import javafx.stage.FileChooser;
+import javax.imageio.ImageIO;
+import javafx.scene.chart.LineChart;
 
 /**
  * FXML Controller class
@@ -27,12 +36,36 @@ import javafx.fxml.Initializable;
  */
 public class Stage_powerlawController implements Initializable {
 
+    @FXML
+    protected LineChart scFractureIntensity;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
+    @FXML
+    protected void exportGraph() throws IOException, Exception {
+        final FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+            if (!file.exists()) {
+                if (file.getAbsolutePath() != null) {
+                    WritableImage imagePL = 
+                            scFractureIntensity.snapshot(new SnapshotParameters(), null);;
+                    if (imagePL != null) {
+                        File imageFile = new File(file.getAbsolutePath());
+                        ImageIO.write(SwingFXUtils.fromFXImage(imagePL, null), "png", imageFile);
+                    }
+                } else {
+                    throw new Exception("Filename is empty.");
+                }
+            } else {
+                throw new Exception("File already exists.");
+            }
+        }
+    }
 }

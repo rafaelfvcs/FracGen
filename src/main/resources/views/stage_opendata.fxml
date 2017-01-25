@@ -19,6 +19,8 @@
         <URL value="@/styles/styles.css"/>
     </stylesheets>
     
+    <gridLinesVisible>true</gridLinesVisible>
+    
     <columnConstraints>
         <ColumnConstraints percentWidth="33"></ColumnConstraints>
         <ColumnConstraints percentWidth="33"></ColumnConstraints>

@@ -11,7 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import nfracgen.javafxapplication.FracGenApplication;
-import nfracgen.model.AnalysisFile;
+import nfracgen.model.ScanlineAnalysisFile;
 
 public class HistogramStage {
 
@@ -20,9 +20,9 @@ public class HistogramStage {
      */
     private static HistogramStage instance;
 
-    private AnalysisFile file;
+    private ScanlineAnalysisFile file;
 
-    public HistogramStage(AnalysisFile file) {
+    public HistogramStage(ScanlineAnalysisFile file) {
         instance = this;
         this.file = file;
     }
@@ -31,7 +31,7 @@ public class HistogramStage {
         return instance;
     }
 
-    public AnalysisFile getAnalysisFile() {
+    public ScanlineAnalysisFile getAnalysisFile() {
         return file;
     }
 
@@ -48,16 +48,18 @@ public class HistogramStage {
         /**
          * Get the headers of columns
          */
-        List list = new ArrayList();
-        for (int i = 0; i < getAnalysisFile().getHeaderArray().size(); i++) {
-            list.add(getAnalysisFile().getHeaderArray(i));
+        if (getAnalysisFile() != null) {
+            List list = new ArrayList();
+            for (int i = 0; i < getAnalysisFile().getHeaderArray().size(); i++) {
+                list.add(getAnalysisFile().getHeaderArray(i));
+            }
+            ObservableList ol = FXCollections.observableArrayList(list);
+            /**
+             * Put columns headers on combobox
+             */
+            ComboBox cbColumns = (ComboBox) parent.lookup("#cbColumnIndex");
+            cbColumns.setItems(ol);
         }
-        ObservableList ol = FXCollections.observableArrayList(list);
-        /**
-         * Put columns headers on combobox
-         */
-        ComboBox cbColumns = (ComboBox) parent.lookup("#cbColumnIndex");
-        cbColumns.setItems(ol);
         /**
          * Create and show stage
          */

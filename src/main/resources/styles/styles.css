@@ -1,17 +1,46 @@
 .button{
 
-  -fx-background-color:#27998f; /* Verde base para a interface gráfica do software */
+    -fx-background-color:#3a3a3a; 
+    -fx-font: 12px "Serif"; 
+    -fx-padding: 3;
+    -fx-text-fill: #FFF;
+    -fx-alignment:CENTER_LEFT;
+    -fx-wrap-text:false;
+    -fx-text-alignment:center;
+    -fx-border:1;
+}
 
+.label{
+    -fx-font: 12px "Courier New";
+    -fx-padding: 9; 
+}
+
+.text-area{
+    -fx-padding: 9;
+    -fx-border: 1;    
 }
 
 .text-field{
-	-fx-background-color:#2990ea; /* Azul base para a interface gráfica do software */
+    -fx-padding: 3;
+    -fx-border: 1;    
+    -fx-background-color:grey;
+    -fx-font: 12px "Serif"; 
+}
+.radio-button{
+    -fx-padding: 9;
+}
+
+.check-box {
+    -fx-padding:9;    
+}
+
+.grid {
+    -fx-padding: 9;
 }
 
 .alert{
-	-fx-background-color:#2990ea;
+    -fx-background-color:#2990ea;
 }
-
 
 .table-view:focused .table-row-cell:selected {
     -fx-background-color: red;
@@ -21,6 +50,16 @@
 .table-row-cell:selected-row {
     -fx-background-color: lightskyblue ;
 }
+/* 
+ * Chart of Power Law Stage
+ */
+#scFractureIntensity {
+    -fx-background-color: transparent;
+}
+
+#scFractureIntensity .chart-plot-background {
+    -fx-background-color:transparent;
+}
 
 #scFractureIntensity .default-color0.chart-series-line {
     -fx-stroke: transparent;    
@@ -29,7 +68,79 @@
     -fx-background-color: transparent;
 }
 
+#scFractureIntensity .chart-alternative-row-fill {
+    -fx-fill:transparent;
+    -fx-stroke: transparent;
+}
 
+#scFractureIntensity .chart-title {
+    -fx-text-fill: black;    
+}
 
+#scFractureIntensity .axis-label {
+    -fx-text-fill: black;
+}
+/*
+ * This is the second Chart on Power Law Stage
+ * This chart is behind the scFractureIntensity chart
+ */
+#lcAux  {
+    -fx-background-color: transparent;
+}
 
+#lcAux .axis-label {
+    -fx-text-fill: black;
+}
+#lcAux .chart-alternative-row-fill {
+    -fx-fill:white;
+    -fx-stroke: black;
+}
+#lcAux .chart-vertical-grid-lines {
+    -fx-stroke:white;
+}
 
+#lcAux .chart-horizontal-grid-lines {
+    -fx-stroke: white;
+}
+/*
+ * Chart of Tab Scanline
+ */
+#gPowerLaw .default-color0.chart-series-line {
+    -fx-stroke: transparent;    
+}
+
+#scDispersion .default-color0.chart-symbol {
+    -fx-background-radius: 3px;
+    -fx-background-color: #2990ea;
+}
+/*
+ * Most panes of application 
+ */
+#WhitePane {
+    -fx-background-color:#FFF;    
+    -fx-padding: 2;
+}
+
+#bcSpHistogram {
+    -fx-bar-gap: 0;
+    -fx-category-gap: 0;
+}
+#bcApHistogram {
+    -fx-bar-gap: 0;
+    -fx-category-gap: 0;
+}
+#bcSpHistogram {
+    -fx-bar-gap: 0;
+    -fx-category-gap: 0;
+}
+#bcHistogram {
+    -fx-bar-gap: 0;
+    -fx-category-gap: 0;
+}
+
+#scDispersion .chart-symbol { 
+    -fx-background-color: #860061, white;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 1px;
+    -fx-padding: 1px;
+}

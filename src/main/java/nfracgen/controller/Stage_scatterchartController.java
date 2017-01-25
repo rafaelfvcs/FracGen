@@ -11,7 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nfracgen.analysis.plot.PlotSeries;
-import nfracgen.model.AnalysisFile;
+import nfracgen.model.ScanlineAnalysisFile;
 import nfracgen.stage.ScatterChartStage;
 import nfracgen.util.OpenScanlineData;
 
@@ -47,7 +47,7 @@ public class Stage_scatterchartController implements Initializable {
      */
     @FXML
     protected void plot() throws Exception {        
-        AnalysisFile file = ScatterChartStage.getInstance().getAnalysisFile();
+        ScanlineAnalysisFile file = ScatterChartStage.getInstance().getAnalysisFile();
         int indexX = cbX.getSelectionModel().getSelectedIndex();
         int indexY = cbY.getSelectionModel().getSelectedIndex();
         scatterChart.setTitle(tfGraphLabel.getText());

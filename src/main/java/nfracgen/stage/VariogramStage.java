@@ -8,23 +8,23 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import nfracgen.javafxapplication.FracGenApplication;
-import nfracgen.model.AnalysisFile;
+import nfracgen.model.ScanlineAnalysisFile;
 
 public class VariogramStage {
 
     private static VariogramStage instance;
-    private static AnalysisFile file;
+    private static ScanlineAnalysisFile file;
 
     public static VariogramStage getInstance() {
         return instance;
     }
 
-    public VariogramStage(AnalysisFile file) {
+    public VariogramStage(ScanlineAnalysisFile file) {
         instance = this;
         this.file = file;
     }
 
-    public AnalysisFile getAnalysisFile() {
+    public ScanlineAnalysisFile getAnalysisFile() {
         return file;
     }
 
